@@ -1,0 +1,32 @@
+name: Lint docs
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  docs_linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+
+      - uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          check-modified-files-only: "yes"
+          base-branch: main
+
+      - uses: tj-actions/changed-files@v40
+        id: changed-files
+        with:
+          files: "**/*.md"
+          separator: ","
+
+      - uses: DavidAnson/markdownlint-cli2-action@v14
+        continue-on-error: false
+        if: steps.changed-files.outputs.any_changed == 'true'
+        with:
+          globs: ${{ steps.changed-files.outputs.all_changed_files }}
+          separator: ","
+          config: ".markdownlint.json"

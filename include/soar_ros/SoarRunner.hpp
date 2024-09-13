@@ -1,0 +1,392 @@
+// Copyright 2024 Moritz Schmidt
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef SOAR_ROS__SOARRUNNER_HPP_
+#define SOAR_ROS__SOARRUNNER_HPP_
+
+#include <cstdlib>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <queue>
+#include <sml_Client.h>
+#include <stdexcept>
+#include <string>
+#include <thread>
+#include <vector>
+
+#include <rclcpp/rclcpp.hpp>
+#include <std_msgs/msg/string.hpp>
+#include <std_srvs/srv/trigger.hpp>
+
+#include "Client.hpp"
+#include "Interface.hpp"
+#include "Publisher.hpp"
+#include "Service.hpp"
+#include "Subscriber.hpp"
+
+namespace soar_ros
+{
+/// @brief Handle the soar print event via ROS logger
+/// @param id  sml event id
+/// @param pSoarRunner_ reference to SoarRunner class to access the logger.
+/// @param pAgent Calling agent
+/// @param pMessage Message content
+void SoarPrintEventHandler([[maybe_unused]] sml::smlPrintEventId id,
+  void * pSoarRunner_, sml::Agent * pAgent,
+  char const * pMessagee);
+
+/// @brief Called on every loop of the Soar kernel to process input and output
+/// link changes
+///
+/// Calls the SoarRunner::updateWorld() function, which in turn processes all
+/// outputs via SoarRunner::processOutputLinkChanges() and attaches new elements
+/// to the Soar input-link via SoarRunner::processInput().
+///
+/// @param id Unused.
+/// @param pSoarRunner_ Soar only provides C wrappers for their API and the
+/// SoarRunner structure must be referenced via static pointer casting.
+/// @param kernel_ptr Unused.
+/// @param run_flags Unused.
+void updateEventHandler([[maybe_unused]] sml::smlUpdateEventId id,
+  void * pSoarRunner_,
+  [[maybe_unused]] sml::Kernel * kernel_ptr,
+  [[maybe_unused]] sml::smlRunFlags run_flags);
+
+/// @brief Singelton class to manage the Soar kernel thread, main ROS interface
+/// to run/ stop the kernel and to attach interfaces via a builder pattern, e.g.
+/// soar_ros::Publisher(), soar_ros::Subscriber(), soar_ros::Service() and
+/// soar_ros::Client().
+class SoarRunner : public rclcpp::Node
+{
+private:
+  /// @brief Reference to the Soar agent running on the SoarRunner::pKernel.
+  sml::Agent * pAgent;
+
+  /// @brief Reference to the Soar kernel instaniated in
+  /// SoarRunner::SoarRunner()
+  sml::Kernel * pKernel;
+
+  /// @brief Reference to the thread running the Soar instance.
+  std::thread runThread;
+
+  /// @brief ROS2 Service which provides the current status of the Soar kernel
+  /// (run/ stop) via SoarRunner::getKernelStatus()
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_getSoarKernelStatus;
+
+  /// @brief ROS2 Service to start/ Restart the Soar kernel via
+  /// SoarRunner::runSoarKernel()
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_kernelRun;
+
+  /// @brief ROS2 Service to stop the Soar kernel if it is running via
+  /// SoarRunner::stopSoarKernel()
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_kernelStop;
+
+  /// @brief ROS2 Service to start the Soar debugger from external programs.
+  rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_debuggerLaunch;
+
+  /// @brief All output related ROS2 structures
+  ///
+  /// The key is the topic or comamnd name specified when registering new
+  /// outputs via SoarRunner::addPublisher(), SoarRunner::addService() or any
+  /// other class that relies on soar_ros::OutputBase.
+  ///
+  /// Implemented as map since the SoarRunner::processOutputLinkChanges() looks
+  /// up the topic or command name to match the output to the Soar WME.
+  std::map<std::string, std::shared_ptr<soar_ros::OutputBase>> outputs;
+
+  /// @brief All input related ROS2 structures
+  ///
+  /// SoarRunner::inputs is not requried to be a map since there is no lookup
+  /// based on the topics.  All inputs are iterated and attached to the
+  /// input-link of Soar.
+  std::vector<std::shared_ptr<soar_ros::InputBase>> inputs;
+
+  /// @brief Variable set via ROS2 params.
+  bool m_debug;
+
+  /// @brief Permenent reference to the output link.
+  sml::Identifier * ol;
+
+  /// @brief Called in SoarRunner::updateWorld()
+  void processOutputLinkChanges();
+
+  /// @brief Read all input queues and call the process function to
+  /// attach the structure to the Soar input link.
+  ///
+  /// Called in SoarRunner::updateWorld()
+  void processInput();
+
+  /// @brief Initialize runThread and execute pAgent->RunSelfForever() in
+  /// separate thread.
+  void run();
+
+  /// @brief Compute filepath for the Soar log in ROS2 ecosystem.
+  /// @return Filepath with ISO8601 timestamp in UTC
+  std::string getSoarLogFilePath();
+
+  /// @brief Flag to start/ stop the SoarRunner::run() function in a separate
+  /// thread started and stopped via SoarRunner::startThread() and
+  /// SoarRunner::stopThread()
+  std::atomic<bool> isRunning;
+
+public:
+  /// @brief Instantiates the Soar kernel and generates ROS2 interfaces. Further
+  /// setup in SoarRunner::addAgent() for first agent.
+  ///
+  ///
+  /// @param agent_name The agents name.
+  /// @param path_productions Filepath to main *.soar file relative to the
+  /// package root.
+  /// @throw std::runtime_error on sml::Kernel setup error.
+  SoarRunner(const std::string & agent_name, const std::string & path_productions);
+
+  /// @brief Enable external control to start the debugger and stop the run
+  /// thread via
+  /// @verbatim embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+  /// @endverbatim via `/soar_ros/debugger/launch`
+  ///
+  /// The run thread is stopped automatically since the debugger is not
+  /// responsive if the thread is running. Reason to be investigated.
+  ///
+  /// The thread running the Soar kernel is not automatically restarted once the
+  /// debugger was closed. Manually restart the thread via the provided
+  /// SoarRunner::runSoarKernel() interface.
+  ///
+  /// @note Launching the Soar debugger without the command requires stopping
+  /// the kernel via SoarRunner::stopSoarKernel() related topic. Otherwise, the
+  /// debugger will remain frozen/ unresponsive.
+  ///
+  /// @param request_header
+  /// @param request
+  /// @param response
+  void debuggerLaunch(
+    [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+    [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+
+  /// @brief ROS2 interface to get current Soar kernel status (run/ stop) via
+  /// @verbatim embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+  /// @endverbatim via `/soar_ros/kernel/status`
+  ///
+  /// @param request_header Unused.
+  /// @param request Empty.
+  /// @param response "Soar Kernel isRunning: true" if running, otherwise
+  /// "Soarkernel isRunning: false".
+  ///
+  /// @warning This does not catch the state of the Soar kernel correctly, once
+  /// the kernel is started/ stopped via the Soar debugger!
+  void getSoarKernelStatus(
+    [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+    [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+
+  /// @brief ROS2 Service interface to stop Soar kernel if it is currently
+  /// running via
+  /// @verbatim embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+  /// @endverbatim via `/soar_ros/kernel/run`
+  ///
+  /// @param request_header Unused.
+  /// @param request Empty.
+  /// @param response "Soar kernel isRunning: true" if started succesfully,
+  /// otherwise "Soar kernel isRunning: false".
+  void runSoarKernel(
+    [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+    [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+
+  /// @brief ROS2 Service interface to start (run) Soar kernel if it is
+  /// currenlty stopped.
+  /// @verbatim embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+  /// @endverbatim via `/soar_ros/kernel/stop`
+  ///
+  /// @param request_header
+  /// @param request Empty.
+  /// @param response "Soar Kernel isRunning: false" if stopped succesfully,
+  /// otherwise "Soarkernel isRunning: true".
+  void stopSoarKernel(
+    [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+    [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+    std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+
+  /// @brief Add a new Soar agent and register callbacks related to ROS.
+  /// @warning Handling multiple agents in one SoarRunner instance is not
+  /// implemented yet!
+  /// @param agent_name The agents name
+  /// @param path_productions Path to the Soar source files.
+  /// @warning The path might depend on the install location specified in cmake
+  /// sctipts
+  /// @throw std::runtime_error on sml::Agent::loadProductions() error.
+  /// @return
+  sml::Agent * addAgent(
+    const std::string & agent_name,
+    const std::string & path_productions);
+
+  /// @brief Stops the Kernel thread and wait until joined, closes Soar Debugger
+  /// in debug mode.
+  ~SoarRunner();
+
+  sml::Agent * getAgent() {return pAgent;}
+
+  /// @brief Adds a soar_ros::Publisher() to the SoarRunner.
+  ///
+  /// The output command is assumed to be the topic name of the Publisher.
+  ///
+  /// @tparam T ROS2 message type
+  /// @param output
+  /// @return
+  template<typename T>
+  bool addPublisher(std::shared_ptr<soar_ros::Publisher<T>> output)
+  {
+    outputs[output.get()->getTopic()] = output;
+    return true;
+  }
+
+  /// @brief Adds a soar_ros::Publisher() to the SoarRunner.
+  /// @tparam T
+  /// @param output
+  /// @param commandName Matching of the Soar output-link command name, e.g.
+  /// io.output-link.move matches to commandName "move".
+  /// @return
+  template<typename T>
+  bool addPublisher(
+    std::shared_ptr<soar_ros::Publisher<T>> output,
+    const std::string & commandName)
+  {
+    outputs[commandName] = output;
+    return true;
+  }
+
+  template<typename T>
+  bool addSubscriber(std::shared_ptr<soar_ros::Subscriber<T>> input)
+  {
+    inputs.push_back(input);
+    return true;
+  }
+
+  /// @brief Add a new soar_ros::Service. The callback on the output link is the
+  /// service's topic name
+  /// @tparam T ROS2 service message type definition
+  /// @param service
+  /// @return
+  template<typename T>
+  bool addService(std::shared_ptr<soar_ros::Service<T>> service)
+  {
+    return addService(service, service.get()->getTopic());
+  }
+
+  /// @brief Add a new ROS2 Service with a custom callback command
+  /// @tparam T
+  /// @param service
+  /// @param commandName
+  /// @return
+  template<typename T>
+  bool addService(
+    std::shared_ptr<soar_ros::Service<T>> service,
+    const std::string & commandName)
+  {
+    outputs[commandName] =
+      std::static_pointer_cast<soar_ros::OutputBase>(service);
+    inputs.push_back(std::static_pointer_cast<soar_ros::InputBase>(service));
+    return true;
+  }
+
+  /// @brief Add a new soar_ros::Client. The callback on the output link is the
+  /// service's topic name
+  /// @tparam T ROS2 Service Message type definition
+  /// @param service
+  /// @return
+  template<typename T>
+  bool addClient(std::shared_ptr<soar_ros::Client<T>> client)
+  {
+    return addClient(client, client.get()->getTopic());
+  }
+
+  /// @brief Add a new soar_ros::Client with a custom callback command
+  /// @tparam T
+  /// @param service
+  /// @param commandName
+  /// @return
+  template<typename T>
+  bool addClient(
+    std::shared_ptr<soar_ros::Client<T>> client,
+    const std::string & commandName)
+  {
+    outputs[commandName] =
+      std::static_pointer_cast<soar_ros::OutputBase>(client);
+    inputs.push_back(std::static_pointer_cast<soar_ros::InputBase>(client));
+    return true;
+  }
+
+  /// @brief Creates a new thread based on the SoarRunner::run() function that
+  /// executes the Soar kernel.
+  ///
+  /// Soar has a synchronous threading model,
+  /// cf. https://soar.eecs.umich.edu/development/soar/ThreadsInSML/
+  void startThread()
+  {
+    // If thread is already running, skip
+    if (isRunning.load() == true) {
+      RCLCPP_WARN(this->get_logger(), "runThread already running");
+      return;
+    } else {
+      isRunning.store(true);
+    }
+
+    RCLCPP_INFO(this->get_logger(), "Starting runThread");
+    runThread = std::thread(&SoarRunner::run, this);
+  }
+
+  /// @brief Stops and joins SoarRunner::run() thread of Soar kernel via the
+  /// SoarRunner::isRunning flag.
+  void stopThread()
+  {
+    if (isRunning.load() == false) {
+      RCLCPP_INFO(this->get_logger(), "Run thread already stopped!");
+      return;
+    }
+
+    isRunning.store(false);
+    RCLCPP_WARN(this->get_logger(), "Stopping runThread");
+
+    if (runThread.joinable()) {
+      RCLCPP_INFO(this->get_logger(), "Waiting for run thread to join");
+      runThread.join();
+    }
+  }
+
+  /// @brief Soar update World function executed every step in the Soar
+  /// execution cycle in SoarRunner::run()
+  ///
+  /// Processes all outputs via SoarRunner::processOutputLinkChanges() and
+  /// attaches new elements to the Soar input-link via
+  /// SoarRunner::processInput().
+  void updateWorld()
+  {
+    // Read Soar output
+    processOutputLinkChanges();
+
+    if (ol == NULL) {
+      ol = pAgent->GetOutputLink();
+      RCLCPP_DEBUG(this->get_logger(), "Output link reference invalid!");
+    }
+
+    // Write to Soar input-link
+    processInput();
+  }
+}; // class SoarRunner
+
+}  // namespace soar_ros
+
+#endif  // SOAR_ROS__SOARRUNNER_HPP_

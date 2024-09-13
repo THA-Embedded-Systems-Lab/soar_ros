@@ -1,0 +1,37 @@
+name: Build and Deploy ROS2 Documentation
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 3: Install dependencies (rosdoc2 and doxygen)
+      - name: Install ROS2 and documentation dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y doxygen
+          sudo apt-get install -y python3-rosdoc2
+          pip install -r requirements.txt
+
+      # Step 4: Build the documentation using rosdoc2
+      - name: Build documentation
+        run: |
+          rosdoc2 build --package-path .
+
+      # Step 5: Deploy the documentation to the gh-pages branch
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs_output
+          publish_branch: gh-pages

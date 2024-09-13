@@ -1,0 +1,27 @@
+# Put in a wait for a state-no-change
+sp {top-state*propose*wait
+   (state <s> ^attribute state
+              ^choices none
+             -^operator.name wait)
+-->
+   (<s> ^operator <o>)
+   (<o> ^name wait)
+}
+
+# This avoids a operator no-change after wait is selected
+# I've included it just to keep the trace simple
+sp {top-state*apply*wait*random
+   (state <s> ^operator <o>)
+   (<o> ^name wait)
+-->
+   (<o> ^random elaboration)
+}
+
+sp {anystate*prefer*others*over*wait
+   (state <s> ^operator <o1> +
+              ^operator <o2> +)
+   (<o1> ^name <> wait)
+   (<o2> ^name wait)
+-->
+   (<s> ^operator <o1> > <o2>)
+}

@@ -1,0 +1,78 @@
+# If the superstate is nil and the states' name is not TestAgent, then propose an
+# operator to name the state TestAgent.
+sp {topstate*propose*init-agent
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name init-agent)
+}
+
+sp {topstate*apply*init-agent
+   (state <s> ^operator.name init-agent)
+-->
+   (<s> ^name TestAgent)
+}
+
+source wait.soar
+
+sp {any*propose*test_republisher
+   (state <s> ^io.input-link.testinput <pMessage>)
+   -(<pMessage> ^status complete)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name test_republisher
+      ^pMessage <pMessage>)
+}
+
+sp {any*apply*test_republisher
+   (state <s> ^operator <o>
+      ^io.output-link <ol>)
+   (<o> ^name test_republisher
+      ^pMessage <pMessage>)
+   (<pMessage> ^data <message>)
+-->
+   (<ol> ^test.data <message>)
+   (<pMessage> ^status complete)
+}
+
+sp {any*propose*add_two_ints_test_server
+   (state <s> ^io.input-link.AddTwoInts <pAddTwoInts>)
+   -(<pAddTwoInts> ^status complete)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add_two_ints
+      ^pAddTwoInts <pAddTwoInts>)
+}
+
+sp {any*apply*add_two_ints_test_server
+   (state <s> ^operator <o>
+      ^io.output-link <ol>)
+   (<o> ^name add_two_ints
+   ^pAddTwoInts <pAddTwoInts>)
+   (<pAddTwoInts> ^a <a>
+      ^b <b>)
+-->
+   (<ol> ^AddTwoInts.sum (+ <a> <b>))
+   (<pAddTwoInts> ^status complete)
+}
+
+sp {any*propose*add_two_ints_client
+   (state <s> ^io.input-link.Trigger <Trigger>)
+   (<Trigger> -^status complete)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name add_two_ints_client
+      ^Trigger <Trigger>)
+}
+
+sp {any*apply*add_two_ints_client
+   (state <s> ^operator <o>
+      ^io.output-link <ol>)
+   (<o> ^name add_two_ints_client
+      ^Trigger <Trigger>)
+-->
+   (<ol> ^AddTwoIntsClient <pAddTwoIntsClient>)
+   (<pAddTwoIntsClient> ^a 6 ^b 6)
+   (<Trigger> ^status complete)
+}

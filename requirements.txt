@@ -1,0 +1,5 @@
+pre-commit==3.*
+pygments @ git+https://github.com/moschmdt/pygments@feature/soar
+sphinxcontrib-mermaid
+sphinx
+breathe

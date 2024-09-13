@@ -1,0 +1,15 @@
+{
+    "MD007": {
+        "indent": 4
+    },
+    "MD040": true,
+    "MD046": {
+        "style": "fenced"
+    },
+    "MD047": true,
+    "MD013": {
+        "tables": false,
+        "code_blocks": false,
+        "strict": false
+    }
+}
