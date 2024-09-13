@@ -3,3 +3,4 @@ pygments @ git+https://github.com/moschmdt/pygments@feature/soar
 sphinxcontrib-mermaid
 sphinx
 breathe
+rosdoc2==0.*
