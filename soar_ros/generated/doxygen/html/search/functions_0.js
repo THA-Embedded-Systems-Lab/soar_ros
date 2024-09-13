@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['addagent_50',['addAgent',['../classsoar__ros_1_1SoarRunner.html#a130cdf890594f230d7e987394c93e002',1,'soar_ros::SoarRunner']]],
+  ['addclient_51',['addClient',['../classsoar__ros_1_1SoarRunner.html#a6b92de426f03f7ed27729d6ff5a7a726',1,'soar_ros::SoarRunner::addClient(std::shared_ptr&lt; soar_ros::Client&lt; T &gt;&gt; client)'],['../classsoar__ros_1_1SoarRunner.html#aba2ffb76aca69fc5441c6a90e3a7a910',1,'soar_ros::SoarRunner::addClient(std::shared_ptr&lt; soar_ros::Client&lt; T &gt;&gt; client, const std::string &amp;commandName)']]],
+  ['addpublisher_52',['addPublisher',['../classsoar__ros_1_1SoarRunner.html#ad773ed65ead9c40e883ffadbd314a346',1,'soar_ros::SoarRunner::addPublisher(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt;&gt; output)'],['../classsoar__ros_1_1SoarRunner.html#a010eff1a3de5ae0eed9078225773e669',1,'soar_ros::SoarRunner::addPublisher(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt;&gt; output, const std::string &amp;commandName)']]],
+  ['addservice_53',['addService',['../classsoar__ros_1_1SoarRunner.html#acb4c15839939a62cb4554e5bb8118e77',1,'soar_ros::SoarRunner::addService(std::shared_ptr&lt; soar_ros::Service&lt; T &gt;&gt; service)'],['../classsoar__ros_1_1SoarRunner.html#acf0876f03bae81626d9e3649162cc13c',1,'soar_ros::SoarRunner::addService(std::shared_ptr&lt; soar_ros::Service&lt; T &gt;&gt; service, const std::string &amp;commandName)']]]
+];

@@ -1,0 +1,956 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1SoarRunner" kind="class" language="C++" prot="public">
+    <compoundname>soar_ros::SoarRunner</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">rclcpp::Node</basecompoundref>
+    <includes refid="SoarRunner_8hpp" local="no">SoarRunner.hpp</includes>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1abfa5ec38972a80bc684cb1104d895c5a" prot="private" static="no" mutable="no">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent* soar_ros::SoarRunner::pAgent</definition>
+        <argsstring></argsstring>
+        <name>pAgent</name>
+        <briefdescription>
+<para>Reference to the Soar agent running on the SoarRunner::pKernel. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="75" column="15" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="75" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1a5f41101b39fcba75443ab764d2b8312f" prot="private" static="no" mutable="no">
+        <type>sml::Kernel *</type>
+        <definition>sml::Kernel* soar_ros::SoarRunner::pKernel</definition>
+        <argsstring></argsstring>
+        <name>pKernel</name>
+        <briefdescription>
+<para>Reference to the Soar kernel instaniated in <ref refid="classsoar__ros_1_1SoarRunner_1a7f582f9e83635a872f0b08f6c8046088" kindref="member">SoarRunner::SoarRunner()</ref> </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="79" column="16" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="79" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1a23cc2d5591744ebda6ac76298c635e80" prot="private" static="no" mutable="no">
+        <type>std::thread</type>
+        <definition>std::thread soar_ros::SoarRunner::runThread</definition>
+        <argsstring></argsstring>
+        <name>runThread</name>
+        <briefdescription>
+<para>Reference to the thread running the Soar instance. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="82" column="15" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="82" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1ab64adfa859047c893111edd8a16b502a" prot="private" static="no" mutable="no">
+        <type>rclcpp::Service&lt; std_srvs::srv::Trigger &gt;::SharedPtr</type>
+        <definition>rclcpp::Service&lt;std_srvs::srv::Trigger&gt;::SharedPtr soar_ros::SoarRunner::m_getSoarKernelStatus</definition>
+        <argsstring></argsstring>
+        <name>m_getSoarKernelStatus</name>
+        <briefdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> which provides the current status of the Soar kernel (run/ stop) via SoarRunner::getKernelStatus() </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="86" column="31" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="86" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1a783fd565406895a60ab6d4a10bbcf43d" prot="private" static="no" mutable="no">
+        <type>rclcpp::Service&lt; std_srvs::srv::Trigger &gt;::SharedPtr</type>
+        <definition>rclcpp::Service&lt;std_srvs::srv::Trigger&gt;::SharedPtr soar_ros::SoarRunner::m_kernelRun</definition>
+        <argsstring></argsstring>
+        <name>m_kernelRun</name>
+        <briefdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> to start/ Restart the Soar kernel via <ref refid="classsoar__ros_1_1SoarRunner_1ad615385cb571b0859fa341a347ba1a79" kindref="member">SoarRunner::runSoarKernel()</ref> </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="90" column="31" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="90" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1a9c9b0da582dd94d686a1ec6f3562ff88" prot="private" static="no" mutable="no">
+        <type>rclcpp::Service&lt; std_srvs::srv::Trigger &gt;::SharedPtr</type>
+        <definition>rclcpp::Service&lt;std_srvs::srv::Trigger&gt;::SharedPtr soar_ros::SoarRunner::m_kernelStop</definition>
+        <argsstring></argsstring>
+        <name>m_kernelStop</name>
+        <briefdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> to stop the Soar kernel if it is running via <ref refid="classsoar__ros_1_1SoarRunner_1a65d354c261d99756222af4a790981e58" kindref="member">SoarRunner::stopSoarKernel()</ref> </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="94" column="31" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="94" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1afd217465fc2027e4a2c3090b5c5a3415" prot="private" static="no" mutable="no">
+        <type>rclcpp::Service&lt; std_srvs::srv::Trigger &gt;::SharedPtr</type>
+        <definition>rclcpp::Service&lt;std_srvs::srv::Trigger&gt;::SharedPtr soar_ros::SoarRunner::m_debuggerLaunch</definition>
+        <argsstring></argsstring>
+        <name>m_debuggerLaunch</name>
+        <briefdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> to start the Soar debugger from external programs. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="97" column="31" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="97" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1ab9a15124c1c0ace6caf10de5e644c27a" prot="private" static="no" mutable="no">
+        <type>std::map&lt; std::string, std::shared_ptr&lt; <ref refid="classsoar__ros_1_1OutputBase" kindref="compound">soar_ros::OutputBase</ref> &gt; &gt;</type>
+        <definition>std::map&lt;std::string, std::shared_ptr&lt;soar_ros::OutputBase&gt; &gt; soar_ros::SoarRunner::outputs</definition>
+        <argsstring></argsstring>
+        <name>outputs</name>
+        <briefdescription>
+<para>All output related ROS2 structures. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The key is the topic or comamnd name specified when registering new outputs via <ref refid="classsoar__ros_1_1SoarRunner_1ad773ed65ead9c40e883ffadbd314a346" kindref="member">SoarRunner::addPublisher()</ref>, <ref refid="classsoar__ros_1_1SoarRunner_1acb4c15839939a62cb4554e5bb8118e77" kindref="member">SoarRunner::addService()</ref> or any other class that relies on <ref refid="classsoar__ros_1_1OutputBase" kindref="compound">soar_ros::OutputBase</ref>.</para>
+<para>Implemented as map since the SoarRunner::processOutputLinkChanges() looks up the topic or command name to match the output to the Soar WME. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="107" column="12" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="107" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1aec55c815da62f421ff3e6329b9169307" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::shared_ptr&lt; <ref refid="classsoar__ros_1_1InputBase" kindref="compound">soar_ros::InputBase</ref> &gt; &gt;</type>
+        <definition>std::vector&lt;std::shared_ptr&lt;soar_ros::InputBase&gt; &gt; soar_ros::SoarRunner::inputs</definition>
+        <argsstring></argsstring>
+        <name>inputs</name>
+        <briefdescription>
+<para>All input related ROS2 structures. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>SoarRunner::inputs is not requried to be a map since there is no lookup based on the topics. All inputs are iterated and attached to the input-link of Soar. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="114" column="15" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="114" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1ada9b6049eed2cbcf747e023a1e04f74e" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::m_debug</definition>
+        <argsstring></argsstring>
+        <name>m_debug</name>
+        <briefdescription>
+<para>Variable set via ROS2 params. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="117" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="117" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1a49522967ca2b2572c083c4389d41e60f" prot="private" static="no" mutable="no">
+        <type>sml::Identifier *</type>
+        <definition>sml::Identifier* soar_ros::SoarRunner::ol</definition>
+        <argsstring></argsstring>
+        <name>ol</name>
+        <briefdescription>
+<para>Permenent reference to the output link. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="120" column="20" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="120" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarRunner_1a653a4829aa2b0300c5559819fe9f13a5" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; bool &gt;</type>
+        <definition>std::atomic&lt;bool&gt; soar_ros::SoarRunner::isRunning</definition>
+        <argsstring></argsstring>
+        <name>isRunning</name>
+        <briefdescription>
+<para>Flag to start/ stop the SoarRunner::run() function in a separate thread started and stopped via <ref refid="classsoar__ros_1_1SoarRunner_1a5d3e6cdb7b55a1f8fba1f22328bd45d4" kindref="member">SoarRunner::startThread()</ref> and <ref refid="classsoar__ros_1_1SoarRunner_1a3344394558c39786279952ad381268bb" kindref="member">SoarRunner::stopThread()</ref> </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="142" column="15" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="142" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a4951cfe752d15753b7844271002811fb" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::processOutputLinkChanges</definition>
+        <argsstring>()</argsstring>
+        <name>processOutputLinkChanges</name>
+        <briefdescription>
+<para>Called in <ref refid="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" kindref="member">SoarRunner::updateWorld()</ref> </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="123" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1ae3fdd8b54d4831704ba7080c8e1794c3" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::processInput</definition>
+        <argsstring>()</argsstring>
+        <name>processInput</name>
+        <briefdescription>
+<para>Read all input queues and call the process function to attach the structure to the Soar input link. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Called in <ref refid="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" kindref="member">SoarRunner::updateWorld()</ref> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="129" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1adde11fa7c0683e1d29c747f5ffe09866" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::run</definition>
+        <argsstring>()</argsstring>
+        <name>run</name>
+        <briefdescription>
+<para>Initialize runThread and execute pAgent-&gt;RunSelfForever() in separate thread. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="133" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a91682e778196bc255c7285d932ea1a4b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>std::string</type>
+        <definition>std::string soar_ros::SoarRunner::getSoarLogFilePath</definition>
+        <argsstring>()</argsstring>
+        <name>getSoarLogFilePath</name>
+        <briefdescription>
+<para>Compute filepath for the Soar log in ROS2 ecosystem. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para>Filepath with ISO8601 timestamp in UTC </para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="137" column="15"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a7f582f9e83635a872f0b08f6c8046088" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::SoarRunner::SoarRunner</definition>
+        <argsstring>(const std::string &amp;agent_name, const std::string &amp;path_productions)</argsstring>
+        <name>SoarRunner</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>agent_name</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>path_productions</declname>
+        </param>
+        <briefdescription>
+<para>Instantiates the Soar kernel and generates ROS2 interfaces. Further setup in <ref refid="classsoar__ros_1_1SoarRunner_1a130cdf890594f230d7e987394c93e002" kindref="member">SoarRunner::addAgent()</ref> for first agent. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>agent_name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The agents name. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>path_productions</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Filepath to main *.soar file relative to the package root. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>std::runtime_error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>on sml::Kernel setup error. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="153" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a8e758f86ce719f1035852e85bfff9a2d" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::debuggerLaunch</definition>
+        <argsstring>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</argsstring>
+        <name>debuggerLaunch</name>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] const std::shared_ptr&lt; rmw_request_id_t &gt;</type>
+          <declname>request_header</declname>
+        </param>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</type>
+          <declname>response</declname>
+        </param>
+        <briefdescription>
+<para>Enable external control to start the debugger and stop the run thread via. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+/// </verbatim> via <computeroutput>/soar_ros/debugger/launch</computeroutput> <verbatim>The run thread is stopped automatically since the debugger is not
+responsive if the thread is running. Reason to be investigated.
+
+The thread running the Soar kernel is not automatically restarted once the
+debugger was closed. Manually restart the thread via the provided
+SoarRunner::runSoarKernel() interface.
+
+@note Launching the Soar debugger without the command requires stopping
+the kernel via SoarRunner::stopSoarKernel() related topic. Otherwise, the
+debugger will remain frozen/ unresponsive.
+
+@param request_header
+@param request
+@param response 
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="174" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1af60fee9c9b50e0696f7fabd444b441b5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::getSoarKernelStatus</definition>
+        <argsstring>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</argsstring>
+        <name>getSoarKernelStatus</name>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] const std::shared_ptr&lt; rmw_request_id_t &gt;</type>
+          <declname>request_header</declname>
+        </param>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</type>
+          <declname>response</declname>
+        </param>
+        <briefdescription>
+<para>ROS2 interface to get current Soar kernel status (run/ stop) via. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+/// </verbatim> via <computeroutput>/soar_ros/kernel/status</computeroutput> <verbatim>@param request_header Unused.
+@param request Empty.
+@param response &quot;Soar Kernel isRunning: true&quot; if running, otherwise
+&quot;Soarkernel isRunning: false&quot;.
+
+@warning This does not catch the state of the Soar kernel correctly, once
+the kernel is started/ stopped via the Soar debugger! 
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="190" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1ad615385cb571b0859fa341a347ba1a79" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::runSoarKernel</definition>
+        <argsstring>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</argsstring>
+        <name>runSoarKernel</name>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] const std::shared_ptr&lt; rmw_request_id_t &gt;</type>
+          <declname>request_header</declname>
+        </param>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</type>
+          <declname>response</declname>
+        </param>
+        <briefdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> interface to stop Soar kernel if it is currently running via. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+/// </verbatim> via <computeroutput>/soar_ros/kernel/run</computeroutput> <verbatim>@param request_header Unused.
+@param request Empty.
+@param response &quot;Soar kernel isRunning: true&quot; if started succesfully,
+otherwise &quot;Soar kernel isRunning: false&quot;. 
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="204" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a65d354c261d99756222af4a790981e58" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::stopSoarKernel</definition>
+        <argsstring>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</argsstring>
+        <name>stopSoarKernel</name>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] const std::shared_ptr&lt; rmw_request_id_t &gt;</type>
+          <declname>request_header</declname>
+        </param>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</type>
+          <declname>request</declname>
+        </param>
+        <param>
+          <type>std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</type>
+          <declname>response</declname>
+        </param>
+        <briefdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> interface to start (run) Soar kernel if it is currenlty stopped. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><verbatim>embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
+/// </verbatim> via <computeroutput>/soar_ros/kernel/stop</computeroutput> <verbatim>@param request_header
+@param request Empty.
+@param response &quot;Soar Kernel isRunning: false&quot; if stopped succesfully,
+otherwise &quot;Soarkernel isRunning: true&quot;. 
+</verbatim> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="218" column="8"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a130cdf890594f230d7e987394c93e002" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent* soar_ros::SoarRunner::addAgent</definition>
+        <argsstring>(const std::string &amp;agent_name, const std::string &amp;path_productions)</argsstring>
+        <name>addAgent</name>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>agent_name</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>path_productions</declname>
+        </param>
+        <briefdescription>
+<para>Add a new Soar agent and register callbacks related to ROS. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="warning"><para>Handling multiple agents in one <ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref> instance is not implemented yet! </para>
+</simplesect>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>agent_name</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The agents name </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>path_productions</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Path to the Soar source files. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="warning"><para>The path might depend on the install location specified in cmake sctipts </para>
+</simplesect>
+<parameterlist kind="exception"><parameteritem>
+<parameternamelist>
+<parametername>std::runtime_error</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>on sml::Agent::loadProductions() error. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="232" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a99a8e825b46bdf372ca99c1632c9d8ce" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::SoarRunner::~SoarRunner</definition>
+        <argsstring>()</argsstring>
+        <name>~SoarRunner</name>
+        <briefdescription>
+<para>Stops the Kernel thread and wait until joined, closes Soar Debugger in debug mode. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="238" column="3"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a8b40745a1b3182393d437e00f3f5e5ce" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent* soar_ros::SoarRunner::getAgent</definition>
+        <argsstring>()</argsstring>
+        <name>getAgent</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="240" column="15" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="240" bodyend="240"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1ad773ed65ead9c40e883ffadbd314a346" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addPublisher</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt;&gt; output)</argsstring>
+        <name>addPublisher</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Publisher" kindref="compound">soar_ros::Publisher</ref>&lt; T &gt;&gt;</type>
+          <declname>output</declname>
+        </param>
+        <briefdescription>
+<para>Adds a <ref refid="classsoar__ros_1_1Publisher" kindref="compound">soar_ros::Publisher()</ref> to the <ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>The output command is assumed to be the topic name of the <ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref>.</para>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ROS2 message type </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>output</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="250" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="250" bodyend="254"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a010eff1a3de5ae0eed9078225773e669" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addPublisher</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt;&gt; output, const std::string &amp;commandName)</argsstring>
+        <name>addPublisher</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Publisher" kindref="compound">soar_ros::Publisher</ref>&lt; T &gt;&gt;</type>
+          <declname>output</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Adds a <ref refid="classsoar__ros_1_1Publisher" kindref="compound">soar_ros::Publisher()</ref> to the <ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>output</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>commandName</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Matching of the Soar output-link command name, e.g. io.output-link.move matches to commandName &quot;move&quot;. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="263" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="263" bodyend="269"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a712aa1f9580e6e8eec9dfdbfb9b40e3e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addSubscriber</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Subscriber&lt; T &gt;&gt; input)</argsstring>
+        <name>addSubscriber</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Subscriber" kindref="compound">soar_ros::Subscriber</ref>&lt; T &gt;&gt;</type>
+          <declname>input</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="272" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="272" bodyend="276"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1acb4c15839939a62cb4554e5bb8118e77" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addService</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Service&lt; T &gt;&gt; service)</argsstring>
+        <name>addService</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Service" kindref="compound">soar_ros::Service</ref>&lt; T &gt;&gt;</type>
+          <declname>service</declname>
+        </param>
+        <briefdescription>
+<para>Add a new <ref refid="classsoar__ros_1_1Service" kindref="compound">soar_ros::Service</ref>. The callback on the output link is the service&apos;s topic name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ROS2 service message type definition </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>service</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="284" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="284" bodyend="287"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1acf0876f03bae81626d9e3649162cc13c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addService</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Service&lt; T &gt;&gt; service, const std::string &amp;commandName)</argsstring>
+        <name>addService</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Service" kindref="compound">soar_ros::Service</ref>&lt; T &gt;&gt;</type>
+          <declname>service</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Add a new ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> with a custom callback command. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>service</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>commandName</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="295" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="295" bodyend="303"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a6b92de426f03f7ed27729d6ff5a7a726" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addClient</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Client&lt; T &gt;&gt; client)</argsstring>
+        <name>addClient</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Client" kindref="compound">soar_ros::Client</ref>&lt; T &gt;&gt;</type>
+          <declname>client</declname>
+        </param>
+        <briefdescription>
+<para>Add a new <ref refid="classsoar__ros_1_1Client" kindref="compound">soar_ros::Client</ref>. The callback on the output link is the service&apos;s topic name. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ROS2 <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> Message type definition </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>service</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="311" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="311" bodyend="314"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1aba2ffb76aca69fc5441c6a90e3a7a910" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarRunner::addClient</definition>
+        <argsstring>(std::shared_ptr&lt; soar_ros::Client&lt; T &gt;&gt; client, const std::string &amp;commandName)</argsstring>
+        <name>addClient</name>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Client" kindref="compound">soar_ros::Client</ref>&lt; T &gt;&gt;</type>
+          <declname>client</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Add a new <ref refid="classsoar__ros_1_1Client" kindref="compound">soar_ros::Client</ref> with a custom callback command. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="templateparam"><parameteritem>
+<parameternamelist>
+<parametername>T</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>service</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>commandName</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="322" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="322" bodyend="330"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a5d3e6cdb7b55a1f8fba1f22328bd45d4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::startThread</definition>
+        <argsstring>()</argsstring>
+        <name>startThread</name>
+        <briefdescription>
+<para>Creates a new thread based on the SoarRunner::run() function that executes the Soar kernel. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Soar has a synchronous threading model, cf. <ulink url="https://soar.eecs.umich.edu/development/soar/ThreadsInSML/">https://soar.eecs.umich.edu/development/soar/ThreadsInSML/</ulink> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="337" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="337" bodyend="349"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a3344394558c39786279952ad381268bb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::stopThread</definition>
+        <argsstring>()</argsstring>
+        <name>stopThread</name>
+        <briefdescription>
+<para>Stops and joins SoarRunner::run() thread of Soar kernel via the SoarRunner::isRunning flag. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="353" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="353" bodyend="367"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarRunner::updateWorld</definition>
+        <argsstring>()</argsstring>
+        <name>updateWorld</name>
+        <briefdescription>
+<para>Soar update World function executed every step in the Soar execution cycle in SoarRunner::run() </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Processes all outputs via SoarRunner::processOutputLinkChanges() and attaches new elements to the Soar input-link via SoarRunner::processInput(). </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="375" column="8" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="375" bodyend="387"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+<para>Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to attach interfaces via a builder pattern, e.g. <ref refid="classsoar__ros_1_1Publisher" kindref="compound">soar_ros::Publisher()</ref>, <ref refid="classsoar__ros_1_1Subscriber" kindref="compound">soar_ros::Subscriber()</ref>, <ref refid="classsoar__ros_1_1Service" kindref="compound">soar_ros::Service()</ref> and <ref refid="classsoar__ros_1_1Client" kindref="compound">soar_ros::Client()</ref>. </para>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>soar_ros::SoarRunner</label>
+        <link refid="classsoar__ros_1_1SoarRunner"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>rclcpp::Node</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>soar_ros::SoarRunner</label>
+        <link refid="classsoar__ros_1_1SoarRunner"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>rclcpp::Node</label>
+      </node>
+    </collaborationgraph>
+    <location file="include/soar_ros/SoarRunner.hpp" line="71" column="1" bodyfile="include/soar_ros/SoarRunner.hpp" bodystart="72" bodyend="388"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1SoarRunner_1a130cdf890594f230d7e987394c93e002" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a6b92de426f03f7ed27729d6ff5a7a726" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addClient</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1aba2ffb76aca69fc5441c6a90e3a7a910" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addClient</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1ad773ed65ead9c40e883ffadbd314a346" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addPublisher</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a010eff1a3de5ae0eed9078225773e669" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addPublisher</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1acb4c15839939a62cb4554e5bb8118e77" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addService</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1acf0876f03bae81626d9e3649162cc13c" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addService</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a712aa1f9580e6e8eec9dfdbfb9b40e3e" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>addSubscriber</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a8e758f86ce719f1035852e85bfff9a2d" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>debuggerLaunch</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a8b40745a1b3182393d437e00f3f5e5ce" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>getAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1af60fee9c9b50e0696f7fabd444b441b5" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>getSoarKernelStatus</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a91682e778196bc255c7285d932ea1a4b" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>getSoarLogFilePath</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1aec55c815da62f421ff3e6329b9169307" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>inputs</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a653a4829aa2b0300c5559819fe9f13a5" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>isRunning</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1ada9b6049eed2cbcf747e023a1e04f74e" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>m_debug</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1afd217465fc2027e4a2c3090b5c5a3415" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>m_debuggerLaunch</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1ab64adfa859047c893111edd8a16b502a" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>m_getSoarKernelStatus</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a783fd565406895a60ab6d4a10bbcf43d" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>m_kernelRun</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a9c9b0da582dd94d686a1ec6f3562ff88" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>m_kernelStop</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a49522967ca2b2572c083c4389d41e60f" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>ol</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1ab9a15124c1c0ace6caf10de5e644c27a" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>outputs</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1abfa5ec38972a80bc684cb1104d895c5a" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>pAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a5f41101b39fcba75443ab764d2b8312f" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>pKernel</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1ae3fdd8b54d4831704ba7080c8e1794c3" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>processInput</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a4951cfe752d15753b7844271002811fb" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>processOutputLinkChanges</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1adde11fa7c0683e1d29c747f5ffe09866" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>run</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1ad615385cb571b0859fa341a347ba1a79" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>runSoarKernel</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a23cc2d5591744ebda6ac76298c635e80" prot="private" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>runThread</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a7f582f9e83635a872f0b08f6c8046088" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>SoarRunner</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a5d3e6cdb7b55a1f8fba1f22328bd45d4" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>startThread</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a65d354c261d99756222af4a790981e58" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>stopSoarKernel</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a3344394558c39786279952ad381268bb" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>stopThread</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>updateWorld</name></member>
+      <member refid="classsoar__ros_1_1SoarRunner_1a99a8e825b46bdf372ca99c1632c9d8ce" prot="public" virt="non-virtual"><scope>soar_ros::SoarRunner</scope><name>~SoarRunner</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

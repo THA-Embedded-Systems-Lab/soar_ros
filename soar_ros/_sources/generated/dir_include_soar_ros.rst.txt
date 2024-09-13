@@ -1,0 +1,28 @@
+.. _dir_include_soar_ros:
+
+
+Directory soar_ros
+==================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_include>` (``include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+
+*Directory path:* ``include/soar_ros``
+
+
+Files
+-----
+
+- :ref:`file_include_soar_ros_Client.hpp`
+- :ref:`file_include_soar_ros_Interface.hpp`
+- :ref:`file_include_soar_ros_Publisher.hpp`
+- :ref:`file_include_soar_ros_SafeQueue.hpp`
+- :ref:`file_include_soar_ros_Service.hpp`
+- :ref:`file_include_soar_ros_soar_ros.hpp`
+- :ref:`file_include_soar_ros_SoarRunner.hpp`
+- :ref:`file_include_soar_ros_Subscriber.hpp`
+
+

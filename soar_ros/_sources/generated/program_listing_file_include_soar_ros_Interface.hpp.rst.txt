@@ -1,0 +1,99 @@
+
+.. _program_listing_file_include_soar_ros_Interface.hpp:
+
+Program Listing for File Interface.hpp
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_soar_ros_Interface.hpp>` (``include/soar_ros/Interface.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright 2024 Moritz Schmidt
+   //
+   // Licensed under the Apache License, Version 2.0 (the "License");
+   // you may not use this file except in compliance with the License.
+   // You may obtain a copy of the License at
+   //
+   //     http://www.apache.org/licenses/LICENSE-2.0
+   //
+   // Unless required by applicable law or agreed to in writing, software
+   // distributed under the License is distributed on an "AS IS" BASIS,
+   // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   // See the License for the specific language governing permissions and
+   // limitations under the License.
+   
+   #ifndef SOAR_ROS__INTERFACE_HPP_
+   #define SOAR_ROS__INTERFACE_HPP_
+   
+   
+   #include <string>
+   
+   #include "SafeQueue.hpp"
+   
+   #include "sml_Client.h"
+   
+   namespace soar_ros
+   {
+   class Interface
+   {
+   public:
+     virtual std::string getTopic() = 0;
+   
+     virtual sml::Agent * getAgent() = 0;
+   };
+   
+   class OutputBase
+   {
+   public:
+     virtual void process_s2r(sml::Identifier * id) = 0;
+   };
+   
+   class InputBase
+   {
+   public:
+     virtual void process_r2s() = 0;
+   };
+   
+   template<typename T>
+   class Output : public OutputBase
+   {
+   protected:
+     SafeQueue<T> m_s2rQueue;
+   
+   public:
+     Output() {}
+     ~Output() {}
+   
+     void process_s2r(sml::Identifier * id) override
+     {
+       m_s2rQueue.push(parse(id));
+     }
+   
+     virtual T parse(sml::Identifier * id) = 0;
+   };
+   
+   template<typename T>
+   class Input : public InputBase
+   {
+   protected:
+     SafeQueue<T> m_r2sQueue;
+   
+   public:
+     Input() {}
+     ~Input() {}
+   
+     virtual void parse(T msg) = 0;
+   
+     void process_r2s() override
+     {
+       auto res = this->m_r2sQueue.tryPop();
+       if (res.has_value()) {
+         this->parse(res.value());
+       }
+     }
+   };
+   
+   }  // namespace soar_ros
+   #endif  // SOAR_ROS__INTERFACE_HPP_

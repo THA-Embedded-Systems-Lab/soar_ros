@@ -1,0 +1,27 @@
+.. _exhale_class_classsoar__ros_1_1Subscriber:
+
+Template Class Subscriber
+=========================
+
+- Defined in :ref:`file_include_soar_ros_Subscriber.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public soar_ros::Input< T >`` (:ref:`exhale_class_classsoar__ros_1_1Input`)
+- ``public soar_ros::Interface`` (:ref:`exhale_class_classsoar__ros_1_1Interface`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::Subscriber
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

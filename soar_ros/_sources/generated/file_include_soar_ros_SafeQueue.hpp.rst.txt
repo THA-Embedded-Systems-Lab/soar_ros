@@ -1,0 +1,89 @@
+
+.. _file_include_soar_ros_SafeQueue.hpp:
+
+File SafeQueue.hpp
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir_include_soar_ros>` (``include/soar_ros``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+
+
+Implementation of a thread safe queue. 
+
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/soar_ros/SafeQueue.hpp``)
+-----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_soar_ros_SafeQueue.hpp.rst
+
+
+
+Detailed Description
+--------------------
+
+2023-12-08
+
+https://www.geeksforgeeks.org/implement-thread-safe-queue-in-c/ 
+
+
+
+
+Includes
+--------
+
+
+- ``condition_variable``
+
+- ``iostream``
+
+- ``mutex``
+
+- ``optional``
+
+- ``queue``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_soar_ros_Client.hpp`
+
+- :ref:`file_include_soar_ros_Interface.hpp`
+
+- :ref:`file_include_soar_ros_Publisher.hpp`
+
+- :ref:`file_include_soar_ros_Service.hpp`
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
+
+- :ref:`file_include_soar_ros_Subscriber.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_soar_ros`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classsoar__ros_1_1SafeQueue`
+

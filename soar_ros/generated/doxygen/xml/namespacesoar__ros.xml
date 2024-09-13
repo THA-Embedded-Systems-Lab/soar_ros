@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+  <compounddef id="namespacesoar__ros" kind="namespace" language="C++">
+    <compoundname>soar_ros</compoundname>
+    <innerclass refid="classsoar__ros_1_1Client" prot="public">soar_ros::Client</innerclass>
+    <innerclass refid="classsoar__ros_1_1Interface" prot="public">soar_ros::Interface</innerclass>
+    <innerclass refid="classsoar__ros_1_1OutputBase" prot="public">soar_ros::OutputBase</innerclass>
+    <innerclass refid="classsoar__ros_1_1InputBase" prot="public">soar_ros::InputBase</innerclass>
+    <innerclass refid="classsoar__ros_1_1Output" prot="public">soar_ros::Output</innerclass>
+    <innerclass refid="classsoar__ros_1_1Input" prot="public">soar_ros::Input</innerclass>
+    <innerclass refid="classsoar__ros_1_1Publisher" prot="public">soar_ros::Publisher</innerclass>
+    <innerclass refid="classsoar__ros_1_1SafeQueue" prot="public">soar_ros::SafeQueue</innerclass>
+    <innerclass refid="classsoar__ros_1_1Service" prot="public">soar_ros::Service</innerclass>
+    <innerclass refid="classsoar__ros_1_1SoarRunner" prot="public">soar_ros::SoarRunner</innerclass>
+    <innerclass refid="classsoar__ros_1_1Subscriber" prot="public">soar_ros::Subscriber</innerclass>
+      <sectiondef kind="func">
+      <memberdef kind="function" id="SoarRunner_8hpp_1aa1f9a113dc080975a096aaacdab6a917" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarPrintEventHandler</definition>
+        <argsstring>([[maybe_unused]] sml::smlPrintEventId id, void *pSoarRunner_, sml::Agent *pAgent, char const *pMessagee)</argsstring>
+        <name>SoarPrintEventHandler</name>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] sml::smlPrintEventId</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>pSoarRunner_</declname>
+        </param>
+        <param>
+          <type>sml::Agent *</type>
+          <declname>pAgent</declname>
+        </param>
+        <param>
+          <type>char const *</type>
+          <declname>pMessagee</declname>
+        </param>
+        <briefdescription>
+<para>Handle the soar print event via ROS logger. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>sml event id </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pSoarRunner_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>reference to <ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref> class to access the logger. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pAgent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Calling agent </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pMessage</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Message content </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="46" column="6" declfile="include/soar_ros/SoarRunner.hpp" declline="46" declcolumn="6"/>
+      </memberdef>
+      <memberdef kind="function" id="SoarRunner_8hpp_1a97a02a4475100d6da512b324b63b74f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::updateEventHandler</definition>
+        <argsstring>([[maybe_unused]] sml::smlUpdateEventId id, void *pSoarRunner_, [[maybe_unused]] sml::Kernel *kernel_ptr, [[maybe_unused]] sml::smlRunFlags run_flags)</argsstring>
+        <name>updateEventHandler</name>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] sml::smlUpdateEventId</type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type>void *</type>
+          <declname>pSoarRunner_</declname>
+        </param>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] sml::Kernel *</type>
+          <declname>kernel_ptr</declname>
+        </param>
+        <param>
+          <attributes>[[maybe_unused]</attributes>
+          <type>] sml::smlRunFlags</type>
+          <declname>run_flags</declname>
+        </param>
+        <briefdescription>
+<para>Called on every loop of the Soar kernel to process input and output link changes. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Calls the <ref refid="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" kindref="member">SoarRunner::updateWorld()</ref> function, which in turn processes all outputs via SoarRunner::processOutputLinkChanges() and attaches new elements to the Soar input-link via SoarRunner::processInput().</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Unused. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>pSoarRunner_</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Soar only provides C wrappers for their API and the <ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref> structure must be referenced via static pointer casting. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>kernel_ptr</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Unused. </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>run_flags</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Unused. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarRunner.hpp" line="62" column="6" declfile="include/soar_ros/SoarRunner.hpp" declline="62" declcolumn="6"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/soar_ros/Client.hpp" line="18" column="1"/>
+  </compounddef>
+</doxygen>

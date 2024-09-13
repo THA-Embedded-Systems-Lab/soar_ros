@@ -1,0 +1,14 @@
+.. _exhale_function_SoarRunner_8hpp_1aa1f9a113dc080975a096aaacdab6a917:
+
+Function soar_ros::SoarPrintEventHandler
+========================================
+
+- Defined in :ref:`file_include_soar_ros_SoarRunner.hpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: soar_ros::SoarPrintEventHandler(] sml::smlPrintEventId, void *, sml::Agent *, char const *)
+   :project: soar_ros Doxygen Project

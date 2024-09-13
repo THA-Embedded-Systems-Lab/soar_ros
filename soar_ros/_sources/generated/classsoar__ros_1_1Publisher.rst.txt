@@ -1,0 +1,27 @@
+.. _exhale_class_classsoar__ros_1_1Publisher:
+
+Template Class Publisher
+========================
+
+- Defined in :ref:`file_include_soar_ros_Publisher.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public soar_ros::Output< T >`` (:ref:`exhale_class_classsoar__ros_1_1Output`)
+- ``public soar_ros::Interface`` (:ref:`exhale_class_classsoar__ros_1_1Interface`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::Publisher
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,29 @@
+.. GENERATED_CONTENT by rosdoc2.verbs.build.builders.sphinx_builder.
+
+soar_ros
+========
+
+An interface library to connect ROS2 with the Soar cognitive architecture.
+
+.. toctree::
+   :maxdepth: 2
+
+
+   C++ API <generated/index>
+
+
+
+   Standard Documents <standards>
+
+.. toctree::
+   :titlesonly:
+   :maxdepth: 2
+
+   Documentation <user_docs>
+
+.. include:: __readme_include.rst
+
+.. toctree::
+   :hidden:
+
+   genindex

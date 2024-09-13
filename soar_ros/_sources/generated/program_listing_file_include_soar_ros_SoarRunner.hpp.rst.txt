@@ -1,0 +1,232 @@
+
+.. _program_listing_file_include_soar_ros_SoarRunner.hpp:
+
+Program Listing for File SoarRunner.hpp
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_soar_ros_SoarRunner.hpp>` (``include/soar_ros/SoarRunner.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // Copyright 2024 Moritz Schmidt
+   //
+   // Licensed under the Apache License, Version 2.0 (the "License");
+   // you may not use this file except in compliance with the License.
+   // You may obtain a copy of the License at
+   //
+   //     http://www.apache.org/licenses/LICENSE-2.0
+   //
+   // Unless required by applicable law or agreed to in writing, software
+   // distributed under the License is distributed on an "AS IS" BASIS,
+   // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   // See the License for the specific language governing permissions and
+   // limitations under the License.
+   
+   #ifndef SOAR_ROS__SOARRUNNER_HPP_
+   #define SOAR_ROS__SOARRUNNER_HPP_
+   
+   #include <cstdlib>
+   #include <iostream>
+   #include <map>
+   #include <memory>
+   #include <queue>
+   #include <sml_Client.h>
+   #include <stdexcept>
+   #include <string>
+   #include <thread>
+   #include <vector>
+   
+   #include <rclcpp/rclcpp.hpp>
+   #include <std_msgs/msg/string.hpp>
+   #include <std_srvs/srv/trigger.hpp>
+   
+   #include "Client.hpp"
+   #include "Interface.hpp"
+   #include "Publisher.hpp"
+   #include "Service.hpp"
+   #include "Subscriber.hpp"
+   
+   namespace soar_ros
+   {
+   void SoarPrintEventHandler([[maybe_unused]] sml::smlPrintEventId id,
+     void * pSoarRunner_, sml::Agent * pAgent,
+     char const * pMessagee);
+   
+   void updateEventHandler([[maybe_unused]] sml::smlUpdateEventId id,
+     void * pSoarRunner_,
+     [[maybe_unused]] sml::Kernel * kernel_ptr,
+     [[maybe_unused]] sml::smlRunFlags run_flags);
+   
+   class SoarRunner : public rclcpp::Node
+   {
+   private:
+     sml::Agent * pAgent;
+   
+     sml::Kernel * pKernel;
+   
+     std::thread runThread;
+   
+     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_getSoarKernelStatus;
+   
+     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_kernelRun;
+   
+     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_kernelStop;
+   
+     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_debuggerLaunch;
+   
+     std::map<std::string, std::shared_ptr<soar_ros::OutputBase>> outputs;
+   
+     std::vector<std::shared_ptr<soar_ros::InputBase>> inputs;
+   
+     bool m_debug;
+   
+     sml::Identifier * ol;
+   
+     void processOutputLinkChanges();
+   
+     void processInput();
+   
+     void run();
+   
+     std::string getSoarLogFilePath();
+   
+     std::atomic<bool> isRunning;
+   
+   public:
+     SoarRunner(const std::string & agent_name, const std::string & path_productions);
+   
+     void debuggerLaunch(
+       [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+       [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+       std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+   
+     void getSoarKernelStatus(
+       [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+       [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+       std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+   
+     void runSoarKernel(
+       [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+       [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+       std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+   
+     void stopSoarKernel(
+       [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+       [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+       std::shared_ptr<std_srvs::srv::Trigger::Response> response);
+   
+     sml::Agent * addAgent(
+       const std::string & agent_name,
+       const std::string & path_productions);
+   
+     ~SoarRunner();
+   
+     sml::Agent * getAgent() {return pAgent;}
+   
+     template<typename T>
+     bool addPublisher(std::shared_ptr<soar_ros::Publisher<T>> output)
+     {
+       outputs[output.get()->getTopic()] = output;
+       return true;
+     }
+   
+     template<typename T>
+     bool addPublisher(
+       std::shared_ptr<soar_ros::Publisher<T>> output,
+       const std::string & commandName)
+     {
+       outputs[commandName] = output;
+       return true;
+     }
+   
+     template<typename T>
+     bool addSubscriber(std::shared_ptr<soar_ros::Subscriber<T>> input)
+     {
+       inputs.push_back(input);
+       return true;
+     }
+   
+     template<typename T>
+     bool addService(std::shared_ptr<soar_ros::Service<T>> service)
+     {
+       return addService(service, service.get()->getTopic());
+     }
+   
+     template<typename T>
+     bool addService(
+       std::shared_ptr<soar_ros::Service<T>> service,
+       const std::string & commandName)
+     {
+       outputs[commandName] =
+         std::static_pointer_cast<soar_ros::OutputBase>(service);
+       inputs.push_back(std::static_pointer_cast<soar_ros::InputBase>(service));
+       return true;
+     }
+   
+     template<typename T>
+     bool addClient(std::shared_ptr<soar_ros::Client<T>> client)
+     {
+       return addClient(client, client.get()->getTopic());
+     }
+   
+     template<typename T>
+     bool addClient(
+       std::shared_ptr<soar_ros::Client<T>> client,
+       const std::string & commandName)
+     {
+       outputs[commandName] =
+         std::static_pointer_cast<soar_ros::OutputBase>(client);
+       inputs.push_back(std::static_pointer_cast<soar_ros::InputBase>(client));
+       return true;
+     }
+   
+     void startThread()
+     {
+       // If thread is already running, skip
+       if (isRunning.load() == true) {
+         RCLCPP_WARN(this->get_logger(), "runThread already running");
+         return;
+       } else {
+         isRunning.store(true);
+       }
+   
+       RCLCPP_INFO(this->get_logger(), "Starting runThread");
+       runThread = std::thread(&SoarRunner::run, this);
+     }
+   
+     void stopThread()
+     {
+       if (isRunning.load() == false) {
+         RCLCPP_INFO(this->get_logger(), "Run thread already stopped!");
+         return;
+       }
+   
+       isRunning.store(false);
+       RCLCPP_WARN(this->get_logger(), "Stopping runThread");
+   
+       if (runThread.joinable()) {
+         RCLCPP_INFO(this->get_logger(), "Waiting for run thread to join");
+         runThread.join();
+       }
+     }
+   
+     void updateWorld()
+     {
+       // Read Soar output
+       processOutputLinkChanges();
+   
+       if (ol == NULL) {
+         ol = pAgent->GetOutputLink();
+         RCLCPP_DEBUG(this->get_logger(), "Output link reference invalid!");
+       }
+   
+       // Write to Soar input-link
+       processInput();
+     }
+   }; // class SoarRunner
+   
+   }  // namespace soar_ros
+   
+   #endif  // SOAR_ROS__SOARRUNNER_HPP_

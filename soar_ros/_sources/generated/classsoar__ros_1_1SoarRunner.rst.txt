@@ -1,0 +1,26 @@
+.. _exhale_class_classsoar__ros_1_1SoarRunner:
+
+Class SoarRunner
+================
+
+- Defined in :ref:`file_include_soar_ros_SoarRunner.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public rclcpp::Node``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::SoarRunner
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

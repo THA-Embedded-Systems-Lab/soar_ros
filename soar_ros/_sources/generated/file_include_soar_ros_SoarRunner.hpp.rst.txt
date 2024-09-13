@@ -1,0 +1,101 @@
+
+.. _file_include_soar_ros_SoarRunner.hpp:
+
+File SoarRunner.hpp
+===================
+
+|exhale_lsh| :ref:`Parent directory <dir_include_soar_ros>` (``include/soar_ros``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/soar_ros/SoarRunner.hpp``)
+------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_soar_ros_SoarRunner.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``Client.hpp`` (:ref:`file_include_soar_ros_Client.hpp`)
+
+- ``Interface.hpp`` (:ref:`file_include_soar_ros_Interface.hpp`)
+
+- ``Publisher.hpp`` (:ref:`file_include_soar_ros_Publisher.hpp`)
+
+- ``Service.hpp`` (:ref:`file_include_soar_ros_Service.hpp`)
+
+- ``Subscriber.hpp`` (:ref:`file_include_soar_ros_Subscriber.hpp`)
+
+- ``cstdlib``
+
+- ``iostream``
+
+- ``map``
+
+- ``memory``
+
+- ``queue``
+
+- ``rclcpp/rclcpp.hpp``
+
+- ``sml_Client.h``
+
+- ``std_msgs/msg/string.hpp``
+
+- ``std_srvs/srv/trigger.hpp``
+
+- ``stdexcept``
+
+- ``string``
+
+- ``thread``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_soar_ros`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classsoar__ros_1_1SoarRunner`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_SoarRunner_8hpp_1aa1f9a113dc080975a096aaacdab6a917`
+
+- :ref:`exhale_function_SoarRunner_8hpp_1a97a02a4475100d6da512b324b63b74f8`
+

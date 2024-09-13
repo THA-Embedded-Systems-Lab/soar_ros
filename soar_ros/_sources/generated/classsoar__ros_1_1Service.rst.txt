@@ -1,0 +1,28 @@
+.. _exhale_class_classsoar__ros_1_1Service:
+
+Template Class Service
+======================
+
+- Defined in :ref:`file_include_soar_ros_Service.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public soar_ros::Input< typename T::Request::SharedPtr >`` (:ref:`exhale_class_classsoar__ros_1_1Input`)
+- ``public soar_ros::Output< typename T::Response::SharedPtr >`` (:ref:`exhale_class_classsoar__ros_1_1Output`)
+- ``public soar_ros::Interface`` (:ref:`exhale_class_classsoar__ros_1_1Interface`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::Service
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.9.1" xml:lang="en-US">
+  <compound refid="classsoar__ros_1_1Client" kind="class"><name>soar_ros::Client</name>
+    <member refid="classsoar__ros_1_1Client_1afc08a31974c4eb8c91d074ac107f7d1c" kind="variable"><name>m_client</name></member>
+    <member refid="classsoar__ros_1_1Client_1ac3f6dc93fa7c2fde86e93f74a4da4e72" kind="variable"><name>m_topic</name></member>
+    <member refid="classsoar__ros_1_1Client_1af74a8f982172ba05468f6cb4e884bdfd" kind="variable"><name>m_node</name></member>
+    <member refid="classsoar__ros_1_1Client_1afd1ff72e016682760921d509ebccfd08" kind="variable"><name>m_pAgent</name></member>
+    <member refid="classsoar__ros_1_1Client_1ac57a5834d6da610d75ee534700d20c07" kind="variable"><name>m_send_client_requests</name></member>
+    <member refid="classsoar__ros_1_1Client_1a0207636766cdeb2253ac46e11ca5bb34" kind="variable"><name>isRunning</name></member>
+    <member refid="classsoar__ros_1_1Client_1ac84a77a574d1156c6ad4741c43f4279c" kind="function"><name>run</name></member>
+    <member refid="classsoar__ros_1_1Client_1a2a7faf370fbeace3458f50c92e9e8cf1" kind="function"><name>Client</name></member>
+    <member refid="classsoar__ros_1_1Client_1a38d3a1728487eb0880ca7a55e1ad7f12" kind="function"><name>~Client</name></member>
+    <member refid="classsoar__ros_1_1Client_1aeb178a99122d6f1932eb001ceef5e936" kind="function"><name>parse</name></member>
+    <member refid="classsoar__ros_1_1Client_1abec0605464dc2a8877deacb086319df3" kind="function"><name>parse</name></member>
+    <member refid="classsoar__ros_1_1Client_1ad4d5c27e5d426c0e88211c27aca30134" kind="function"><name>getTopic</name></member>
+    <member refid="classsoar__ros_1_1Client_1ae4fe6f9d6c592e42c168d3f1f2c52d27" kind="function"><name>getAgent</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1Input" kind="class"><name>soar_ros::Input</name>
+    <member refid="classsoar__ros_1_1Input_1abf3de829e83b44139a4b2baae2e5a16a" kind="variable"><name>m_r2sQueue</name></member>
+    <member refid="classsoar__ros_1_1Input_1a3220b2318518edab5a5be521a962c25b" kind="function"><name>Input</name></member>
+    <member refid="classsoar__ros_1_1Input_1a603986902be248718541df48e1dbfe9d" kind="function"><name>~Input</name></member>
+    <member refid="classsoar__ros_1_1Input_1a09a0e5766d8c852f3da30c6bb7723ecf" kind="function"><name>parse</name></member>
+    <member refid="classsoar__ros_1_1Input_1a24f54e499689f3751bc5ba2c37096a93" kind="function"><name>process_r2s</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1InputBase" kind="class"><name>soar_ros::InputBase</name>
+    <member refid="classsoar__ros_1_1InputBase_1a54be74c01b756a1ebc1f927b5efb0f48" kind="function"><name>process_r2s</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1Interface" kind="class"><name>soar_ros::Interface</name>
+    <member refid="classsoar__ros_1_1Interface_1a294fefd3992c72bf1c227928716e938b" kind="function"><name>getTopic</name></member>
+    <member refid="classsoar__ros_1_1Interface_1a6f20fe370632f8df09b4cbc79d7cc2a7" kind="function"><name>getAgent</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1Output" kind="class"><name>soar_ros::Output</name>
+    <member refid="classsoar__ros_1_1Output_1a4bfed14fee4ff1088d961087e5025344" kind="variable"><name>m_s2rQueue</name></member>
+    <member refid="classsoar__ros_1_1Output_1aac8f8818e59a7c6391d684e2d32d2784" kind="function"><name>Output</name></member>
+    <member refid="classsoar__ros_1_1Output_1a9660a99c83ff6be1923165a88b426c73" kind="function"><name>~Output</name></member>
+    <member refid="classsoar__ros_1_1Output_1ac38d1e23a7093e233209f8ff8f8c9046" kind="function"><name>process_s2r</name></member>
+    <member refid="classsoar__ros_1_1Output_1af01db0104f6bd68b61ac9baff164926f" kind="function"><name>parse</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1OutputBase" kind="class"><name>soar_ros::OutputBase</name>
+    <member refid="classsoar__ros_1_1OutputBase_1a30c11674e784b63ef1cea8f3868e9e3d" kind="function"><name>process_s2r</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1Publisher" kind="class"><name>soar_ros::Publisher</name>
+    <member refid="classsoar__ros_1_1Publisher_1abd6d7bf5a1df5bf709f218aafd916bdf" kind="variable"><name>isRunning</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1aad72d2746cd35d2d8c9283d1e3bb067b" kind="variable"><name>publisher</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1acde2d1a11d05a0644c7f1f38d1b32594" kind="variable"><name>m_topic</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1af59f5fc4a561158ff3784d5b6b700b37" kind="variable"><name>m_node</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a694d4641e3f12b6b567f9850e00ecc26" kind="variable"><name>m_pAgent</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a5ebfa7b23572b1e6d421a6a6a3e988a0" kind="variable"><name>pub</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a1671d61bcabd64fa76232c2c54289764" kind="function"><name>Publisher</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a2855d10a3c54ec0c30ac846f7a585be5" kind="function"><name>~Publisher</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a70c008bc9c9376d957221b3abf934f74" kind="function"><name>run</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a5d0151138cdd51eca9c5238f2751e66f" kind="function"><name>parse</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1adbcb963a82d60f1821fe78289e70481b" kind="function"><name>getTopic</name></member>
+    <member refid="classsoar__ros_1_1Publisher_1a32b5a0549e5eadce8483db3f359e4d37" kind="function"><name>getAgent</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1SafeQueue" kind="class"><name>soar_ros::SafeQueue</name>
+    <member refid="classsoar__ros_1_1SafeQueue_1a4848ed716d5114c802276205e4522df8" kind="variable"><name>m_queue</name></member>
+    <member refid="classsoar__ros_1_1SafeQueue_1a947a73a1f5f3176325db4c9f9bd04a0a" kind="variable"><name>m_mutex</name></member>
+    <member refid="classsoar__ros_1_1SafeQueue_1a5557de784402e3056e198d518dd139bb" kind="variable"><name>m_cond</name></member>
+    <member refid="classsoar__ros_1_1SafeQueue_1a6aed3d5e415a9858e8aae80315e2c77c" kind="function"><name>push</name></member>
+    <member refid="classsoar__ros_1_1SafeQueue_1ac0165f47263727d6fc39bdd197e04c71" kind="function"><name>pop</name></member>
+    <member refid="classsoar__ros_1_1SafeQueue_1a984c086eadabaecc812d02c3f7320a30" kind="function"><name>tryPop</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1Service" kind="class"><name>soar_ros::Service</name>
+    <member refid="classsoar__ros_1_1Service_1acd096e5b38356cf1782569b5508e232c" kind="variable"><name>m_service</name></member>
+    <member refid="classsoar__ros_1_1Service_1af87f81bd6b4fa82de6ad13aac77c96c0" kind="variable"><name>m_topic</name></member>
+    <member refid="classsoar__ros_1_1Service_1a75246c60e11f4aa857ab05b0066ed439" kind="variable"><name>m_node</name></member>
+    <member refid="classsoar__ros_1_1Service_1af508e808ef3a7800e6ae7fd53625e7b9" kind="variable"><name>m_pAgent</name></member>
+    <member refid="classsoar__ros_1_1Service_1af0f7c04f10ca093be26f7eadff905e6d" kind="function"><name>callback</name></member>
+    <member refid="classsoar__ros_1_1Service_1a921979260ab6075196ee193bd547b64a" kind="function"><name>Service</name></member>
+    <member refid="classsoar__ros_1_1Service_1a3e3ce8c6d4a9896db73d1254e871aab6" kind="function"><name>~Service</name></member>
+    <member refid="classsoar__ros_1_1Service_1a17406e0ac08b50fc03328c77f548e10c" kind="function"><name>parse</name></member>
+    <member refid="classsoar__ros_1_1Service_1ac961b67915ab6ba21ce618dc41809e54" kind="function"><name>parse</name></member>
+    <member refid="classsoar__ros_1_1Service_1a2f7c2edd8230359d73d63c720b6d8c1f" kind="function"><name>getTopic</name></member>
+    <member refid="classsoar__ros_1_1Service_1aedb3ff0a398aa821369e3a6521a70fab" kind="function"><name>getAgent</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1SoarRunner" kind="class"><name>soar_ros::SoarRunner</name>
+    <member refid="classsoar__ros_1_1SoarRunner_1abfa5ec38972a80bc684cb1104d895c5a" kind="variable"><name>pAgent</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a5f41101b39fcba75443ab764d2b8312f" kind="variable"><name>pKernel</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a23cc2d5591744ebda6ac76298c635e80" kind="variable"><name>runThread</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1ab64adfa859047c893111edd8a16b502a" kind="variable"><name>m_getSoarKernelStatus</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a783fd565406895a60ab6d4a10bbcf43d" kind="variable"><name>m_kernelRun</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a9c9b0da582dd94d686a1ec6f3562ff88" kind="variable"><name>m_kernelStop</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1afd217465fc2027e4a2c3090b5c5a3415" kind="variable"><name>m_debuggerLaunch</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1ab9a15124c1c0ace6caf10de5e644c27a" kind="variable"><name>outputs</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1aec55c815da62f421ff3e6329b9169307" kind="variable"><name>inputs</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1ada9b6049eed2cbcf747e023a1e04f74e" kind="variable"><name>m_debug</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a49522967ca2b2572c083c4389d41e60f" kind="variable"><name>ol</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a653a4829aa2b0300c5559819fe9f13a5" kind="variable"><name>isRunning</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a4951cfe752d15753b7844271002811fb" kind="function"><name>processOutputLinkChanges</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1ae3fdd8b54d4831704ba7080c8e1794c3" kind="function"><name>processInput</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1adde11fa7c0683e1d29c747f5ffe09866" kind="function"><name>run</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a91682e778196bc255c7285d932ea1a4b" kind="function"><name>getSoarLogFilePath</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a7f582f9e83635a872f0b08f6c8046088" kind="function"><name>SoarRunner</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a8e758f86ce719f1035852e85bfff9a2d" kind="function"><name>debuggerLaunch</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1af60fee9c9b50e0696f7fabd444b441b5" kind="function"><name>getSoarKernelStatus</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1ad615385cb571b0859fa341a347ba1a79" kind="function"><name>runSoarKernel</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a65d354c261d99756222af4a790981e58" kind="function"><name>stopSoarKernel</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a130cdf890594f230d7e987394c93e002" kind="function"><name>addAgent</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a99a8e825b46bdf372ca99c1632c9d8ce" kind="function"><name>~SoarRunner</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a8b40745a1b3182393d437e00f3f5e5ce" kind="function"><name>getAgent</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1ad773ed65ead9c40e883ffadbd314a346" kind="function"><name>addPublisher</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a010eff1a3de5ae0eed9078225773e669" kind="function"><name>addPublisher</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a712aa1f9580e6e8eec9dfdbfb9b40e3e" kind="function"><name>addSubscriber</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1acb4c15839939a62cb4554e5bb8118e77" kind="function"><name>addService</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1acf0876f03bae81626d9e3649162cc13c" kind="function"><name>addService</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a6b92de426f03f7ed27729d6ff5a7a726" kind="function"><name>addClient</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1aba2ffb76aca69fc5441c6a90e3a7a910" kind="function"><name>addClient</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a5d3e6cdb7b55a1f8fba1f22328bd45d4" kind="function"><name>startThread</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a3344394558c39786279952ad381268bb" kind="function"><name>stopThread</name></member>
+    <member refid="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" kind="function"><name>updateWorld</name></member>
+  </compound>
+  <compound refid="classsoar__ros_1_1Subscriber" kind="class"><name>soar_ros::Subscriber</name>
+    <member refid="classsoar__ros_1_1Subscriber_1afccb4556b8cfa979b2aaae4992a46f92" kind="variable"><name>sub</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1aa7590acd931f3afc004c884e650507be" kind="variable"><name>m_topic</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1a96a43bbb59ce74924de5b0e47d6168cc" kind="variable"><name>m_node</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1a66a3424d2018ead24e96196452a72089" kind="variable"><name>m_pAgent</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1a914bfa372802bd354468991f20beaa53" kind="function"><name>Subscriber</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1abc9de615bbc28c2ada15230123056418" kind="function"><name>~Subscriber</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1a42550bd2e42ac94e1ac28bd52fdfc90e" kind="function"><name>callback</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1a5cbbcc7f77e12aec0811a4f128a7b871" kind="function"><name>getTopic</name></member>
+    <member refid="classsoar__ros_1_1Subscriber_1aa5b8d2ffaa6264e9eb3f5a11e1c76334" kind="function"><name>getAgent</name></member>
+  </compound>
+  <compound refid="namespacerclcpp" kind="namespace"><name>rclcpp</name>
+  </compound>
+  <compound refid="namespacesoar__ros" kind="namespace"><name>soar_ros</name>
+    <member refid="SoarRunner_8hpp_1aa1f9a113dc080975a096aaacdab6a917" kind="function"><name>SoarPrintEventHandler</name></member>
+    <member refid="SoarRunner_8hpp_1a97a02a4475100d6da512b324b63b74f8" kind="function"><name>updateEventHandler</name></member>
+  </compound>
+  <compound refid="Client_8hpp" kind="file"><name>Client.hpp</name>
+  </compound>
+  <compound refid="Interface_8hpp" kind="file"><name>Interface.hpp</name>
+  </compound>
+  <compound refid="Publisher_8hpp" kind="file"><name>Publisher.hpp</name>
+  </compound>
+  <compound refid="SafeQueue_8hpp" kind="file"><name>SafeQueue.hpp</name>
+  </compound>
+  <compound refid="Service_8hpp" kind="file"><name>Service.hpp</name>
+  </compound>
+  <compound refid="soar__ros_8hpp" kind="file"><name>soar_ros.hpp</name>
+  </compound>
+  <compound refid="SoarRunner_8hpp" kind="file"><name>SoarRunner.hpp</name>
+  </compound>
+  <compound refid="Subscriber_8hpp" kind="file"><name>Subscriber.hpp</name>
+  </compound>
+  <compound refid="dir_d44c64559bbebec7f509842c48db8b23" kind="dir"><name>include</name>
+  </compound>
+  <compound refid="dir_985b5c52563a1b96a10a170add29da1c" kind="dir"><name>include/soar_ros</name>
+  </compound>
+</doxygenindex>
