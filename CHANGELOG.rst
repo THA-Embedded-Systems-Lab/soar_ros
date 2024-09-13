@@ -2,7 +2,7 @@
 Changelog for package soar_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2024-09-13)
+------------------
 * Initial commit
 * Contributors: Moritz Schmidt
