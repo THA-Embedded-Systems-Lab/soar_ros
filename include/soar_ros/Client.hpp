@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef SOAR_ROSOS__CLIENT_HPP_
-#define SOAR_ROSOS__CLIENT_HPP_
+#ifndef SOAR_ROS__CLIENT_HPP_
+#define SOAR_ROS__CLIENT_HPP_
 
 namespace soar_ros
 {
 
-#include <string>
 #include <rclcpp/rclcpp.hpp>
+#include <string>
 
 #include "Interface.hpp"
 #include "SafeQueue.hpp"
-
 #include "sml_Client.h"
 
 template<typename T, typename pRequestType = typename T::Request::SharedPtr,
   typename pResponseType = typename T::Response::SharedPtr>
-class Client : public virtual Output<pRequestType>, public virtual Input<pResponseType>,
+class Client : public virtual Output<pRequestType>,
+  public virtual Input<pResponseType>,
   public Interface
 {
 protected:
@@ -39,9 +39,9 @@ protected:
   std::thread m_send_client_requests;
   std::atomic<bool> isRunning;
 
-
   /**
-   * @brief Periodically check the m_s2rQueue and m_r2sQueue for input and output.
+   * @brief Periodically check the m_s2rQueue and m_r2sQueue for input and
+   * output.
    *
    */
   void run()
@@ -52,7 +52,8 @@ protected:
       while (!m_client->wait_for_service(std::chrono::seconds(1))) {
         if (!rclcpp::ok()) {
           RCLCPP_ERROR(
-            this->m_node->get_logger(), "Interrupted while waiting for the service. Exiting.");
+            this->m_node->get_logger(),
+            "Interrupted while waiting for the service. Exiting.");
           isRunning.store(false);
           break;
         }
@@ -60,13 +61,15 @@ protected:
         auto current_time = std::chrono::steady_clock::now();
         if (current_time - start_time >= timeout_duration) {
           RCLCPP_ERROR(
-            this->m_node->get_logger(), "Timeout while waiting for service %s", m_topic.c_str());
+            this->m_node->get_logger(),
+            "Timeout while waiting for service %s", m_topic.c_str());
           // rclcpp::shutdown();
           // break;
         }
 
         RCLCPP_WARN(
-          this->m_node->get_logger(), "%s service not available, waiting again...",
+          this->m_node->get_logger(),
+          "%s service not available, waiting again...",
           m_topic.c_str());
       }
 
@@ -80,7 +83,9 @@ protected:
   }
 
 public:
-  Client(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & client_name)
+  Client(
+    sml::Agent * agent, rclcpp::Node::SharedPtr node,
+    const std::string & client_name)
   : m_topic(client_name), m_node(node), m_pAgent(agent), isRunning(true)
   {
     m_client = m_node.get()->create_client<T>(client_name);
@@ -98,16 +103,10 @@ public:
   virtual void parse(pResponseType msg) = 0;
   pRequestType parse(sml::Identifier * id) override = 0;
 
-  std::string getTopic() override
-  {
-    return m_topic;
-  }
+  std::string getTopic() override {return m_topic;}
 
-  sml::Agent * getAgent() override
-  {
-    return m_pAgent;
-  }
+  sml::Agent * getAgent() override {return m_pAgent;}
 };
 }  // namespace soar_ros
 
-#endif  // SOAR_ROSOS__CLIENT_HPP_
+#endif  // SOAR_ROS__CLIENT_HPP_

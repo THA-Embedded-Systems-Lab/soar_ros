@@ -150,7 +150,9 @@ public:
   /// @param path_productions Filepath to main *.soar file relative to the
   /// package root.
   /// @throw std::runtime_error on sml::Kernel setup error.
-  SoarRunner(const std::string & agent_name, const std::string & path_productions);
+  SoarRunner(
+    const std::string & agent_name,
+    const std::string & path_productions);
 
   /// @brief Enable external control to start the debugger and stop the run
   /// thread via
@@ -385,7 +387,7 @@ public:
     // Write to Soar input-link
     processInput();
   }
-}; // class SoarRunner
+};  // class SoarRunner
 
 }  // namespace soar_ros
 

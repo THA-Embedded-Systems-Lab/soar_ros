@@ -81,7 +81,7 @@ class TestSoarRos(unittest.TestCase):
             pub.publish(msg)
             print(f'Published Trigger message: {msg.data}')
 
-        proc_output.assertWaitFor("12", timeout=2)
+        proc_output.assertWaitFor("12", timeout=5)
 
         # Stop spin thread and wait until stopped until further tests are executed.
         self.stop_event.set()

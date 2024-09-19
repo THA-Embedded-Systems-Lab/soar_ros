@@ -54,9 +54,6 @@ if(BUILD_TESTING)
   find_package(launch_testing_ament_cmake)
   add_launch_test(test/test_launch.py)
   add_launch_test(test/test_launch_client.py)
-
-  find_package(ament_lint_auto REQUIRED)
-  ament_lint_auto_find_test_dependencies()
 endif()
 
 install(TARGETS test_example

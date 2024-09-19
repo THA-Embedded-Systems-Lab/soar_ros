@@ -27,12 +27,11 @@
 #include <condition_variable>
 #include <iostream>
 #include <mutex>
-#include <queue>
 #include <optional>
+#include <queue>
 
 namespace soar_ros
 {
-
 
 template<typename T>
 class SafeQueue
@@ -68,10 +67,7 @@ public:
     std::unique_lock<std::mutex> lock(m_mutex);
 
     // wait until queue is not empty
-    m_cond.wait(
-      lock,
-      [this]()
-      {return !m_queue.empty();});
+    m_cond.wait(lock, [this]() {return !m_queue.empty();});
 
     // retrieve item
     T item = m_queue.front();
@@ -100,6 +96,6 @@ public:
     return item;
   }
 };
-}
+}  // namespace soar_ros
 
 #endif  // SOAR_ROS__SAFEQUEUE_HPP_
