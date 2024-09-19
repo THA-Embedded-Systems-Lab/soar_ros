@@ -22,7 +22,7 @@ jobs:
       - name: Install ROS2 and documentation dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y doxygen
+          sudo apt-get install -y doxygen graphviz
           pip install -r requirements.txt
 
       # Step 4: Build the documentation using rosdoc2
