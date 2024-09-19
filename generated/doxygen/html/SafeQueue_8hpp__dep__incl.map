@@ -1,0 +1,10 @@
+<map id="include/soar_ros/SafeQueue.hpp" name="include/soar_ros/SafeQueue.hpp">
+<area shape="rect" id="node1" title="Implementation of a thread safe queue." alt="" coords="325,5,556,32"/>
+<area shape="rect" id="node2" href="$Client_8hpp_source.html" title=" " alt="" coords="34,155,233,181"/>
+<area shape="rect" id="node3" href="$soar__ros_8hpp_source.html" title=" " alt="" coords="330,304,490,345"/>
+<area shape="rect" id="node5" href="$Interface_8hpp_source.html" title=" " alt="" coords="404,80,623,107"/>
+<area shape="rect" id="node6" href="$Publisher_8hpp_source.html" title=" " alt="" coords="258,155,476,181"/>
+<area shape="rect" id="node7" href="$Service_8hpp_source.html" title=" " alt="" coords="602,155,810,181"/>
+<area shape="rect" id="node8" href="$Subscriber_8hpp_source.html" title=" " alt="" coords="834,155,1060,181"/>
+<area shape="rect" id="node4" href="$SoarRunner_8hpp_source.html" title=" " alt="" coords="292,229,527,256"/>
+</map>

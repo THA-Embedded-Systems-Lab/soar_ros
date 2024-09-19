@@ -1,0 +1,4 @@
+<map id="soar_ros::SoarRunner" name="soar_ros::SoarRunner">
+<area shape="rect" id="node1" title="Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to a..." alt="" coords="5,80,165,107"/>
+<area shape="rect" id="node2" title=" " alt="" coords="34,5,137,32"/>
+</map>

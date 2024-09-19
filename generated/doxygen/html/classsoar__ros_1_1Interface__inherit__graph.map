@@ -1,0 +1,7 @@
+<map id="soar_ros::Interface" name="soar_ros::Interface">
+<area shape="rect" id="node1" title=" " alt="" coords="5,105,148,131"/>
+<area shape="rect" id="node2" href="$classsoar__ros_1_1Client.html" title=" " alt="" coords="196,5,437,47"/>
+<area shape="rect" id="node3" href="$classsoar__ros_1_1Publisher.html" title=" " alt="" coords="225,71,408,98"/>
+<area shape="rect" id="node4" href="$classsoar__ros_1_1Service.html" title=" " alt="" coords="211,122,423,178"/>
+<area shape="rect" id="node5" href="$classsoar__ros_1_1Subscriber.html" title=" " alt="" coords="221,202,412,229"/>
+</map>
