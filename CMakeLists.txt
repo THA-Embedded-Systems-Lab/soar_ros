@@ -14,6 +14,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
   std_msgs
   std_srvs
+  ament_index_cpp
 )
 
 find_package(example_interfaces REQUIRED)
@@ -38,7 +39,7 @@ target_include_directories(soar_ros
   PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-ament_target_dependencies(soar_ros rclcpp std_msgs std_srvs)
+ament_target_dependencies(soar_ros rclcpp std_msgs std_srvs ament_index_cpp)
 target_link_libraries(soar_ros soar)
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
