@@ -308,6 +308,7 @@ void SoarPrintEventHandler(
     auto logger = pSoarRunner->get_logger();
     if (str.find("System halted.") != std::string::npos) {
       RCLCPP_ERROR(logger, message.c_str());
+      pSoarRunner->stopThread();
     } else {
       RCLCPP_INFO(logger, message.c_str());
     }
