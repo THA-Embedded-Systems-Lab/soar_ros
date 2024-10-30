@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1soar__ros_1_1Interface" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>soar_ros::soar_ros::Interface</compoundname>
+    <derivedcompoundref refid="classsoar__ros_1_1Client" prot="public" virt="non-virtual">soar_ros::Client&lt; T, pRequestType, pResponseType &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1Publisher" prot="public" virt="non-virtual">soar_ros::Publisher&lt; T &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1Service" prot="public" virt="non-virtual">soar_ros::Service&lt; T, pRequestType, pResponseType &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1Subscriber" prot="public" virt="non-virtual">soar_ros::Subscriber&lt; T &gt;</derivedcompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Interface_1ac9e494efcf52d9a574bbb13d4275dff5" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>std::string</type>
+        <definition>std::string soar_ros::Interface::getTopic</definition>
+        <argsstring>()=0</argsstring>
+        <name>getTopic</name>
+        <qualifiedname>soar_ros::soar_ros::Interface::getTopic</qualifiedname>
+        <reimplementedby refid="classsoar__ros_1_1Client_1ad4d5c27e5d426c0e88211c27aca30134">getTopic</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Publisher_1adbcb963a82d60f1821fe78289e70481b">getTopic</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Service_1a2f7c2edd8230359d73d63c720b6d8c1f">getTopic</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Subscriber_1a5cbbcc7f77e12aec0811a4f128a7b871">getTopic</reimplementedby>
+        <briefdescription>
+<para>Get the topic of the subscriber. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="32" column="23"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Interface_1a3913469a81fd03c62f1683c48aed8923" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent * soar_ros::Interface::getAgent</definition>
+        <argsstring>()=0</argsstring>
+        <name>getAgent</name>
+        <qualifiedname>soar_ros::soar_ros::Interface::getAgent</qualifiedname>
+        <reimplementedby refid="classsoar__ros_1_1Client_1a851c9c9d954740cd3384016efbd1844e">getAgent</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Publisher_1ad2448cafbb5ebf23b9c7b528af958a3f">getAgent</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Service_1a01b248776a0e28e387308f0796ea50f7">getAgent</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Subscriber_1ab6ce3f45ea600c5e8e0eef4b85c2a6b1">getAgent</reimplementedby>
+        <briefdescription>
+<para>Get the agent of the current interface. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="36" column="23"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="2">
+        <label>soar_ros::Client&lt; T, pRequestType, pResponseType &gt;</label>
+        <link refid="classsoar__ros_1_1Client"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::Publisher&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Publisher"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>soar_ros::Service&lt; T, pRequestType, pResponseType &gt;</label>
+        <link refid="classsoar__ros_1_1Service"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>soar_ros::Subscriber&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Subscriber"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>soar_ros::soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Interface"/>
+      </node>
+    </inheritancegraph>
+    <location file="include/soar_ros/Interface.hpp" line="27" column="1" bodyfile="include/soar_ros/Client.hpp" bodystart="28" bodyend="37"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Interface_1a3913469a81fd03c62f1683c48aed8923" prot="public" virt="pure-virtual"><scope>soar_ros::soar_ros::Interface</scope><name>getAgent</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Interface_1ac9e494efcf52d9a574bbb13d4275dff5" prot="public" virt="pure-virtual"><scope>soar_ros::soar_ros::Interface</scope><name>getTopic</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

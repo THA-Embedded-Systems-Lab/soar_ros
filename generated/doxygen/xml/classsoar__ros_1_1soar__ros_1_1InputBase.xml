@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1soar__ros_1_1InputBase" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>soar_ros::soar_ros::InputBase</compoundname>
+    <derivedcompoundref refid="classsoar__ros_1_1soar__ros_1_1Input" prot="public" virt="non-virtual">soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1soar__ros_1_1Input" prot="public" virt="non-virtual">soar_ros::soar_ros::Input&lt; typename T::Request::SharedPtr &gt;</derivedcompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1soar__ros_1_1Input" prot="public" virt="non-virtual">soar_ros::soar_ros::Input&lt; T &gt;</derivedcompoundref>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1InputBase_1af350a7fc94716effcf2e17bb540fc125" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>void soar_ros::InputBase::process_r2s</definition>
+        <argsstring>()=0</argsstring>
+        <name>process_r2s</name>
+        <qualifiedname>soar_ros::soar_ros::InputBase::process_r2s</qualifiedname>
+        <reimplementedby refid="classsoar__ros_1_1soar__ros_1_1Input_1af0d5c1222d36d8bc84ab3f6b719b8492">process_r2s</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1soar__ros_1_1Input_1af0d5c1222d36d8bc84ab3f6b719b8492">process_r2s</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1soar__ros_1_1Input_1af0d5c1222d36d8bc84ab3f6b719b8492">process_r2s</reimplementedby>
+        <briefdescription>
+<para>This function reads the queue and calls the parse function of the input to create new WM elements via parse function, cf. <ref refid="classsoar__ros_1_1soar__ros_1_1Input" kindref="compound">Input</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="53" column="16"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>soar_ros::Client&lt; T, pRequestType, pResponseType &gt;</label>
+        <link refid="classsoar__ros_1_1Client"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>soar_ros::Service&lt; T, pRequestType, pResponseType &gt;</label>
+        <link refid="classsoar__ros_1_1Service"/>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>soar_ros::Subscriber&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Subscriber"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>soar_ros::soar_ros::Input&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>soar_ros::soar_ros::Input&lt; typename T::Request::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>soar_ros::soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1InputBase"/>
+      </node>
+    </inheritancegraph>
+    <location file="include/soar_ros/Interface.hpp" line="48" column="1" bodyfile="include/soar_ros/Client.hpp" bodystart="49" bodyend="54"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1soar__ros_1_1InputBase_1af350a7fc94716effcf2e17bb540fc125" prot="public" virt="pure-virtual"><scope>soar_ros::soar_ros::InputBase</scope><name>process_r2s</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

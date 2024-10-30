@@ -1,0 +1,14 @@
+.. _exhale_variable_Interface_8hpp_1aeee60222f5f166555d6431db019286e0:
+
+Variable m_s2rQueue
+===================
+
+- Defined in :ref:`file_include_soar_ros_Interface.hpp`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: m_s2rQueue
+   :project: soar_ros Doxygen Project

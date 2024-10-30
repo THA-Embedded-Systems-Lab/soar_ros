@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
   <compounddef id="classsoar__ros_1_1Client" kind="class" language="C++" prot="public" abstract="yes">
     <compoundname>soar_ros::Client</compoundname>
-    <basecompoundref refid="classsoar__ros_1_1Output" prot="public" virt="virtual">soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</basecompoundref>
-    <basecompoundref refid="classsoar__ros_1_1Input" prot="public" virt="virtual">soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</basecompoundref>
-    <basecompoundref refid="classsoar__ros_1_1Interface" prot="public" virt="non-virtual">soar_ros::Interface</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1Output" prot="public" virt="virtual">soar_ros::soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1Input" prot="public" virt="virtual">soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1Interface" prot="public" virt="non-virtual">soar_ros::soar_ros::Interface</basecompoundref>
     <templateparamlist>
       <param>
         <type>typename T</type>
@@ -18,12 +18,13 @@
         <defval>typename T::Response::SharedPtr</defval>
       </param>
     </templateparamlist>
-      <sectiondef kind="protected-attrib">
+    <sectiondef kind="protected-attrib">
       <memberdef kind="variable" id="classsoar__ros_1_1Client_1afc08a31974c4eb8c91d074ac107f7d1c" prot="protected" static="no" mutable="no">
         <type>rclcpp::Client&lt; T &gt;::SharedPtr</type>
         <definition>rclcpp::Client&lt;T&gt;::SharedPtr soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::m_client</definition>
         <argsstring></argsstring>
         <name>m_client</name>
+        <qualifiedname>soar_ros::Client::m_client</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -37,6 +38,7 @@
         <definition>std::string soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::m_topic</definition>
         <argsstring></argsstring>
         <name>m_topic</name>
+        <qualifiedname>soar_ros::Client::m_topic</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -50,6 +52,7 @@
         <definition>rclcpp::Node::SharedPtr soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::m_node</definition>
         <argsstring></argsstring>
         <name>m_node</name>
+        <qualifiedname>soar_ros::Client::m_node</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -63,6 +66,7 @@
         <definition>sml::Agent* soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::m_pAgent</definition>
         <argsstring></argsstring>
         <name>m_pAgent</name>
+        <qualifiedname>soar_ros::Client::m_pAgent</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -76,6 +80,7 @@
         <definition>std::thread soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::m_send_client_requests</definition>
         <argsstring></argsstring>
         <name>m_send_client_requests</name>
+        <qualifiedname>soar_ros::Client::m_send_client_requests</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -89,6 +94,7 @@
         <definition>std::atomic&lt;bool&gt; soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::isRunning</definition>
         <argsstring></argsstring>
         <name>isRunning</name>
+        <qualifiedname>soar_ros::Client::isRunning</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -97,13 +103,14 @@
         </inbodydescription>
         <location file="include/soar_ros/Client.hpp" line="40" column="15" bodyfile="include/soar_ros/Client.hpp" bodystart="40" bodyend="-1"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="protected-func">
+    </sectiondef>
+    <sectiondef kind="protected-func">
       <memberdef kind="function" id="classsoar__ros_1_1Client_1ac84a77a574d1156c6ad4741c43f4279c" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type>void</type>
         <definition>void soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::run</definition>
         <argsstring>()</argsstring>
         <name>run</name>
+        <qualifiedname>soar_ros::Client::run</qualifiedname>
         <briefdescription>
 <para>Periodically check the m_s2rQueue and m_r2sQueue for input and output. </para>
         </briefdescription>
@@ -111,15 +118,16 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="47" column="8" bodyfile="include/soar_ros/Client.hpp" bodystart="47" bodyend="80"/>
+        <location file="include/soar_ros/Client.hpp" line="47" column="8" bodyfile="include/soar_ros/Client.hpp" bodystart="47" bodyend="83"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-func">
+    </sectiondef>
+    <sectiondef kind="public-func">
       <memberdef kind="function" id="classsoar__ros_1_1Client_1a2a7faf370fbeace3458f50c92e9e8cf1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type></type>
         <definition>soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::Client</definition>
         <argsstring>(sml::Agent *agent, rclcpp::Node::SharedPtr node, const std::string &amp;client_name)</argsstring>
         <name>Client</name>
+        <qualifiedname>soar_ros::Client::Client</qualifiedname>
         <param>
           <type>sml::Agent *</type>
           <declname>agent</declname>
@@ -138,26 +146,28 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="83" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="83" bodyend="88"/>
+        <location file="include/soar_ros/Client.hpp" line="86" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="86" bodyend="93"/>
       </memberdef>
       <memberdef kind="function" id="classsoar__ros_1_1Client_1a38d3a1728487eb0880ca7a55e1ad7f12" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type></type>
         <definition>soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::~Client</definition>
         <argsstring>()</argsstring>
         <name>~Client</name>
+        <qualifiedname>soar_ros::Client::~Client</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="90" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="90" bodyend="96"/>
+        <location file="include/soar_ros/Client.hpp" line="95" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="95" bodyend="101"/>
       </memberdef>
       <memberdef kind="function" id="classsoar__ros_1_1Client_1aeb178a99122d6f1932eb001ceef5e936" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
         <type>void</type>
         <definition>virtual void soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::parse</definition>
         <argsstring>(pResponseType msg)=0</argsstring>
         <name>parse</name>
+        <qualifiedname>soar_ros::Client::parse</qualifiedname>
         <param>
           <type>pResponseType</type>
           <declname>msg</declname>
@@ -168,14 +178,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="98" column="16"/>
+        <location file="include/soar_ros/Client.hpp" line="103" column="16"/>
       </memberdef>
       <memberdef kind="function" id="classsoar__ros_1_1Client_1abec0605464dc2a8877deacb086319df3" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
         <type>pRequestType</type>
         <definition>pRequestType soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::parse</definition>
         <argsstring>(sml::Identifier *id) override=0</argsstring>
         <name>parse</name>
-        <reimplements refid="classsoar__ros_1_1Output_1af01db0104f6bd68b61ac9baff164926f">parse</reimplements>
+        <qualifiedname>soar_ros::Client::parse</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1Output_1a728f759fd5538bf8c21e52ad9d387742">parse</reimplements>
         <param>
           <type>sml::Identifier *</type>
           <declname>id</declname>
@@ -199,14 +210,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="99" column="16"/>
+        <location file="include/soar_ros/Client.hpp" line="104" column="16"/>
       </memberdef>
       <memberdef kind="function" id="classsoar__ros_1_1Client_1ad4d5c27e5d426c0e88211c27aca30134" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>std::string</type>
         <definition>std::string soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::getTopic</definition>
         <argsstring>() override</argsstring>
         <name>getTopic</name>
-        <reimplements refid="classsoar__ros_1_1Interface_1a294fefd3992c72bf1c227928716e938b">getTopic</reimplements>
+        <qualifiedname>soar_ros::Client::getTopic</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1Interface_1ac9e494efcf52d9a574bbb13d4275dff5">getTopic</reimplements>
         <briefdescription>
 <para>Get the topic of the subscriber. </para>
         </briefdescription>
@@ -217,14 +229,15 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="101" column="15" bodyfile="include/soar_ros/Client.hpp" bodystart="101" bodyend="104"/>
+        <location file="include/soar_ros/Client.hpp" line="106" column="15" bodyfile="include/soar_ros/Client.hpp" bodystart="106" bodyend="106"/>
       </memberdef>
-      <memberdef kind="function" id="classsoar__ros_1_1Client_1ae4fe6f9d6c592e42c168d3f1f2c52d27" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+      <memberdef kind="function" id="classsoar__ros_1_1Client_1a851c9c9d954740cd3384016efbd1844e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>sml::Agent *</type>
-        <definition>sml::Agent* soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::getAgent</definition>
+        <definition>sml::Agent * soar_ros::Client&lt; T, pRequestType, pResponseType &gt;::getAgent</definition>
         <argsstring>() override</argsstring>
         <name>getAgent</name>
-        <reimplements refid="classsoar__ros_1_1Interface_1a6f20fe370632f8df09b4cbc79d7cc2a7">getAgent</reimplements>
+        <qualifiedname>soar_ros::Client::getAgent</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1Interface_1a3913469a81fd03c62f1683c48aed8923">getAgent</reimplements>
         <briefdescription>
 <para>Get the agent of the current interface. </para>
         </briefdescription>
@@ -235,38 +248,14 @@
         </detaileddescription>
         <inbodydescription>
         </inbodydescription>
-        <location file="include/soar_ros/Client.hpp" line="106" column="15" bodyfile="include/soar_ros/Client.hpp" bodystart="106" bodyend="109"/>
+        <location file="include/soar_ros/Client.hpp" line="108" column="15" bodyfile="include/soar_ros/Client.hpp" bodystart="108" bodyend="108"/>
       </memberdef>
-      </sectiondef>
+    </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <inheritancegraph>
-      <node id="5">
-        <label>soar_ros::InputBase</label>
-        <link refid="classsoar__ros_1_1InputBase"/>
-      </node>
-      <node id="4">
-        <label>soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</label>
-        <link refid="classsoar__ros_1_1Input"/>
-        <childnode refid="5" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="3">
-        <label>soar_ros::OutputBase</label>
-        <link refid="classsoar__ros_1_1OutputBase"/>
-      </node>
-      <node id="2">
-        <label>soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</label>
-        <link refid="classsoar__ros_1_1Output"/>
-        <childnode refid="3" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="6">
-        <label>soar_ros::Interface</label>
-        <link refid="classsoar__ros_1_1Interface"/>
-      </node>
       <node id="1">
         <label>soar_ros::Client&lt; T, pRequestType, pResponseType &gt;</label>
         <link refid="classsoar__ros_1_1Client"/>
@@ -276,33 +265,33 @@
         </childnode>
         <childnode refid="6" relation="public-inheritance">
         </childnode>
+      </node>
+      <node id="4">
+        <label>soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>soar_ros::soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1InputBase"/>
+      </node>
+      <node id="6">
+        <label>soar_ros::soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Interface"/>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Output"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1OutputBase"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="5">
-        <label>soar_ros::InputBase</label>
-        <link refid="classsoar__ros_1_1InputBase"/>
-      </node>
-      <node id="4">
-        <label>soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</label>
-        <link refid="classsoar__ros_1_1Input"/>
-        <childnode refid="5" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="3">
-        <label>soar_ros::OutputBase</label>
-        <link refid="classsoar__ros_1_1OutputBase"/>
-      </node>
-      <node id="2">
-        <label>soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</label>
-        <link refid="classsoar__ros_1_1Output"/>
-        <childnode refid="3" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="6">
-        <label>soar_ros::Interface</label>
-        <link refid="classsoar__ros_1_1Interface"/>
-      </node>
       <node id="1">
         <label>soar_ros::Client&lt; T, pRequestType, pResponseType &gt;</label>
         <link refid="classsoar__ros_1_1Client"/>
@@ -313,31 +302,55 @@
         <childnode refid="6" relation="public-inheritance">
         </childnode>
       </node>
+      <node id="4">
+        <label>soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>soar_ros::soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1InputBase"/>
+      </node>
+      <node id="6">
+        <label>soar_ros::soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Interface"/>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Output"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1OutputBase"/>
+      </node>
     </collaborationgraph>
-    <location file="include/soar_ros/Client.hpp" line="31" column="1" bodyfile="include/soar_ros/Client.hpp" bodystart="33" bodyend="110"/>
+    <location file="include/soar_ros/Client.hpp" line="30" column="1" bodyfile="include/soar_ros/Client.hpp" bodystart="33" bodyend="109"/>
     <listofallmembers>
       <member refid="classsoar__ros_1_1Client_1a2a7faf370fbeace3458f50c92e9e8cf1" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>Client</name></member>
-      <member refid="classsoar__ros_1_1Client_1ae4fe6f9d6c592e42c168d3f1f2c52d27" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>getAgent</name></member>
+      <member refid="classsoar__ros_1_1Client_1a851c9c9d954740cd3384016efbd1844e" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>getAgent</name></member>
       <member refid="classsoar__ros_1_1Client_1ad4d5c27e5d426c0e88211c27aca30134" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>getTopic</name></member>
-      <member refid="classsoar__ros_1_1Input_1a3220b2318518edab5a5be521a962c25b" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>Input</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a6260ad4f6adca546d3b547097cedc03e" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>Input</name></member>
       <member refid="classsoar__ros_1_1Client_1a0207636766cdeb2253ac46e11ca5bb34" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>isRunning</name></member>
       <member refid="classsoar__ros_1_1Client_1afc08a31974c4eb8c91d074ac107f7d1c" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_client</name></member>
       <member refid="classsoar__ros_1_1Client_1af74a8f982172ba05468f6cb4e884bdfd" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_node</name></member>
       <member refid="classsoar__ros_1_1Client_1afd1ff72e016682760921d509ebccfd08" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_pAgent</name></member>
-      <member refid="classsoar__ros_1_1Input_1abf3de829e83b44139a4b2baae2e5a16a" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_r2sQueue</name></member>
-      <member refid="classsoar__ros_1_1Output_1a4bfed14fee4ff1088d961087e5025344" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_s2rQueue</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a3a3def4d48ae099fc3a5cab44ff1f195" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_r2sQueue</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1aa018f798f4d7c4e93518bd9fb5dba522" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_s2rQueue</name></member>
       <member refid="classsoar__ros_1_1Client_1ac57a5834d6da610d75ee534700d20c07" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_send_client_requests</name></member>
       <member refid="classsoar__ros_1_1Client_1ac3f6dc93fa7c2fde86e93f74a4da4e72" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>m_topic</name></member>
-      <member refid="classsoar__ros_1_1Output_1aac8f8818e59a7c6391d684e2d32d2784" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>Output</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a986ba8c7294a0aaec2b6774849ba1a47" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>Output</name></member>
       <member refid="classsoar__ros_1_1Client_1aeb178a99122d6f1932eb001ceef5e936" prot="public" virt="pure-virtual"><scope>soar_ros::Client</scope><name>parse</name></member>
       <member refid="classsoar__ros_1_1Client_1abec0605464dc2a8877deacb086319df3" prot="public" virt="pure-virtual"><scope>soar_ros::Client</scope><name>parse</name></member>
-      <member refid="classsoar__ros_1_1Input_1a09a0e5766d8c852f3da30c6bb7723ecf" prot="public" virt="pure-virtual" ambiguityscope="Input&lt; typename T::Response::SharedPtr &gt;::"><scope>soar_ros::Client</scope><name>parse</name></member>
-      <member refid="classsoar__ros_1_1Input_1a24f54e499689f3751bc5ba2c37096a93" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>process_r2s</name></member>
-      <member refid="classsoar__ros_1_1Output_1ac38d1e23a7093e233209f8ff8f8c9046" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>process_s2r</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a6b2c746a395c5290d3338d55e0367fed" prot="public" virt="pure-virtual" ambiguityscope="soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;::"><scope>soar_ros::Client</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1af0d5c1222d36d8bc84ab3f6b719b8492" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>process_r2s</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a30db5b8255ba15c91a388496050b3fac" prot="public" virt="virtual"><scope>soar_ros::Client</scope><name>process_s2r</name></member>
       <member refid="classsoar__ros_1_1Client_1ac84a77a574d1156c6ad4741c43f4279c" prot="protected" virt="non-virtual"><scope>soar_ros::Client</scope><name>run</name></member>
       <member refid="classsoar__ros_1_1Client_1a38d3a1728487eb0880ca7a55e1ad7f12" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>~Client</name></member>
-      <member refid="classsoar__ros_1_1Input_1a603986902be248718541df48e1dbfe9d" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>~Input</name></member>
-      <member refid="classsoar__ros_1_1Output_1a9660a99c83ff6be1923165a88b426c73" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>~Output</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a67e47cf4fce7e7ebc1a292a97a9dabd1" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>~Input</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1aba30fb800d9e4e315aec1d76cb757db7" prot="public" virt="non-virtual"><scope>soar_ros::Client</scope><name>~Output</name></member>
     </listofallmembers>
   </compounddef>
 </doxygen>

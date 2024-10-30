@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="namespacesoar__ros_1_1soar__ros" kind="namespace" language="C++">
+    <compoundname>soar_ros::soar_ros</compoundname>
+    <innerclass refid="classsoar__ros_1_1soar__ros_1_1Input" prot="public">soar_ros::soar_ros::Input</innerclass>
+    <innerclass refid="classsoar__ros_1_1soar__ros_1_1InputBase" prot="public">soar_ros::soar_ros::InputBase</innerclass>
+    <innerclass refid="classsoar__ros_1_1soar__ros_1_1Interface" prot="public">soar_ros::soar_ros::Interface</innerclass>
+    <innerclass refid="classsoar__ros_1_1soar__ros_1_1Output" prot="public">soar_ros::soar_ros::Output</innerclass>
+    <innerclass refid="classsoar__ros_1_1soar__ros_1_1OutputBase" prot="public">soar_ros::soar_ros::OutputBase</innerclass>
+    <innerclass refid="classsoar__ros_1_1soar__ros_1_1SafeQueue" prot="public">soar_ros::soar_ros::SafeQueue</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/soar_ros/SafeQueue.hpp" line="34" column="1"/>
+  </compounddef>
+</doxygen>

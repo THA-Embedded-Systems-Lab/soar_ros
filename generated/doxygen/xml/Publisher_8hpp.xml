@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
   <compounddef id="Publisher_8hpp" kind="file" language="C++">
     <compoundname>Publisher.hpp</compoundname>
     <includes local="no">string</includes>
@@ -7,26 +7,9 @@
     <includes refid="Interface_8hpp" local="yes">Interface.hpp</includes>
     <includes refid="SafeQueue_8hpp" local="yes">SafeQueue.hpp</includes>
     <includes local="yes">sml_Client.h</includes>
-    <includedby refid="soar__ros_8hpp" local="yes">include/soar_ros/soar_ros.hpp</includedby>
     <includedby refid="SoarRunner_8hpp" local="yes">include/soar_ros/SoarRunner.hpp</includedby>
+    <includedby refid="soar__ros_8hpp" local="yes">include/soar_ros/soar_ros.hpp</includedby>
     <incdepgraph>
-      <node id="9">
-        <label>queue</label>
-      </node>
-      <node id="5">
-        <label>SafeQueue.hpp</label>
-        <link refid="SafeQueue_8hpp"/>
-        <childnode refid="6" relation="include">
-        </childnode>
-        <childnode refid="7" relation="include">
-        </childnode>
-        <childnode refid="8" relation="include">
-        </childnode>
-        <childnode refid="9" relation="include">
-        </childnode>
-        <childnode refid="10" relation="include">
-        </childnode>
-      </node>
       <node id="4">
         <label>Interface.hpp</label>
         <link refid="Interface_8hpp_source"/>
@@ -36,21 +19,6 @@
         </childnode>
         <childnode refid="11" relation="include">
         </childnode>
-      </node>
-      <node id="2">
-        <label>string</label>
-      </node>
-      <node id="3">
-        <label>rclcpp/rclcpp.hpp</label>
-      </node>
-      <node id="11">
-        <label>sml_Client.h</label>
-      </node>
-      <node id="6">
-        <label>condition_variable</label>
-      </node>
-      <node id="10">
-        <label>optional</label>
       </node>
       <node id="1">
         <label>include/soar_ros/Publisher.hpp</label>
@@ -66,24 +34,46 @@
         <childnode refid="11" relation="include">
         </childnode>
       </node>
+      <node id="5">
+        <label>SafeQueue.hpp</label>
+        <link refid="SafeQueue_8hpp"/>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>condition_variable</label>
+      </node>
       <node id="7">
         <label>iostream</label>
       </node>
       <node id="8">
         <label>mutex</label>
       </node>
-    </incdepgraph>
-    <invincdepgraph>
+      <node id="9">
+        <label>optional</label>
+      </node>
+      <node id="10">
+        <label>queue</label>
+      </node>
       <node id="3">
-        <label>include/soar_ros/SoarRunner.hpp</label>
-        <link refid="SoarRunner_8hpp_source"/>
-        <childnode refid="2" relation="include">
-        </childnode>
+        <label>rclcpp/rclcpp.hpp</label>
+      </node>
+      <node id="11">
+        <label>sml_Client.h</label>
       </node>
       <node id="2">
-        <label>include/soar_ros/soar_ros.hpp</label>
-        <link refid="soar__ros_8hpp_source"/>
+        <label>string</label>
       </node>
+    </incdepgraph>
+    <invincdepgraph>
       <node id="1">
         <label>include/soar_ros/Publisher.hpp</label>
         <link refid="Publisher_8hpp"/>
@@ -91,6 +81,16 @@
         </childnode>
         <childnode refid="3" relation="include">
         </childnode>
+      </node>
+      <node id="2">
+        <label>include/soar_ros/SoarRunner.hpp</label>
+        <link refid="SoarRunner_8hpp_source"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>include/soar_ros/soar_ros.hpp</label>
+        <link refid="soar__ros_8hpp_source"/>
       </node>
     </invincdepgraph>
     <innerclass refid="classsoar__ros_1_1Publisher" prot="public">soar_ros::Publisher</innerclass>
@@ -128,7 +128,7 @@
 <codeline lineno="26"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal">soar_ros</highlight></codeline>
 <codeline lineno="27"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="28"><highlight class="normal"></highlight><highlight class="keyword">template</highlight><highlight class="normal">&lt;</highlight><highlight class="keyword">typename</highlight><highlight class="normal"><sp/>T&gt;</highlight></codeline>
-<codeline lineno="29" refid="classsoar__ros_1_1Publisher" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classsoar__ros_1_1Output" kindref="compound">Output</ref>&lt;T&gt;,<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/><ref refid="classsoar__ros_1_1Interface" kindref="compound">Interface</ref></highlight></codeline>
+<codeline lineno="29" refid="classsoar__ros_1_1Publisher" refkind="compound"><highlight class="normal"></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref><sp/>:<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>Output&lt;T&gt;,<sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal"><sp/>Interface</highlight></codeline>
 <codeline lineno="30"><highlight class="normal">{</highlight></codeline>
 <codeline lineno="31"><highlight class="normal"></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
 <codeline lineno="32"><highlight class="normal"><sp/><sp/>std::atomic&lt;bool&gt;<sp/>isRunning;</highlight></codeline>
@@ -139,12 +139,12 @@
 <codeline lineno="37"><highlight class="normal"></highlight></codeline>
 <codeline lineno="38"><highlight class="normal"></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
 <codeline lineno="39"><highlight class="normal"><sp/><sp/><ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref>(sml::Agent<sp/>*<sp/>agent,<sp/>rclcpp::Node::SharedPtr<sp/>node,<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>std::string<sp/>&amp;<sp/>topic)</highlight></codeline>
-<codeline lineno="40"><highlight class="normal"><sp/><sp/>:<sp/><ref refid="classsoar__ros_1_1Output" kindref="compound">Output&lt;T&gt;</ref>(),<sp/>isRunning(</highlight><highlight class="keyword">true</highlight><highlight class="normal">),<sp/>m_topic(topic),<sp/>m_node(node),<sp/>m_pAgent(agent)</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"><sp/><sp/>:<sp/>Output&lt;T&gt;(),<sp/>isRunning(</highlight><highlight class="keyword">true</highlight><highlight class="normal">),<sp/>m_topic(topic),<sp/>m_node(node),<sp/>m_pAgent(agent)</highlight></codeline>
 <codeline lineno="41"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
 <codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/>pub<sp/>=<sp/>m_node-&gt;create_publisher&lt;T&gt;(m_topic,<sp/>10);</highlight></codeline>
 <codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/>publisher<sp/>=<sp/>std::thread(&amp;<ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher&lt;T&gt;::run</ref>,<sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="44"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
-<codeline lineno="45"><highlight class="normal"><sp/><sp/>~<ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref>()</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><ref refid="classsoar__ros_1_1Publisher" kindref="compound">~Publisher</ref>()</highlight></codeline>
 <codeline lineno="46"><highlight class="normal"><sp/><sp/>{</highlight></codeline>
 <codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/>isRunning.store(</highlight><highlight class="keyword">false</highlight><highlight class="normal">);</highlight></codeline>
 <codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">if</highlight><highlight class="normal"><sp/>(publisher.joinable())<sp/>{</highlight></codeline>
@@ -169,7 +169,7 @@
 <codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>m_topic;</highlight></codeline>
 <codeline lineno="68"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
 <codeline lineno="69"><highlight class="normal"></highlight></codeline>
-<codeline lineno="70" refid="classsoar__ros_1_1Publisher_1a32b5a0549e5eadce8483db3f359e4d37" refkind="member"><highlight class="normal"><sp/><sp/>sml::Agent<sp/>*<sp/><ref refid="classsoar__ros_1_1Publisher_1a32b5a0549e5eadce8483db3f359e4d37" kindref="member">getAgent</ref>()</highlight><highlight class="keyword"><sp/>override</highlight></codeline>
+<codeline lineno="70" refid="classsoar__ros_1_1Publisher_1ad2448cafbb5ebf23b9c7b528af958a3f" refkind="member"><highlight class="normal"><sp/><sp/>sml::Agent<sp/>*<sp/><ref refid="classsoar__ros_1_1Publisher_1ad2448cafbb5ebf23b9c7b528af958a3f" kindref="member">getAgent</ref>()</highlight><highlight class="keyword"><sp/>override</highlight></codeline>
 <codeline lineno="71"><highlight class="keyword"><sp/><sp/></highlight><highlight class="normal">{</highlight></codeline>
 <codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>m_pAgent;</highlight></codeline>
 <codeline lineno="73"><highlight class="normal"><sp/><sp/>}</highlight></codeline>

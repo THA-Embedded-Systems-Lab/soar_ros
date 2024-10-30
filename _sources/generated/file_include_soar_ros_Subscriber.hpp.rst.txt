@@ -46,9 +46,9 @@ Included By
 -----------
 
 
-- :ref:`file_include_soar_ros_soar_ros.hpp`
-
 - :ref:`file_include_soar_ros_SoarRunner.hpp`
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
 
 
 

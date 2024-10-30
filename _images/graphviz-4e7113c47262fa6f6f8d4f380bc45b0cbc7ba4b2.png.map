@@ -1,0 +1,13 @@
+<map id="%3" name="%3">
+<area shape="rect" id="node1" title="soar_ros::Service&lt; T, pRequestType, pResponseType &gt;" alt="" coords="515,5,1063,53"/>
+<area shape="rect" id="node2" title="soar_ros::soar_ros::Input&lt; typename T::Request::SharedPtr &gt;" alt="" coords="5,101,619,149"/>
+<area shape="poly" id="edge1" title="public&#45;inheritance" alt="" coords="674,56,442,101,441,96,673,51"/>
+<area shape="rect" id="node4" title="soar_ros::soar_ros::Interface" alt="" coords="643,101,935,149"/>
+<area shape="poly" id="edge3" title="public&#45;inheritance" alt="" coords="792,54,792,88,787,88,787,54"/>
+<area shape="rect" id="node5" title="soar_ros::soar_ros::Output&lt; typename T::Response::SharedPtr &gt;" alt="" coords="960,101,1603,149"/>
+<area shape="poly" id="edge2" title="public&#45;inheritance" alt="" coords="910,51,1149,96,1148,101,909,56"/>
+<area shape="rect" id="node3" title="soar_ros::soar_ros::InputBase" alt="" coords="161,197,463,245"/>
+<area shape="poly" id="edge4" title="public&#45;inheritance" alt="" coords="315,150,315,184,309,184,309,150"/>
+<area shape="rect" id="node6" title="soar_ros::soar_ros::OutputBase" alt="" coords="1122,197,1441,245"/>
+<area shape="poly" id="edge5" title="public&#45;inheritance" alt="" coords="1284,150,1284,184,1279,184,1279,150"/>
+</map>

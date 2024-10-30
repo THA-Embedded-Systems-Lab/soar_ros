@@ -1,0 +1,14 @@
+.. _exhale_define_Client_8hpp_1a59a2d969c5f7c021d0ad0ca7603e1d3b:
+
+Define SOAR_ROS__INTERFACE_HPP_
+===============================
+
+- Defined in :ref:`file_include_soar_ros_Client.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SOAR_ROS__INTERFACE_HPP_
+   :project: soar_ros Doxygen Project

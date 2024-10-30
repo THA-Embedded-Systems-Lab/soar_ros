@@ -95,7 +95,7 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_SoarRunner_8hpp_1aa1f9a113dc080975a096aaacdab6a917`
+- :ref:`exhale_function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92`
 
-- :ref:`exhale_function_SoarRunner_8hpp_1a97a02a4475100d6da512b324b63b74f8`
+- :ref:`exhale_function_SoarRunner_8hpp_1ac1b2f4700bd2aa2de462bcf23acb9caf`
 

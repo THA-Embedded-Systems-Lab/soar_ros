@@ -46,9 +46,9 @@ Included By
 -----------
 
 
-- :ref:`file_include_soar_ros_soar_ros.hpp`
-
 - :ref:`file_include_soar_ros_SoarRunner.hpp`
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
 
 
 
@@ -59,10 +59,33 @@ Namespaces
 
 - :ref:`namespace_soar_ros`
 
+- :ref:`namespace_soar_ros__soar_ros`
+
 
 Classes
 -------
 
 
 - :ref:`exhale_class_classsoar__ros_1_1Client`
+
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1Input`
+
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1InputBase`
+
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1Interface`
+
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1Output`
+
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1OutputBase`
+
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1SafeQueue`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_Client_8hpp_1a59a2d969c5f7c021d0ad0ca7603e1d3b`
+
+- :ref:`exhale_define_Client_8hpp_1a03a522c849c9e2cbd13ddd03521216b2`
 

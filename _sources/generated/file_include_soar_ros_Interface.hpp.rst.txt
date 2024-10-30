@@ -48,11 +48,11 @@ Included By
 
 - :ref:`file_include_soar_ros_Service.hpp`
 
-- :ref:`file_include_soar_ros_soar_ros.hpp`
-
 - :ref:`file_include_soar_ros_SoarRunner.hpp`
 
 - :ref:`file_include_soar_ros_Subscriber.hpp`
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
 
 
 
@@ -68,13 +68,22 @@ Classes
 -------
 
 
-- :ref:`exhale_class_classsoar__ros_1_1Input`
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1Input`
 
-- :ref:`exhale_class_classsoar__ros_1_1InputBase`
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1InputBase`
 
-- :ref:`exhale_class_classsoar__ros_1_1Interface`
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1Interface`
 
-- :ref:`exhale_class_classsoar__ros_1_1Output`
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1Output`
 
-- :ref:`exhale_class_classsoar__ros_1_1OutputBase`
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1OutputBase`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_Interface_8hpp_1abf8edd1e315472b78351c428b1eb0fa3`
+
+- :ref:`exhale_variable_Interface_8hpp_1aeee60222f5f166555d6431db019286e0`
 

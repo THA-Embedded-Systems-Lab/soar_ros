@@ -1,27 +1,22 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
   <compounddef id="namespacesoar__ros" kind="namespace" language="C++">
     <compoundname>soar_ros</compoundname>
     <innerclass refid="classsoar__ros_1_1Client" prot="public">soar_ros::Client</innerclass>
-    <innerclass refid="classsoar__ros_1_1Interface" prot="public">soar_ros::Interface</innerclass>
-    <innerclass refid="classsoar__ros_1_1OutputBase" prot="public">soar_ros::OutputBase</innerclass>
-    <innerclass refid="classsoar__ros_1_1InputBase" prot="public">soar_ros::InputBase</innerclass>
-    <innerclass refid="classsoar__ros_1_1Output" prot="public">soar_ros::Output</innerclass>
-    <innerclass refid="classsoar__ros_1_1Input" prot="public">soar_ros::Input</innerclass>
     <innerclass refid="classsoar__ros_1_1Publisher" prot="public">soar_ros::Publisher</innerclass>
-    <innerclass refid="classsoar__ros_1_1SafeQueue" prot="public">soar_ros::SafeQueue</innerclass>
     <innerclass refid="classsoar__ros_1_1Service" prot="public">soar_ros::Service</innerclass>
     <innerclass refid="classsoar__ros_1_1SoarRunner" prot="public">soar_ros::SoarRunner</innerclass>
     <innerclass refid="classsoar__ros_1_1Subscriber" prot="public">soar_ros::Subscriber</innerclass>
-      <sectiondef kind="func">
-      <memberdef kind="function" id="SoarRunner_8hpp_1aa1f9a113dc080975a096aaacdab6a917" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+    <innernamespace refid="namespacesoar__ros_1_1soar__ros">soar_ros::soar_ros</innernamespace>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void soar_ros::SoarPrintEventHandler</definition>
-        <argsstring>([[maybe_unused]] sml::smlPrintEventId id, void *pSoarRunner_, sml::Agent *pAgent, char const *pMessagee)</argsstring>
+        <argsstring>(sml::smlPrintEventId id, void *pSoarRunner_, sml::Agent *pAgent, char const *pMessagee)</argsstring>
         <name>SoarPrintEventHandler</name>
+        <qualifiedname>soar_ros::SoarPrintEventHandler</qualifiedname>
         <param>
-          <attributes>[[maybe_unused]</attributes>
-          <type>] sml::smlPrintEventId</type>
+          <type>sml::smlPrintEventId</type>
           <declname>id</declname>
         </param>
         <param>
@@ -79,14 +74,14 @@
         </inbodydescription>
         <location file="include/soar_ros/SoarRunner.hpp" line="46" column="6" declfile="include/soar_ros/SoarRunner.hpp" declline="46" declcolumn="6"/>
       </memberdef>
-      <memberdef kind="function" id="SoarRunner_8hpp_1a97a02a4475100d6da512b324b63b74f8" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+      <memberdef kind="function" id="SoarRunner_8hpp_1ac1b2f4700bd2aa2de462bcf23acb9caf" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
         <type>void</type>
         <definition>void soar_ros::updateEventHandler</definition>
-        <argsstring>([[maybe_unused]] sml::smlUpdateEventId id, void *pSoarRunner_, [[maybe_unused]] sml::Kernel *kernel_ptr, [[maybe_unused]] sml::smlRunFlags run_flags)</argsstring>
+        <argsstring>(sml::smlUpdateEventId id, void *pSoarRunner_, sml::Kernel *kernel_ptr, sml::smlRunFlags run_flags)</argsstring>
         <name>updateEventHandler</name>
+        <qualifiedname>soar_ros::updateEventHandler</qualifiedname>
         <param>
-          <attributes>[[maybe_unused]</attributes>
-          <type>] sml::smlUpdateEventId</type>
+          <type>sml::smlUpdateEventId</type>
           <declname>id</declname>
         </param>
         <param>
@@ -94,13 +89,11 @@
           <declname>pSoarRunner_</declname>
         </param>
         <param>
-          <attributes>[[maybe_unused]</attributes>
-          <type>] sml::Kernel *</type>
+          <type>sml::Kernel *</type>
           <declname>kernel_ptr</declname>
         </param>
         <param>
-          <attributes>[[maybe_unused]</attributes>
-          <type>] sml::smlRunFlags</type>
+          <type>sml::smlRunFlags</type>
           <declname>run_flags</declname>
         </param>
         <briefdescription>
@@ -147,7 +140,7 @@
         </inbodydescription>
         <location file="include/soar_ros/SoarRunner.hpp" line="62" column="6" declfile="include/soar_ros/SoarRunner.hpp" declline="62" declcolumn="6"/>
       </memberdef>
-      </sectiondef>
+    </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>

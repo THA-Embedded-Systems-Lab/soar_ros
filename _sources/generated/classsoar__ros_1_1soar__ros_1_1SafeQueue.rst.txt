@@ -1,0 +1,17 @@
+.. _exhale_class_classsoar__ros_1_1soar__ros_1_1SafeQueue:
+
+Template Class SafeQueue
+========================
+
+- Defined in :ref:`file_include_soar_ros_Client.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::soar_ros::SafeQueue
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

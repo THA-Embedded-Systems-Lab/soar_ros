@@ -1,20 +1,21 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
-<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.9.1" xml:lang="en-US">
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
   <compounddef id="classsoar__ros_1_1Publisher" kind="class" language="C++" prot="public" abstract="yes">
     <compoundname>soar_ros::Publisher</compoundname>
-    <basecompoundref refid="classsoar__ros_1_1Output" prot="public" virt="non-virtual">soar_ros::Output&lt; T &gt;</basecompoundref>
-    <basecompoundref refid="classsoar__ros_1_1Interface" prot="public" virt="non-virtual">soar_ros::Interface</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1Output" prot="public" virt="non-virtual">soar_ros::soar_ros::Output&lt; T &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1Interface" prot="public" virt="non-virtual">soar_ros::soar_ros::Interface</basecompoundref>
     <templateparamlist>
       <param>
         <type>typename T</type>
       </param>
     </templateparamlist>
-      <sectiondef kind="private-attrib">
+    <sectiondef kind="private-attrib">
       <memberdef kind="variable" id="classsoar__ros_1_1Publisher_1abd6d7bf5a1df5bf709f218aafd916bdf" prot="private" static="no" mutable="no">
         <type>std::atomic&lt; bool &gt;</type>
         <definition>std::atomic&lt;bool&gt; soar_ros::Publisher&lt; T &gt;::isRunning</definition>
         <argsstring></argsstring>
         <name>isRunning</name>
+        <qualifiedname>soar_ros::Publisher::isRunning</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -28,6 +29,7 @@
         <definition>std::thread soar_ros::Publisher&lt; T &gt;::publisher</definition>
         <argsstring></argsstring>
         <name>publisher</name>
+        <qualifiedname>soar_ros::Publisher::publisher</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -41,6 +43,7 @@
         <definition>std::string soar_ros::Publisher&lt; T &gt;::m_topic</definition>
         <argsstring></argsstring>
         <name>m_topic</name>
+        <qualifiedname>soar_ros::Publisher::m_topic</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -54,6 +57,7 @@
         <definition>rclcpp::Node::SharedPtr soar_ros::Publisher&lt; T &gt;::m_node</definition>
         <argsstring></argsstring>
         <name>m_node</name>
+        <qualifiedname>soar_ros::Publisher::m_node</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -67,6 +71,7 @@
         <definition>sml::Agent* soar_ros::Publisher&lt; T &gt;::m_pAgent</definition>
         <argsstring></argsstring>
         <name>m_pAgent</name>
+        <qualifiedname>soar_ros::Publisher::m_pAgent</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -75,13 +80,14 @@
         </inbodydescription>
         <location file="include/soar_ros/Publisher.hpp" line="36" column="15" bodyfile="include/soar_ros/Publisher.hpp" bodystart="36" bodyend="-1"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-attrib">
+    </sectiondef>
+    <sectiondef kind="public-attrib">
       <memberdef kind="variable" id="classsoar__ros_1_1Publisher_1a5ebfa7b23572b1e6d421a6a6a3e988a0" prot="public" static="no" mutable="no">
         <type>rclcpp::Publisher&lt; T &gt;::SharedPtr</type>
         <definition>rclcpp::Publisher&lt;T&gt;::SharedPtr soar_ros::Publisher&lt; T &gt;::pub</definition>
         <argsstring></argsstring>
         <name>pub</name>
+        <qualifiedname>soar_ros::Publisher::pub</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -90,13 +96,14 @@
         </inbodydescription>
         <location file="include/soar_ros/Publisher.hpp" line="52" column="42" bodyfile="include/soar_ros/Publisher.hpp" bodystart="52" bodyend="-1"/>
       </memberdef>
-      </sectiondef>
-      <sectiondef kind="public-func">
+    </sectiondef>
+    <sectiondef kind="public-func">
       <memberdef kind="function" id="classsoar__ros_1_1Publisher_1a1671d61bcabd64fa76232c2c54289764" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
         <type></type>
         <definition>soar_ros::Publisher&lt; T &gt;::Publisher</definition>
         <argsstring>(sml::Agent *agent, rclcpp::Node::SharedPtr node, const std::string &amp;topic)</argsstring>
         <name>Publisher</name>
+        <qualifiedname>soar_ros::Publisher::Publisher</qualifiedname>
         <param>
           <type>sml::Agent *</type>
           <declname>agent</declname>
@@ -122,6 +129,7 @@
         <definition>soar_ros::Publisher&lt; T &gt;::~Publisher</definition>
         <argsstring>()</argsstring>
         <name>~Publisher</name>
+        <qualifiedname>soar_ros::Publisher::~Publisher</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -135,6 +143,7 @@
         <definition>void soar_ros::Publisher&lt; T &gt;::run</definition>
         <argsstring>()</argsstring>
         <name>run</name>
+        <qualifiedname>soar_ros::Publisher::run</qualifiedname>
         <briefdescription>
         </briefdescription>
         <detaileddescription>
@@ -148,7 +157,8 @@
         <definition>T soar_ros::Publisher&lt; T &gt;::parse</definition>
         <argsstring>(sml::Identifier *id) override=0</argsstring>
         <name>parse</name>
-        <reimplements refid="classsoar__ros_1_1Output_1af01db0104f6bd68b61ac9baff164926f">parse</reimplements>
+        <qualifiedname>soar_ros::Publisher::parse</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1Output_1a728f759fd5538bf8c21e52ad9d387742">parse</reimplements>
         <param>
           <type>sml::Identifier *</type>
           <declname>id</declname>
@@ -179,7 +189,8 @@
         <definition>std::string soar_ros::Publisher&lt; T &gt;::getTopic</definition>
         <argsstring>() override</argsstring>
         <name>getTopic</name>
-        <reimplements refid="classsoar__ros_1_1Interface_1a294fefd3992c72bf1c227928716e938b">getTopic</reimplements>
+        <qualifiedname>soar_ros::Publisher::getTopic</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1Interface_1ac9e494efcf52d9a574bbb13d4275dff5">getTopic</reimplements>
         <briefdescription>
 <para>Get the topic of the subscriber. </para>
         </briefdescription>
@@ -192,12 +203,13 @@
         </inbodydescription>
         <location file="include/soar_ros/Publisher.hpp" line="65" column="15" bodyfile="include/soar_ros/Publisher.hpp" bodystart="65" bodyend="68"/>
       </memberdef>
-      <memberdef kind="function" id="classsoar__ros_1_1Publisher_1a32b5a0549e5eadce8483db3f359e4d37" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+      <memberdef kind="function" id="classsoar__ros_1_1Publisher_1ad2448cafbb5ebf23b9c7b528af958a3f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
         <type>sml::Agent *</type>
-        <definition>sml::Agent* soar_ros::Publisher&lt; T &gt;::getAgent</definition>
+        <definition>sml::Agent * soar_ros::Publisher&lt; T &gt;::getAgent</definition>
         <argsstring>() override</argsstring>
         <name>getAgent</name>
-        <reimplements refid="classsoar__ros_1_1Interface_1a6f20fe370632f8df09b4cbc79d7cc2a7">getAgent</reimplements>
+        <qualifiedname>soar_ros::Publisher::getAgent</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1Interface_1a3913469a81fd03c62f1683c48aed8923">getAgent</reimplements>
         <briefdescription>
 <para>Get the agent of the current interface. </para>
         </briefdescription>
@@ -210,26 +222,12 @@
         </inbodydescription>
         <location file="include/soar_ros/Publisher.hpp" line="70" column="15" bodyfile="include/soar_ros/Publisher.hpp" bodystart="70" bodyend="73"/>
       </memberdef>
-      </sectiondef>
+    </sectiondef>
     <briefdescription>
     </briefdescription>
     <detaileddescription>
     </detaileddescription>
     <inheritancegraph>
-      <node id="2">
-        <label>soar_ros::Output&lt; T &gt;</label>
-        <link refid="classsoar__ros_1_1Output"/>
-        <childnode refid="3" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="3">
-        <label>soar_ros::OutputBase</label>
-        <link refid="classsoar__ros_1_1OutputBase"/>
-      </node>
-      <node id="4">
-        <label>soar_ros::Interface</label>
-        <link refid="classsoar__ros_1_1Interface"/>
-      </node>
       <node id="1">
         <label>soar_ros::Publisher&lt; T &gt;</label>
         <link refid="classsoar__ros_1_1Publisher"/>
@@ -237,23 +235,23 @@
         </childnode>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
+      </node>
+      <node id="4">
+        <label>soar_ros::soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Interface"/>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::Output&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Output"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1OutputBase"/>
       </node>
     </inheritancegraph>
     <collaborationgraph>
-      <node id="2">
-        <label>soar_ros::Output&lt; T &gt;</label>
-        <link refid="classsoar__ros_1_1Output"/>
-        <childnode refid="3" relation="public-inheritance">
-        </childnode>
-      </node>
-      <node id="3">
-        <label>soar_ros::OutputBase</label>
-        <link refid="classsoar__ros_1_1OutputBase"/>
-      </node>
-      <node id="4">
-        <label>soar_ros::Interface</label>
-        <link refid="classsoar__ros_1_1Interface"/>
-      </node>
       <node id="1">
         <label>soar_ros::Publisher&lt; T &gt;</label>
         <link refid="classsoar__ros_1_1Publisher"/>
@@ -261,25 +259,39 @@
         </childnode>
         <childnode refid="4" relation="public-inheritance">
         </childnode>
+      </node>
+      <node id="4">
+        <label>soar_ros::soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Interface"/>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::Output&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Output"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1OutputBase"/>
       </node>
     </collaborationgraph>
     <location file="include/soar_ros/Publisher.hpp" line="29" column="1" bodyfile="include/soar_ros/Publisher.hpp" bodystart="30" bodyend="74"/>
     <listofallmembers>
-      <member refid="classsoar__ros_1_1Publisher_1a32b5a0549e5eadce8483db3f359e4d37" prot="public" virt="virtual"><scope>soar_ros::Publisher</scope><name>getAgent</name></member>
+      <member refid="classsoar__ros_1_1Publisher_1ad2448cafbb5ebf23b9c7b528af958a3f" prot="public" virt="virtual"><scope>soar_ros::Publisher</scope><name>getAgent</name></member>
       <member refid="classsoar__ros_1_1Publisher_1adbcb963a82d60f1821fe78289e70481b" prot="public" virt="virtual"><scope>soar_ros::Publisher</scope><name>getTopic</name></member>
       <member refid="classsoar__ros_1_1Publisher_1abd6d7bf5a1df5bf709f218aafd916bdf" prot="private" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>isRunning</name></member>
       <member refid="classsoar__ros_1_1Publisher_1af59f5fc4a561158ff3784d5b6b700b37" prot="private" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>m_node</name></member>
       <member refid="classsoar__ros_1_1Publisher_1a694d4641e3f12b6b567f9850e00ecc26" prot="private" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>m_pAgent</name></member>
-      <member refid="classsoar__ros_1_1Output_1a4bfed14fee4ff1088d961087e5025344" prot="protected" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>m_s2rQueue</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1aa018f798f4d7c4e93518bd9fb5dba522" prot="protected" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>m_s2rQueue</name></member>
       <member refid="classsoar__ros_1_1Publisher_1acde2d1a11d05a0644c7f1f38d1b32594" prot="private" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>m_topic</name></member>
-      <member refid="classsoar__ros_1_1Output_1aac8f8818e59a7c6391d684e2d32d2784" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>Output</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a986ba8c7294a0aaec2b6774849ba1a47" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>Output</name></member>
       <member refid="classsoar__ros_1_1Publisher_1a5d0151138cdd51eca9c5238f2751e66f" prot="public" virt="pure-virtual"><scope>soar_ros::Publisher</scope><name>parse</name></member>
-      <member refid="classsoar__ros_1_1Output_1ac38d1e23a7093e233209f8ff8f8c9046" prot="public" virt="virtual"><scope>soar_ros::Publisher</scope><name>process_s2r</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a30db5b8255ba15c91a388496050b3fac" prot="public" virt="virtual"><scope>soar_ros::Publisher</scope><name>process_s2r</name></member>
       <member refid="classsoar__ros_1_1Publisher_1a5ebfa7b23572b1e6d421a6a6a3e988a0" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>pub</name></member>
-      <member refid="classsoar__ros_1_1Publisher_1aad72d2746cd35d2d8c9283d1e3bb067b" prot="private" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>publisher</name></member>
       <member refid="classsoar__ros_1_1Publisher_1a1671d61bcabd64fa76232c2c54289764" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>Publisher</name></member>
+      <member refid="classsoar__ros_1_1Publisher_1aad72d2746cd35d2d8c9283d1e3bb067b" prot="private" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>publisher</name></member>
       <member refid="classsoar__ros_1_1Publisher_1a70c008bc9c9376d957221b3abf934f74" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>run</name></member>
-      <member refid="classsoar__ros_1_1Output_1a9660a99c83ff6be1923165a88b426c73" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>~Output</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1aba30fb800d9e4e315aec1d76cb757db7" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>~Output</name></member>
       <member refid="classsoar__ros_1_1Publisher_1a2855d10a3c54ec0c30ac846f7a585be5" prot="public" virt="non-virtual"><scope>soar_ros::Publisher</scope><name>~Publisher</name></member>
     </listofallmembers>
   </compounddef>

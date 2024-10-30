@@ -95,7 +95,9 @@ Program Listing for File SoarRunner.hpp
      std::atomic<bool> isRunning;
    
    public:
-     SoarRunner(const std::string & agent_name, const std::string & path_productions);
+     SoarRunner(
+       const std::string & agent_name,
+       const std::string & path_productions);
    
      void debuggerLaunch(
        [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
@@ -225,7 +227,7 @@ Program Listing for File SoarRunner.hpp
        // Write to Soar input-link
        processInput();
      }
-   }; // class SoarRunner
+   };  // class SoarRunner
    
    }  // namespace soar_ros
    

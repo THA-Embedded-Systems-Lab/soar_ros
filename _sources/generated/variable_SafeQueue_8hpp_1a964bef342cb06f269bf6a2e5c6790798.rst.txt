@@ -1,0 +1,14 @@
+.. _exhale_variable_SafeQueue_8hpp_1a964bef342cb06f269bf6a2e5c6790798:
+
+Variable m_queue
+================
+
+- Defined in :ref:`file_include_soar_ros_SafeQueue.hpp`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: m_queue
+   :project: soar_ros Doxygen Project

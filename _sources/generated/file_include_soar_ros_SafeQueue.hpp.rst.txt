@@ -67,9 +67,9 @@ Included By
 
 - :ref:`file_include_soar_ros_Service.hpp`
 
-- :ref:`file_include_soar_ros_soar_ros.hpp`
-
 - :ref:`file_include_soar_ros_Subscriber.hpp`
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
 
 
 
@@ -85,5 +85,16 @@ Classes
 -------
 
 
-- :ref:`exhale_class_classsoar__ros_1_1SafeQueue`
+- :ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1SafeQueue`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable_SafeQueue_8hpp_1a76964a5982cf430a1d7e7b4466dc11eb`
+
+- :ref:`exhale_variable_SafeQueue_8hpp_1a5c751dae9068bdb864af14129bbe0fa1`
+
+- :ref:`exhale_variable_SafeQueue_8hpp_1a964bef342cb06f269bf6a2e5c6790798`
 

@@ -1,0 +1,14 @@
+.. _exhale_variable_SafeQueue_8hpp_1a5c751dae9068bdb864af14129bbe0fa1:
+
+Variable m_mutex
+================
+
+- Defined in :ref:`file_include_soar_ros_SafeQueue.hpp`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: m_mutex
+   :project: soar_ros Doxygen Project

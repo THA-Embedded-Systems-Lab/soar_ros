@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1soar__ros_1_1Input" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>soar_ros::soar_ros::Input</compoundname>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1InputBase" prot="public" virt="non-virtual">soar_ros::soar_ros::InputBase</basecompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1Subscriber" prot="public" virt="non-virtual">soar_ros::Subscriber&lt; T &gt;</derivedcompoundref>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classsoar__ros_1_1soar__ros_1_1Input_1a3a3def4d48ae099fc3a5cab44ff1f195" prot="protected" static="no" mutable="no">
+        <type><ref refid="classsoar__ros_1_1soar__ros_1_1SafeQueue" kindref="compound">SafeQueue</ref>&lt; T &gt;</type>
+        <definition>SafeQueue&lt;T&gt; soar_ros::soar_ros::Input&lt; T &gt;::m_r2sQueue</definition>
+        <argsstring></argsstring>
+        <name>m_r2sQueue</name>
+        <qualifiedname>soar_ros::soar_ros::Input::m_r2sQueue</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="82" column="13" bodyfile="include/soar_ros/Client.hpp" bodystart="82" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Input_1a6260ad4f6adca546d3b547097cedc03e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::Input::Input</definition>
+        <argsstring>()</argsstring>
+        <name>Input</name>
+        <qualifiedname>soar_ros::soar_ros::Input::Input</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="85" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="85" bodyend="85"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Input_1a67e47cf4fce7e7ebc1a292a97a9dabd1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::Input::~Input</definition>
+        <argsstring>()</argsstring>
+        <name>~Input</name>
+        <qualifiedname>soar_ros::soar_ros::Input::~Input</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="86" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="86" bodyend="86"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Input_1a6b2c746a395c5290d3338d55e0367fed" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>void soar_ros::Input::parse</definition>
+        <argsstring>(T msg)=0</argsstring>
+        <name>parse</name>
+        <qualifiedname>soar_ros::soar_ros::Input::parse</qualifiedname>
+        <param>
+          <type>T</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+<para>This function must attach the ROS message T from m_r2sQueue to the Soar input link. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Soar usually requires a <computeroutput>pAgent-&gt;Commit()</computeroutput> to send the changes, but this is handled inside the SoarRunner::processInput() call.</para>
+<para>The function is called inside the Interface::Input::process_r2s() function.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The ROS2 message. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="97" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Input_1af0d5c1222d36d8bc84ab3f6b719b8492" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>void soar_ros::Input::process_r2s</definition>
+        <argsstring>() override</argsstring>
+        <name>process_r2s</name>
+        <qualifiedname>soar_ros::soar_ros::Input::process_r2s</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1InputBase_1af350a7fc94716effcf2e17bb540fc125">process_r2s</reimplements>
+        <briefdescription>
+<para>This function reads the queue and calls the parse function of the input to create new WM elements via parse function, cf. <ref refid="classsoar__ros_1_1soar__ros_1_1Input" kindref="compound">Input</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="100" column="8" bodyfile="include/soar_ros/Client.hpp" bodystart="100" bodyend="106"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>soar_ros::Subscriber&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Subscriber"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>soar_ros::soar_ros::Input&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1InputBase"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>soar_ros::soar_ros::Input&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Input"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1InputBase"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/soar_ros/Interface.hpp" line="78" column="1" bodyfile="include/soar_ros/Client.hpp" bodystart="79" bodyend="107"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a6260ad4f6adca546d3b547097cedc03e" prot="public" virt="non-virtual"><scope>soar_ros::soar_ros::Input</scope><name>Input</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a3a3def4d48ae099fc3a5cab44ff1f195" prot="protected" virt="non-virtual"><scope>soar_ros::soar_ros::Input</scope><name>m_r2sQueue</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a6b2c746a395c5290d3338d55e0367fed" prot="public" virt="pure-virtual"><scope>soar_ros::soar_ros::Input</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1af0d5c1222d36d8bc84ab3f6b719b8492" prot="public" virt="virtual"><scope>soar_ros::soar_ros::Input</scope><name>process_r2s</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Input_1a67e47cf4fce7e7ebc1a292a97a9dabd1" prot="public" virt="non-virtual"><scope>soar_ros::soar_ros::Input</scope><name>~Input</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

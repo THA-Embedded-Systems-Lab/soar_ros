@@ -1,7 +1,8 @@
 # soar_ros: A ROS 2 Interface for Soar
 
 This ROS2 package provides an interface for the Soar cognitive architecture by
-creating wrappers for ROS2 topics and services.
+creating wrappers for ROS2 messages and handling the Soar kernel in
+a [continuos mode](https://soar.eecs.umich.edu/development/soar/ThreadsInSML/).
 
 [Soar](https://soar.eecs.umich.edu/) is a cognitive architecture developed at
 the University of Michigan. It is used in the field of cognitive robotics in
@@ -31,8 +32,7 @@ configurations were not tested. It provides
 - Service
 - Client
 
-The following features are **not supported** - for more information refer to
-the linked issues.
+The following features are **not supported**, yet.
 
 - Action Server and Client
 - Multiple Soar agents
@@ -71,10 +71,10 @@ public:
 
 ### Service
 
-In the following example, the ROS2 example `AddTwoInts` is implemened. Soar adds
+In the following example, the ROS2 example `AddTwoInts` is implemented. Soar adds
 two integers and sends the result as a ROS2 Service, based on the
 `soar_ros::Service` class. The code is from
-[test_soar_ros.cpp](test/test_soar_ros.cpp).
+[test/test_soar_ros.cpp](./test/test_soar_ros.cpp).
 
 ```cpp
 class TestService : public soar_ros::Service<example_interfaces::srv::AddTwoInts>

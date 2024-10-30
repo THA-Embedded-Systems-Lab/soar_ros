@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1soar__ros_1_1Output" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>soar_ros::soar_ros::Output</compoundname>
+    <basecompoundref refid="classsoar__ros_1_1soar__ros_1_1OutputBase" prot="public" virt="non-virtual">soar_ros::soar_ros::OutputBase</basecompoundref>
+    <derivedcompoundref refid="classsoar__ros_1_1Publisher" prot="public" virt="non-virtual">soar_ros::Publisher&lt; T &gt;</derivedcompoundref>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="classsoar__ros_1_1soar__ros_1_1Output_1aa018f798f4d7c4e93518bd9fb5dba522" prot="protected" static="no" mutable="no">
+        <type><ref refid="classsoar__ros_1_1soar__ros_1_1SafeQueue" kindref="compound">SafeQueue</ref>&lt; T &gt;</type>
+        <definition>SafeQueue&lt;T&gt; soar_ros::soar_ros::Output&lt; T &gt;::m_s2rQueue</definition>
+        <argsstring></argsstring>
+        <name>m_s2rQueue</name>
+        <qualifiedname>soar_ros::soar_ros::Output::m_s2rQueue</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="60" column="13" bodyfile="include/soar_ros/Client.hpp" bodystart="60" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Output_1a986ba8c7294a0aaec2b6774849ba1a47" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::Output::Output</definition>
+        <argsstring>()</argsstring>
+        <name>Output</name>
+        <qualifiedname>soar_ros::soar_ros::Output::Output</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="63" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="63" bodyend="63"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Output_1aba30fb800d9e4e315aec1d76cb757db7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::Output::~Output</definition>
+        <argsstring>()</argsstring>
+        <name>~Output</name>
+        <qualifiedname>soar_ros::soar_ros::Output::~Output</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="64" column="3" bodyfile="include/soar_ros/Client.hpp" bodystart="64" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Output_1a30db5b8255ba15c91a388496050b3fac" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>void soar_ros::Output::process_s2r</definition>
+        <argsstring>(sml::Identifier *id) override</argsstring>
+        <name>process_s2r</name>
+        <qualifiedname>soar_ros::soar_ros::Output::process_s2r</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1soar__ros_1_1OutputBase_1a14fe8c99313410a1833c2e3dffa6f893">process_s2r</reimplements>
+        <param>
+          <type>sml::Identifier *</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>This function is called to process an output link WME and push it to a queue. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="66" column="8" bodyfile="include/soar_ros/Client.hpp" bodystart="66" bodyend="69"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1soar__ros_1_1Output_1a728f759fd5538bf8c21e52ad9d387742" prot="public" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>T</type>
+        <definition>T soar_ros::Output::parse</definition>
+        <argsstring>(sml::Identifier *id)=0</argsstring>
+        <name>parse</name>
+        <qualifiedname>soar_ros::soar_ros::Output::parse</qualifiedname>
+        <reimplementedby refid="classsoar__ros_1_1Client_1abec0605464dc2a8877deacb086319df3">parse</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Publisher_1a5d0151138cdd51eca9c5238f2751e66f">parse</reimplementedby>
+        <reimplementedby refid="classsoar__ros_1_1Service_1ac961b67915ab6ba21ce618dc41809e54">parse</reimplementedby>
+        <param>
+          <type>sml::Identifier *</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Parse Soar working memory structure to a ROS message. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/Interface.hpp" line="74" column="13"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="3">
+        <label>soar_ros::Publisher&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Publisher"/>
+        <childnode refid="1" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>soar_ros::soar_ros::Output&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Output"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1OutputBase"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>soar_ros::soar_ros::Output&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1Output"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="2">
+        <label>soar_ros::soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1soar__ros_1_1OutputBase"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/soar_ros/Interface.hpp" line="57" column="1" bodyfile="include/soar_ros/Client.hpp" bodystart="58" bodyend="75"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1aa018f798f4d7c4e93518bd9fb5dba522" prot="protected" virt="non-virtual"><scope>soar_ros::soar_ros::Output</scope><name>m_s2rQueue</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a986ba8c7294a0aaec2b6774849ba1a47" prot="public" virt="non-virtual"><scope>soar_ros::soar_ros::Output</scope><name>Output</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a728f759fd5538bf8c21e52ad9d387742" prot="public" virt="pure-virtual"><scope>soar_ros::soar_ros::Output</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1a30db5b8255ba15c91a388496050b3fac" prot="public" virt="virtual"><scope>soar_ros::soar_ros::Output</scope><name>process_s2r</name></member>
+      <member refid="classsoar__ros_1_1soar__ros_1_1Output_1aba30fb800d9e4e315aec1d76cb757db7" prot="public" virt="non-virtual"><scope>soar_ros::soar_ros::Output</scope><name>~Output</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

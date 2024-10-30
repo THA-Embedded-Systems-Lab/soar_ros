@@ -1,0 +1,14 @@
+.. _exhale_define_Client_8hpp_1a03a522c849c9e2cbd13ddd03521216b2:
+
+Define SOAR_ROS__SAFEQUEUE_HPP_
+===============================
+
+- Defined in :ref:`file_include_soar_ros_Client.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: SOAR_ROS__SAFEQUEUE_HPP_
+   :project: soar_ros Doxygen Project

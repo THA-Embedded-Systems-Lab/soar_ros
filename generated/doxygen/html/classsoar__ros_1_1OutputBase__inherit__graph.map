@@ -1,9 +1,0 @@
-<map id="soar_ros::OutputBase" name="soar_ros::OutputBase">
-<area shape="rect" id="node1" title=" " alt="" coords="5,93,167,120"/>
-<area shape="rect" id="node2" href="$classsoar__ros_1_1Output.html" title=" " alt="" coords="215,17,425,58"/>
-<area shape="rect" id="node4" href="$classsoar__ros_1_1Output.html" title=" " alt="" coords="215,86,425,127"/>
-<area shape="rect" id="node6" href="$classsoar__ros_1_1Output.html" title=" " alt="" coords="237,152,403,179"/>
-<area shape="rect" id="node3" href="$classsoar__ros_1_1Service.html" title=" " alt="" coords="488,5,700,61"/>
-<area shape="rect" id="node5" href="$classsoar__ros_1_1Client.html" title=" " alt="" coords="473,86,715,127"/>
-<area shape="rect" id="node7" href="$classsoar__ros_1_1Publisher.html" title=" " alt="" coords="503,152,685,179"/>
-</map>

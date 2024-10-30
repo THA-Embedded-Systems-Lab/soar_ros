@@ -11,7 +11,7 @@ output base classes as well as the shared interface.
    :allow-dot-graphs:
 ```
 
-The difference bettwen service and client from the libraries perspective is
+The difference between service and client from the libraries perspective is
 only the reversal of output and input calls.
 
 ```{eval-rst}

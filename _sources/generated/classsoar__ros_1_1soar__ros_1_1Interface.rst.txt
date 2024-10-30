@@ -1,0 +1,29 @@
+.. _exhale_class_classsoar__ros_1_1soar__ros_1_1Interface:
+
+Class Interface
+===============
+
+- Defined in :ref:`file_include_soar_ros_Client.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public soar_ros::Client< T, pRequestType, pResponseType >`` (:ref:`exhale_class_classsoar__ros_1_1Client`)
+- ``public soar_ros::Publisher< T >`` (:ref:`exhale_class_classsoar__ros_1_1Publisher`)
+- ``public soar_ros::Service< T, pRequestType, pResponseType >`` (:ref:`exhale_class_classsoar__ros_1_1Service`)
+- ``public soar_ros::Subscriber< T >`` (:ref:`exhale_class_classsoar__ros_1_1Subscriber`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::soar_ros::Interface
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

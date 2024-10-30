@@ -24,11 +24,11 @@ Program Listing for File Service.hpp
    // See the License for the specific language governing permissions and
    // limitations under the License.
    
-   #ifndef SOAR_ROSOS__SERVICE_HPP_
-   #define SOAR_ROSOS__SERVICE_HPP_
+   #ifndef SOAR_ROS__SERVICE_HPP_
+   #define SOAR_ROS__SERVICE_HPP_
    
-   #include <string>
    #include <memory>
+   #include <string>
    
    #include <rclcpp/rclcpp.hpp>
    
@@ -41,7 +41,8 @@ Program Listing for File Service.hpp
    {
    template<typename T, typename pRequestType = typename T::Request::SharedPtr,
      typename pResponseType = typename T::Response::SharedPtr>
-   class Service : public virtual Input<pRequestType>, public virtual Output<pResponseType>,
+   class Service : public virtual Input<pRequestType>,
+     public virtual Output<pResponseType>,
      public Interface
    {
    protected:
@@ -52,8 +53,7 @@ Program Listing for File Service.hpp
    
      void callback(
        [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
-       pRequestType request,
-       pResponseType response)
+       pRequestType request, pResponseType response)
      {
        // send data via createWMEs
        this->m_r2sQueue.push(request);
@@ -62,31 +62,25 @@ Program Listing for File Service.hpp
      }
    
    public:
-     Service(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & service_name)
+     Service(
+       sml::Agent * agent, rclcpp::Node::SharedPtr node,
+       const std::string & service_name)
      : m_topic(service_name), m_node(node), m_pAgent(agent)
      {
-       m_service =
-         m_node.get()->create_service<T>(
-         m_topic,
-         std::bind(
-           &Service::callback, this, std::placeholders::_1, std::placeholders::_2,
-           std::placeholders::_3));
+       m_service = m_node.get()->create_service<T>(
+         m_topic, std::bind(
+           &Service::callback, this, std::placeholders::_1,
+           std::placeholders::_2, std::placeholders::_3));
      }
      ~Service() {}
    
      virtual void parse(pRequestType msg) = 0;
      pResponseType parse(sml::Identifier * id) override = 0;
    
-     std::string getTopic() override
-     {
-       return m_topic;
-     }
+     std::string getTopic() override {return m_topic;}
    
-     sml::Agent * getAgent() override
-     {
-       return m_pAgent;
-     }
+     sml::Agent * getAgent() override {return m_pAgent;}
    };
    }  // namespace soar_ros
    
-   #endif  // SOAR_ROSOS__SERVICE_HPP_
+   #endif  // SOAR_ROS__SERVICE_HPP_

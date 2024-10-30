@@ -1,0 +1,32 @@
+.. _exhale_class_classsoar__ros_1_1soar__ros_1_1Input:
+
+Template Class Input
+====================
+
+- Defined in :ref:`file_include_soar_ros_Client.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public soar_ros::soar_ros::InputBase`` (:ref:`exhale_class_classsoar__ros_1_1soar__ros_1_1InputBase`)
+
+
+Derived Type
+************
+
+- ``public soar_ros::Subscriber< T >`` (:ref:`exhale_class_classsoar__ros_1_1Subscriber`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::soar_ros::Input
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

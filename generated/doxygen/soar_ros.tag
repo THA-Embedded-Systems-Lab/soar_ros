@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.9.1">
+<tagfile doxygen_version="1.12.0" doxygen_gitid="c73f5d30f9e8b1df5ba15a1d064ff2067cbb8267">
   <compound kind="file">
     <name>SafeQueue.hpp</name>
-    <path>/home/runner/work/soar_ros/soar_ros/include/soar_ros/</path>
+    <path>include/soar_ros/</path>
     <filename>SafeQueue_8hpp.html</filename>
-    <class kind="class">soar_ros::SafeQueue</class>
+    <class kind="class">soar_ros::soar_ros::SafeQueue</class>
   </compound>
   <compound kind="class">
     <name>soar_ros::Client</name>
     <filename>classsoar__ros_1_1Client.html</filename>
-    <templarg></templarg>
-    <templarg></templarg>
-    <templarg></templarg>
-    <base virtualness="virtual">Output&lt; typename T::Request::SharedPtr &gt;</base>
-    <base virtualness="virtual">Input&lt; typename T::Response::SharedPtr &gt;</base>
-    <base>soar_ros::Interface</base>
+    <templarg>typename T</templarg>
+    <templarg>typename pRequestType</templarg>
+    <templarg>typename pResponseType</templarg>
+    <base virtualness="virtual">soar_ros::soar_ros::Output&lt; typename T::Request::SharedPtr &gt;</base>
+    <base virtualness="virtual">soar_ros::soar_ros::Input&lt; typename T::Response::SharedPtr &gt;</base>
+    <base>soar_ros::soar_ros::Interface</base>
     <member kind="function" virtualness="pure">
       <type>pRequestType</type>
       <name>parse</name>
@@ -33,7 +33,7 @@
       <type>sml::Agent *</type>
       <name>getAgent</name>
       <anchorfile>classsoar__ros_1_1Client.html</anchorfile>
-      <anchor>ae4fe6f9d6c592e42c168d3f1f2c52d27</anchor>
+      <anchor>a851c9c9d954740cd3384016efbd1844e</anchor>
       <arglist>() override</arglist>
     </member>
     <member kind="function" protection="protected">
@@ -45,167 +45,91 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>soar_ros::Input</name>
-    <filename>classsoar__ros_1_1Input.html</filename>
-    <templarg></templarg>
-    <base>soar_ros::InputBase</base>
+    <name>soar_ros::soar_ros::Input</name>
+    <filename>classsoar__ros_1_1soar__ros_1_1Input.html</filename>
+    <templarg>typename T</templarg>
+    <base>soar_ros::soar_ros::InputBase</base>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
       <name>parse</name>
-      <anchorfile>classsoar__ros_1_1Input.html</anchorfile>
-      <anchor>a09a0e5766d8c852f3da30c6bb7723ecf</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1Input.html</anchorfile>
+      <anchor>a6b2c746a395c5290d3338d55e0367fed</anchor>
       <arglist>(T msg)=0</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>process_r2s</name>
-      <anchorfile>classsoar__ros_1_1Input.html</anchorfile>
-      <anchor>a24f54e499689f3751bc5ba2c37096a93</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1Input.html</anchorfile>
+      <anchor>af0d5c1222d36d8bc84ab3f6b719b8492</anchor>
       <arglist>() override</arglist>
     </member>
   </compound>
   <compound kind="class">
-    <name>Input&lt; typename T::Request::SharedPtr &gt;</name>
-    <filename>classsoar__ros_1_1Input.html</filename>
-    <base>soar_ros::InputBase</base>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>parse</name>
-      <anchorfile>classsoar__ros_1_1Input.html</anchorfile>
-      <anchor>a09a0e5766d8c852f3da30c6bb7723ecf</anchor>
-      <arglist>(typename T::Request::SharedPtr msg)=0</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>process_r2s</name>
-      <anchorfile>classsoar__ros_1_1Input.html</anchorfile>
-      <anchor>a24f54e499689f3751bc5ba2c37096a93</anchor>
-      <arglist>() override</arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>Input&lt; typename T::Response::SharedPtr &gt;</name>
-    <filename>classsoar__ros_1_1Input.html</filename>
-    <base>soar_ros::InputBase</base>
-    <member kind="function" virtualness="pure">
-      <type>virtual void</type>
-      <name>parse</name>
-      <anchorfile>classsoar__ros_1_1Input.html</anchorfile>
-      <anchor>a09a0e5766d8c852f3da30c6bb7723ecf</anchor>
-      <arglist>(typename T::Response::SharedPtr msg)=0</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>process_r2s</name>
-      <anchorfile>classsoar__ros_1_1Input.html</anchorfile>
-      <anchor>a24f54e499689f3751bc5ba2c37096a93</anchor>
-      <arglist>() override</arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>soar_ros::InputBase</name>
-    <filename>classsoar__ros_1_1InputBase.html</filename>
+    <name>soar_ros::soar_ros::InputBase</name>
+    <filename>classsoar__ros_1_1soar__ros_1_1InputBase.html</filename>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
       <name>process_r2s</name>
-      <anchorfile>classsoar__ros_1_1InputBase.html</anchorfile>
-      <anchor>a54be74c01b756a1ebc1f927b5efb0f48</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1InputBase.html</anchorfile>
+      <anchor>af350a7fc94716effcf2e17bb540fc125</anchor>
       <arglist>()=0</arglist>
     </member>
   </compound>
   <compound kind="class">
-    <name>soar_ros::Interface</name>
-    <filename>classsoar__ros_1_1Interface.html</filename>
+    <name>soar_ros::soar_ros::Interface</name>
+    <filename>classsoar__ros_1_1soar__ros_1_1Interface.html</filename>
     <member kind="function" virtualness="pure">
       <type>virtual std::string</type>
       <name>getTopic</name>
-      <anchorfile>classsoar__ros_1_1Interface.html</anchorfile>
-      <anchor>a294fefd3992c72bf1c227928716e938b</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1Interface.html</anchorfile>
+      <anchor>ac9e494efcf52d9a574bbb13d4275dff5</anchor>
       <arglist>()=0</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual sml::Agent *</type>
       <name>getAgent</name>
-      <anchorfile>classsoar__ros_1_1Interface.html</anchorfile>
-      <anchor>a6f20fe370632f8df09b4cbc79d7cc2a7</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1Interface.html</anchorfile>
+      <anchor>a3913469a81fd03c62f1683c48aed8923</anchor>
       <arglist>()=0</arglist>
     </member>
   </compound>
   <compound kind="class">
-    <name>soar_ros::Output</name>
-    <filename>classsoar__ros_1_1Output.html</filename>
-    <templarg></templarg>
-    <base>soar_ros::OutputBase</base>
+    <name>soar_ros::soar_ros::Output</name>
+    <filename>classsoar__ros_1_1soar__ros_1_1Output.html</filename>
+    <templarg>typename T</templarg>
+    <base>soar_ros::soar_ros::OutputBase</base>
     <member kind="function">
       <type>void</type>
       <name>process_s2r</name>
-      <anchorfile>classsoar__ros_1_1Output.html</anchorfile>
-      <anchor>ac38d1e23a7093e233209f8ff8f8c9046</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1Output.html</anchorfile>
+      <anchor>a30db5b8255ba15c91a388496050b3fac</anchor>
       <arglist>(sml::Identifier *id) override</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual T</type>
       <name>parse</name>
-      <anchorfile>classsoar__ros_1_1Output.html</anchorfile>
-      <anchor>af01db0104f6bd68b61ac9baff164926f</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1Output.html</anchorfile>
+      <anchor>a728f759fd5538bf8c21e52ad9d387742</anchor>
       <arglist>(sml::Identifier *id)=0</arglist>
     </member>
   </compound>
   <compound kind="class">
-    <name>Output&lt; typename T::Request::SharedPtr &gt;</name>
-    <filename>classsoar__ros_1_1Output.html</filename>
-    <base>soar_ros::OutputBase</base>
-    <member kind="function">
-      <type>void</type>
-      <name>process_s2r</name>
-      <anchorfile>classsoar__ros_1_1Output.html</anchorfile>
-      <anchor>ac38d1e23a7093e233209f8ff8f8c9046</anchor>
-      <arglist>(sml::Identifier *id) override</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual typename T::Request::SharedPtr</type>
-      <name>parse</name>
-      <anchorfile>classsoar__ros_1_1Output.html</anchorfile>
-      <anchor>af01db0104f6bd68b61ac9baff164926f</anchor>
-      <arglist>(sml::Identifier *id)=0</arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>Output&lt; typename T::Response::SharedPtr &gt;</name>
-    <filename>classsoar__ros_1_1Output.html</filename>
-    <base>soar_ros::OutputBase</base>
-    <member kind="function">
-      <type>void</type>
-      <name>process_s2r</name>
-      <anchorfile>classsoar__ros_1_1Output.html</anchorfile>
-      <anchor>ac38d1e23a7093e233209f8ff8f8c9046</anchor>
-      <arglist>(sml::Identifier *id) override</arglist>
-    </member>
-    <member kind="function" virtualness="pure">
-      <type>virtual typename T::Response::SharedPtr</type>
-      <name>parse</name>
-      <anchorfile>classsoar__ros_1_1Output.html</anchorfile>
-      <anchor>af01db0104f6bd68b61ac9baff164926f</anchor>
-      <arglist>(sml::Identifier *id)=0</arglist>
-    </member>
-  </compound>
-  <compound kind="class">
-    <name>soar_ros::OutputBase</name>
-    <filename>classsoar__ros_1_1OutputBase.html</filename>
+    <name>soar_ros::soar_ros::OutputBase</name>
+    <filename>classsoar__ros_1_1soar__ros_1_1OutputBase.html</filename>
     <member kind="function" virtualness="pure">
       <type>virtual void</type>
       <name>process_s2r</name>
-      <anchorfile>classsoar__ros_1_1OutputBase.html</anchorfile>
-      <anchor>a30c11674e784b63ef1cea8f3868e9e3d</anchor>
+      <anchorfile>classsoar__ros_1_1soar__ros_1_1OutputBase.html</anchorfile>
+      <anchor>a14fe8c99313410a1833c2e3dffa6f893</anchor>
       <arglist>(sml::Identifier *id)=0</arglist>
     </member>
   </compound>
   <compound kind="class">
     <name>soar_ros::Publisher</name>
     <filename>classsoar__ros_1_1Publisher.html</filename>
-    <templarg></templarg>
-    <base>soar_ros::Output</base>
-    <base>soar_ros::Interface</base>
+    <templarg>typename T</templarg>
+    <base>soar_ros::soar_ros::Output&lt; T &gt;</base>
+    <base>soar_ros::soar_ros::Interface</base>
     <member kind="function" virtualness="pure">
       <type>T</type>
       <name>parse</name>
@@ -224,24 +148,24 @@
       <type>sml::Agent *</type>
       <name>getAgent</name>
       <anchorfile>classsoar__ros_1_1Publisher.html</anchorfile>
-      <anchor>a32b5a0549e5eadce8483db3f359e4d37</anchor>
+      <anchor>ad2448cafbb5ebf23b9c7b528af958a3f</anchor>
       <arglist>() override</arglist>
     </member>
   </compound>
   <compound kind="class">
-    <name>soar_ros::SafeQueue</name>
-    <filename>classsoar__ros_1_1SafeQueue.html</filename>
-    <templarg></templarg>
+    <name>soar_ros::soar_ros::SafeQueue</name>
+    <filename>classsoar__ros_1_1soar__ros_1_1SafeQueue.html</filename>
+    <templarg>typename T</templarg>
   </compound>
   <compound kind="class">
     <name>soar_ros::Service</name>
     <filename>classsoar__ros_1_1Service.html</filename>
-    <templarg></templarg>
-    <templarg></templarg>
-    <templarg></templarg>
-    <base virtualness="virtual">Input&lt; typename T::Request::SharedPtr &gt;</base>
-    <base virtualness="virtual">Output&lt; typename T::Response::SharedPtr &gt;</base>
-    <base>soar_ros::Interface</base>
+    <templarg>typename T</templarg>
+    <templarg>typename pRequestType</templarg>
+    <templarg>typename pResponseType</templarg>
+    <base virtualness="virtual">soar_ros::soar_ros::Input&lt; typename T::Request::SharedPtr &gt;</base>
+    <base virtualness="virtual">soar_ros::soar_ros::Output&lt; typename T::Response::SharedPtr &gt;</base>
+    <base>soar_ros::soar_ros::Interface</base>
     <member kind="function" virtualness="pure">
       <type>pResponseType</type>
       <name>parse</name>
@@ -260,7 +184,7 @@
       <type>sml::Agent *</type>
       <name>getAgent</name>
       <anchorfile>classsoar__ros_1_1Service.html</anchorfile>
-      <anchor>aedb3ff0a398aa821369e3a6521a70fab</anchor>
+      <anchor>a01b248776a0e28e387308f0796ea50f7</anchor>
       <arglist>() override</arglist>
     </member>
   </compound>
@@ -278,35 +202,35 @@
       <type>void</type>
       <name>debuggerLaunch</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>a8e758f86ce719f1035852e85bfff9a2d</anchor>
-      <arglist>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
+      <anchor>a5a85184219cdedb2e9826481e4be5f49</anchor>
+      <arglist>(const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>getSoarKernelStatus</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>af60fee9c9b50e0696f7fabd444b441b5</anchor>
-      <arglist>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
+      <anchor>af7c28fc3d7ba9f4d9b2178fca86c230c</anchor>
+      <arglist>(const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>runSoarKernel</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>ad615385cb571b0859fa341a347ba1a79</anchor>
-      <arglist>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
+      <anchor>a9b579438380e18582d68c66b7a1ab170</anchor>
+      <arglist>(const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>stopSoarKernel</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>a65d354c261d99756222af4a790981e58</anchor>
-      <arglist>([[maybe_unused]] const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, [[maybe_unused]] std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
+      <anchor>a70560c29a2d317f96d29462ac6d44d2a</anchor>
+      <arglist>(const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</arglist>
     </member>
     <member kind="function">
       <type>sml::Agent *</type>
       <name>addAgent</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>a130cdf890594f230d7e987394c93e002</anchor>
+      <anchor>a25a39e1fe1dbb815a7781caa9d63895b</anchor>
       <arglist>(const std::string &amp;agent_name, const std::string &amp;path_productions)</arglist>
     </member>
     <member kind="function">
@@ -320,43 +244,43 @@
       <type>bool</type>
       <name>addPublisher</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>ad773ed65ead9c40e883ffadbd314a346</anchor>
-      <arglist>(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt;&gt; output)</arglist>
+      <anchor>a5c03ccf5186a8386b73ed23f933ce492</anchor>
+      <arglist>(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt; &gt; output)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>addPublisher</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>a010eff1a3de5ae0eed9078225773e669</anchor>
-      <arglist>(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt;&gt; output, const std::string &amp;commandName)</arglist>
+      <anchor>a3d62f1328da585cbb7c55010a31352a4</anchor>
+      <arglist>(std::shared_ptr&lt; soar_ros::Publisher&lt; T &gt; &gt; output, const std::string &amp;commandName)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>addService</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>acb4c15839939a62cb4554e5bb8118e77</anchor>
-      <arglist>(std::shared_ptr&lt; soar_ros::Service&lt; T &gt;&gt; service)</arglist>
+      <anchor>abbadbd6a39c3dbb7e4490cac11965a29</anchor>
+      <arglist>(std::shared_ptr&lt; soar_ros::Service&lt; T &gt; &gt; service)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>addService</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>acf0876f03bae81626d9e3649162cc13c</anchor>
-      <arglist>(std::shared_ptr&lt; soar_ros::Service&lt; T &gt;&gt; service, const std::string &amp;commandName)</arglist>
+      <anchor>a0edd9b8aadb1440f363a316eee091dd6</anchor>
+      <arglist>(std::shared_ptr&lt; soar_ros::Service&lt; T &gt; &gt; service, const std::string &amp;commandName)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>addClient</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>a6b92de426f03f7ed27729d6ff5a7a726</anchor>
-      <arglist>(std::shared_ptr&lt; soar_ros::Client&lt; T &gt;&gt; client)</arglist>
+      <anchor>ac47e59d8073947e53a213bb12b130e67</anchor>
+      <arglist>(std::shared_ptr&lt; soar_ros::Client&lt; T &gt; &gt; client)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>addClient</name>
       <anchorfile>classsoar__ros_1_1SoarRunner.html</anchorfile>
-      <anchor>aba2ffb76aca69fc5441c6a90e3a7a910</anchor>
-      <arglist>(std::shared_ptr&lt; soar_ros::Client&lt; T &gt;&gt; client, const std::string &amp;commandName)</arglist>
+      <anchor>a12ee7e8dceadb4ca8aaa55262839d3e3</anchor>
+      <arglist>(std::shared_ptr&lt; soar_ros::Client&lt; T &gt; &gt; client, const std::string &amp;commandName)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -383,9 +307,9 @@
   <compound kind="class">
     <name>soar_ros::Subscriber</name>
     <filename>classsoar__ros_1_1Subscriber.html</filename>
-    <templarg></templarg>
-    <base>soar_ros::Input</base>
-    <base>soar_ros::Interface</base>
+    <templarg>typename T</templarg>
+    <base>soar_ros::soar_ros::Input&lt; T &gt;</base>
+    <base>soar_ros::soar_ros::Interface</base>
     <member kind="function">
       <type>std::string</type>
       <name>getTopic</name>
@@ -397,7 +321,7 @@
       <type>sml::Agent *</type>
       <name>getAgent</name>
       <anchorfile>classsoar__ros_1_1Subscriber.html</anchorfile>
-      <anchor>aa5b8d2ffaa6264e9eb3f5a11e1c76334</anchor>
+      <anchor>ab6ce3f45ea600c5e8e0eef4b85c2a6b1</anchor>
       <arglist>() override</arglist>
     </member>
   </compound>
