@@ -2,5 +2,4 @@ README
 ======
 
 
-.. include:: standard_docs/original/README.md
-   :parser: myst_parser.sphinx_
+.. include:: standard_docs/original/README.rst

@@ -1,5 +1,4 @@
 README
 ))))))
 
-.. include:: original/README.md
-   :parser: myst_parser.sphinx_
+.. include:: original/README.rst

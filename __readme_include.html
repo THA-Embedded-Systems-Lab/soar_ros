@@ -14,6 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css?v=a885cde7" />
 
   
+    <link rel="shortcut icon" href="_static/soar_ros_logo.svg"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=7026087e"></script>
@@ -36,6 +37,7 @@
           
           <a href="index.html" class="icon icon-home">
             soar_ros
+              <img src="_static/soar_ros_logo.svg" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -500,6 +502,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="user_docs.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_docs/About.html">About</a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_docs/ClassDiagram.html">Class Diagrams</a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_docs/ROSInterface.html">ROS Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_docs/SoftwareArchitecture.html">Software Architecture</a></li>
@@ -537,28 +540,34 @@
              
   <section id="readme">
 <h1>README<a class="headerlink" href="#readme" title="Link to this heading"></a></h1>
+</section>
 <section id="soar-ros-a-ros-2-interface-for-soar">
-<h2>soar_ros: A ROS 2 Interface for Soar<a class="headerlink" href="#soar-ros-a-ros-2-interface-for-soar" title="Link to this heading"></a></h2>
-<p>This ROS2 package provides an interface for the Soar cognitive architecture by
-creating wrappers for ROS2 messages and handling the Soar kernel in
-a <a class="reference external" href="https://soar.eecs.umich.edu/development/soar/ThreadsInSML/">continuos mode</a>.</p>
-<p><a class="reference external" href="https://soar.eecs.umich.edu/">Soar</a> is a cognitive architecture developed at
-the University of Michigan. It is used in the field of cognitive robotics in
-different projects, e.g. a
+<h1>soar_ros: A ROS 2 Interface for Soar<a class="headerlink" href="#soar-ros-a-ros-2-interface-for-soar" title="Link to this heading"></a></h1>
+<figure class="align-default">
+<img alt="logo" src="doc/Images/soar_ros_slogan.svg" />
+</figure>
+<p>This ROS2 package provides an interface for the Soar cognitive
+architecture by creating wrappers for ROS2 messages and handling the
+Soar kernel in a <a class="reference external" href="https://soar.eecs.umich.edu/development/soar/ThreadsInSML/">continuos
+mode</a>.</p>
+<p><a class="reference external" href="https://soar.eecs.umich.edu/">Soar</a> is a cognitive architecture
+developed at the University of Michigan. It is used in the field of
+cognitive robotics in different projects, e.g. a
 <a class="reference external" href="https://github.com/saikishor/soar-to-ros/tree/master">drone</a> or a
-<a class="reference external" href="https://github.com/pauloserrafh/ros_tiago_soar/tree/master">robot</a>. However,
-the integration of Soar and <a class="reference external" href="https://www.ros.org/">ROS 2</a> is currently difficult
-for complex projects, which include multiple publishers, subscribers, services
-or clients. The main limitation orginates from the synchronous callback model
-used by Soar which inspired the creation of this wrapper. A detailed explanation
-about the reason for the development of the package can be read in the
-<a class="reference internal" href="#./doc/SoftwareArchitecture.md"><span class="xref myst">software architecture</span></a>.</p>
-<p>The package relies on a forked version of Soar. The major changes include a
-<code class="docutils literal notranslate"><span class="pre">cmake</span></code>-based build instead of <code class="docutils literal notranslate"><span class="pre">scons</span></code> and removal of SWIG language interfaces.
-For a detailed comparison have a look at the commit history of the
-<a class="reference external" href="https://github.com/moschmdt/soar">fork</a>.</p>
+<a class="reference external" href="https://github.com/pauloserrafh/ros_tiago_soar/tree/master">robot</a>.
+However, the integration of Soar and <a class="reference external" href="https://www.ros.org/">ROS 2</a> is
+currently difficult for complex projects, which include multiple
+publishers, subscribers, services or clients. The main limitation
+orginates from the synchronous callback model used by Soar which
+inspired the creation of this wrapper. A detailed explanation about the
+reason for the development of the package can be read in the <a class="reference external" href="./doc/SoftwareArchitecture.md">software
+architecture</a>.</p>
+<p>The package relies on a forked version of Soar. The major changes
+include a <code class="docutils literal notranslate"><span class="pre">cmake</span></code>-based build instead of <code class="docutils literal notranslate"><span class="pre">scons</span></code> and removal of SWIG
+language interfaces. For a detailed comparison have a look at the commit
+history of the <a class="reference external" href="https://github.com/moschmdt/soar">fork</a>.</p>
 <section id="features">
-<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
 <p>The library is developed targeting ROS 2 Humble on Ubuntu 22.04. Other
 configurations were not tested. It provides</p>
 <ul class="simple">
@@ -575,18 +584,20 @@ configurations were not tested. It provides</p>
 </ul>
 </section>
 <section id="definition-and-description-of-the-public-api">
-<h3>Definition and description of the public API<a class="headerlink" href="#definition-and-description-of-the-public-api" title="Link to this heading"></a></h3>
-<p>The API documentation is generated via <a class="reference external" href="https://github.com/ros-infrastructure/rosdoc2"><code class="docutils literal notranslate"><span class="pre">rosdoc2</span></code></a>, cf.
-<a class="reference internal" href="#how-to-build-documentation"><span class="xref myst">how to build documentation</span></a>.</p>
+<h2>Definition and description of the public API<a class="headerlink" href="#definition-and-description-of-the-public-api" title="Link to this heading"></a></h2>
+<p>The API documentation is generated via
+<a class="reference external" href="https://github.com/ros-infrastructure/rosdoc2">rosdoc2</a>, cf.
+<a class="reference external" href="#how-to-build-documentation">how to build documentation</a>.</p>
 </section>
 <section id="examples">
-<h3>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h3>
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p>The following examples are an extract of the test cases in
-<a class="reference internal" href="#./test/test_soar_ros.cpp"><span class="xref myst">test/test_soar_ros.cpp</span></a>.</p>
+<a class="reference external" href="./test/test_soar_ros.cpp">test/test_soar_ros.cpp</a>.</p>
 <section id="publisher">
-<h4>Publisher<a class="headerlink" href="#publisher" title="Link to this heading"></a></h4>
-<p>The <code class="docutils literal notranslate"><span class="pre">soar_ros::Publisher</span></code> extends the ROS <code class="docutils literal notranslate"><span class="pre">Publisher</span></code> so the user only needs to
-define how data are converted between ROS data types and Soar data types.</p>
+<h3>Publisher<a class="headerlink" href="#publisher" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">soar_ros::Publisher</span></code> extends the ROS <code class="docutils literal notranslate"><span class="pre">Publisher</span></code> so the user
+only needs to define how data are converted between ROS data types and
+Soar data types.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TestOutput</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">soar_ros</span><span class="o">::</span><span class="n">Publisher</span><span class="o">&lt;</span><span class="n">std_msgs</span><span class="o">::</span><span class="n">msg</span><span class="o">::</span><span class="n">String</span><span class="o">&gt;</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -605,11 +616,11 @@ define how data are converted between ROS data types and Soar data types.</p>
 </div>
 </section>
 <section id="service">
-<h4>Service<a class="headerlink" href="#service" title="Link to this heading"></a></h4>
-<p>In the following example, the ROS2 example <code class="docutils literal notranslate"><span class="pre">AddTwoInts</span></code> is implemented. Soar adds
-two integers and sends the result as a ROS2 Service, based on the
-<code class="docutils literal notranslate"><span class="pre">soar_ros::Service</span></code> class. The code is from
-<a class="reference internal" href="#./test/test_soar_ros.cpp"><span class="xref myst">test/test_soar_ros.cpp</span></a>.</p>
+<h3>Service<a class="headerlink" href="#service" title="Link to this heading"></a></h3>
+<p>In the following example, the ROS2 example <code class="docutils literal notranslate"><span class="pre">AddTwoInts</span></code> is
+implemented. Soar adds two integers and sends the result as a ROS2
+Service, based on the <code class="docutils literal notranslate"><span class="pre">soar_ros::Service</span></code> class. The code is from
+<a class="reference external" href="./test/test_soar_ros.cpp">test/test_soar_ros.cpp</a>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">TestService</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">soar_ros</span><span class="o">::</span><span class="n">Service</span><span class="o">&lt;</span><span class="n">example_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">AddTwoInts</span><span class="o">&gt;</span>
 <span class="p">{</span>
 <span class="k">public</span><span class="o">:</span>
@@ -639,9 +650,9 @@ two integers and sends the result as a ROS2 Service, based on the
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>A second step is required to actually make this interface available - adding it
-to the node similar to a builder pattern, cf.
-<a class="reference internal" href="#test/test_soar_ros.cpp"><span class="xref myst">tes_soar_ros.cpp</span></a>.</p>
+<p>A second step is required to actually make this interface available -
+adding it to the node similar to a builder pattern, cf.
+<a class="reference external" href="test/test_soar_ros.cpp">tes_soar_ros.cpp</a>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">soar_ros</span><span class="o">::</span><span class="n">SoarRunner</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Test Agent&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">soar_path</span><span class="p">);</span>
 
 <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">soar_ros</span><span class="o">::</span><span class="n">Service</span><span class="o">&lt;</span><span class="n">example_interfaces</span><span class="o">::</span><span class="n">srv</span><span class="o">::</span><span class="n">AddTwoInts</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="o">=</span>
@@ -655,9 +666,9 @@ to the node similar to a builder pattern, cf.
 <span class="n">executor</span><span class="p">.</span><span class="n">spin</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>These rules use an operator to add two integer numbers and provide the sum
-at the output link. The following rules are availabe in
-<a class="reference internal" href="#Soar/main.soar"><span class="xref myst">main.soar</span></a>.</p>
+<p>These rules use an operator to add two integer numbers and provide the
+sum at the output link. The following rules are availabe in
+<a class="reference external" href="Soar/main.soar">main.soar</a>.</p>
 <div class="highlight-soar notranslate"><div class="highlight"><pre><span></span><span class="kr">sp</span><span class="w"> </span><span class="p">{</span><span class="nf">any*propose*add_two_ints</span>
 <span class="w">   </span><span class="p">(</span><span class="kr">state</span><span class="w"> </span><span class="n">&lt;s&gt;</span><span class="w"> </span><span class="nv">^io.input-link.AddTwoInts</span><span class="w"> </span><span class="n">&lt;pAddTwoInts&gt;</span><span class="p">)</span>
 <span class="w">   </span><span class="o">-</span><span class="p">(</span><span class="n">&lt;pAddTwoInts&gt;</span><span class="w"> </span><span class="nv">^status</span><span class="w"> </span><span class="l">complete</span><span class="p">)</span>
@@ -683,14 +694,14 @@ at the output link. The following rules are availabe in
 </section>
 </section>
 <section id="how-to-build-and-install">
-<h3>How to build and install<a class="headerlink" href="#how-to-build-and-install" title="Link to this heading"></a></h3>
+<h2>How to build and install<a class="headerlink" href="#how-to-build-and-install" title="Link to this heading"></a></h2>
 <p><strong>Prerequisite</strong>: A ROS2 installation is available.</p>
 <ol class="arabic">
 <li><p>Clone this repository in your workspace</p></li>
 <li><p>Build via <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">build</span> <span class="pre">--packages-select</span> <span class="pre">soar_ros</span></code></p></li>
 <li><p>Source the ROS workspace</p></li>
-<li><p>Run the test executable via <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span> <span class="pre">soar_ros</span> <span class="pre">test_example</span></code>. The output should
-look similar to the following:</p>
+<li><p>Run the test executable via <code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span> <span class="pre">soar_ros</span> <span class="pre">test_example</span></code>. The
+output should look similar to the following:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>ros2<span class="w"> </span>run<span class="w"> </span>soar_ros<span class="w"> </span>test_example
 <span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1721823668</span>.516038530<span class="o">]</span><span class="w"> </span><span class="o">[</span>SoarRunner<span class="o">]</span>:<span class="w"> </span>Starting<span class="w"> </span>runThread
 <span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1721823668</span>.516344554<span class="o">]</span><span class="w"> </span><span class="o">[</span>SoarRunner<span class="o">]</span>:<span class="w"> </span>Test<span class="w"> </span>Agent:<span class="w">      </span><span class="m">1</span>:<span class="w">    </span>O:<span class="w"> </span>O1<span class="w"> </span><span class="o">(</span>init-agent<span class="o">)</span>
@@ -700,76 +711,74 @@ look similar to the following:</p>
 </div>
 </li>
 </ol>
-<blockquote>
-<div><p>[!WARNING]
-If you would like to use the Java-based debugger, the installation of the
-official Soar release is requried:
-Download and install the latest Soar release from their
-<a class="reference external" href="https://github.com/SoarGroup/Soar">repository</a>. Setting the <code class="docutils literal notranslate"><span class="pre">SOAR_HOME</span></code> environment variable to
-the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory of the insalltion could help to open the debugger.</p>
-</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you would like to use the Java-based debugger, the
+installation of the official Soar release is requried: Download and
+install the latest Soar release from their
+<a class="reference external" href="https://github.com/SoarGroup/Soar">repository</a>. Setting the
+<code class="docutils literal notranslate"><span class="pre">SOAR_HOME</span></code> environment variable to the <code class="docutils literal notranslate"><span class="pre">bin/</span></code> directory of the
+insalltion could help to open the debugger.</p>
+</div>
 </section>
 <section id="how-to-build-and-run-tests">
-<h3>How to build and run tests<a class="headerlink" href="#how-to-build-and-run-tests" title="Link to this heading"></a></h3>
-<p>The packages relies on the <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test</span></code> procedure, including launch testing
-which is automatically triggered by <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test</span></code>.</p>
+<h2>How to build and run tests<a class="headerlink" href="#how-to-build-and-run-tests" title="Link to this heading"></a></h2>
+<p>The packages relies on the <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test</span></code> procedure, including launch
+testing which is automatically triggered by <code class="docutils literal notranslate"><span class="pre">colcon</span> <span class="pre">test</span></code>.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>colcon<span class="w"> </span><span class="nb">test</span>
 colcon<span class="w"> </span>test-result<span class="w"> </span>--verbose
 </pre></div>
 </div>
 </section>
 <section id="how-to-build-documentation">
-<h3>How to build documentation<a class="headerlink" href="#how-to-build-documentation" title="Link to this heading"></a></h3>
-<p>The documentation is generated via <a class="reference external" href="https://github.com/ros-infrastructure/rosdoc2"><code class="docutils literal notranslate"><span class="pre">rosdoc2</span></code></a>. Execute the following
-commands in the cloned repository or adjust the path of <code class="docutils literal notranslate"><span class="pre">rosdoc2</span> <span class="pre">build</span></code>
-accordingly.</p>
+<h2>How to build documentation<a class="headerlink" href="#how-to-build-documentation" title="Link to this heading"></a></h2>
+<p>The documentation is generated via
+<a class="reference external" href="https://github.com/ros-infrastructure/rosdoc2">rosdoc2</a>. Execute
+the following commands in the cloned repository or adjust the path of
+<code class="docutils literal notranslate"><span class="pre">rosdoc2</span> <span class="pre">build</span></code> accordingly.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>rosdoc2<span class="w"> </span>build<span class="w"> </span>--package-path<span class="w"> </span>.
 rosdoc2<span class="w"> </span>open<span class="w"> </span>docs_output/soar_ros/index.html
 </pre></div>
 </div>
 </section>
 <section id="how-to-develop">
-<h3>How to develop<a class="headerlink" href="#how-to-develop" title="Link to this heading"></a></h3>
+<h2>How to develop<a class="headerlink" href="#how-to-develop" title="Link to this heading"></a></h2>
 <p>Clone the package in your ROS2 workspace.</p>
 </section>
 <section id="usage">
-<h3>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h3>
-<p>Include this package as dependency in your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> and clone it your
-ROS2 workspace.</p>
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Include this package as dependency in your <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> and clone
+it your ROS2 workspace.</p>
 <div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">find_package</span><span class="p">(</span><span class="s">soar_ros</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
 <span class="nb">ament_target_dependencies</span><span class="p">(</span><span class="s">&lt;executable_name&gt;</span><span class="w"> </span><span class="s">soar_ros</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>For code references have a look at the <a class="reference internal" href="#examples"><span class="xref myst">examples</span></a>.</p>
+<p>For code references have a look at the <a class="reference external" href="#examples">examples</a>.</p>
 </section>
 <section id="license">
-<h3>License<a class="headerlink" href="#license" title="Link to this heading"></a></h3>
-<p>Licensed under the Apache License, Version 2.0 (the “License”);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>Licensed under the Apache License, Version 2.0 (the “License”); you may
+not use this file except in compliance with the License. You may obtain
+a copy of the License at</p>
 <p><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></p>
 <p>Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an “AS IS” BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License</p>
-<p>Refer to the <a class="reference internal" href="#LICENSE"><span class="xref myst">license</span></a> file. The respective Soar license is available
-at their <a class="reference external" href="https://github.com/SoarGroup/Soar">repository</a>.</p>
+<p>Refer to the <a class="reference external" href="LICENSE">license</a> file. The respective Soar license is
+available at their <a class="reference external" href="https://github.com/SoarGroup/Soar">repository</a>.</p>
 </section>
 <section id="acknowledgements">
-<h3>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading"></a></h3>
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading"></a></h2>
 <p>This project was developed as part of the <a class="reference external" href="https://www.kiproduktionsnetzwerk.de/">AI Production Network
-Augsburg</a> funded by the <a class="reference external" href="https://www.stmwk.bayern.de/englisch.html">Bavarian State
-Ministry of Science and the Arts</a>
-and the <a class="reference external" href="https://www.stmwi.bayern.de/english/">Bavarian Ministry of Economic Affairs, Regional Development and
-Energy</a>.</p>
-<p><img alt="Bavarian Ministry of Economic Affairs, Regional Development and Energy" src="doc/Images/stmwi.png" />
-<img alt="Bavarian State Ministry of Science and the Arts" src="doc/Images/stmwk.png" />
-<img alt="Bayern Innovativ" src="doc/Images/bayern_innovativ.svg" />
-<img alt="Hightech Agenda Bavaria" src="doc/Images/hta.png" />
-<img alt="AI Production Network Augsburg" src="doc/Images/ai_prod_network.png" /></p>
-<p><a class="reference external" href="https://www.tha.de/Service/Impressum.html">Imprint</a> &amp; <a class="reference external" href="https://www.tha.de/Service/Datenschutz.html">privacy</a></p>
-</section>
+Augsburg</a> funded by the
+<a class="reference external" href="https://www.stmwk.bayern.de/englisch.html">Bavarian State Ministry of Science and the
+Arts</a> and the <a class="reference external" href="https://www.stmwi.bayern.de/english/">Bavarian
+Ministry of Economic Affairs, Regional Development and
+Energy</a>, cf. <a class="reference external" href="./doc/About.rst">about</a>.</p>
+<p><a class="reference external" href="https://www.tha.de/Service/Impressum.html">Imprint</a> &amp;
+<a class="reference external" href="https://www.tha.de/Service/Datenschutz.html">privacy</a></p>
 </section>
 </section>
 

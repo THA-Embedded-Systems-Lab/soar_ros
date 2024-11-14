@@ -21,7 +21,6 @@ only the reversal of output and input calls.
 
 Publisher and subscriber only have either the input or the output functionality:
 
-
 ```{eval-rst}
 .. doxygenclass:: soar_ros::Publisher
    :allow-dot-graphs:
