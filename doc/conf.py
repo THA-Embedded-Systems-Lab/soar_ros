@@ -58,6 +58,8 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 master_doc = 'index'
+html_logo = 'Images/soar_ros_logo.svg'
+html_favicon = 'Images/soar_ros_logo.svg'
 
 source_suffix = {
     '.rst': 'restructuredtext',
