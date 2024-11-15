@@ -1,7 +1,7 @@
 soar_ros: A ROS 2 Interface for Soar
 ====================================
 
-.. figure:: doc/Images/soar_ros_slogan.svg
+.. figure:: doc/Images/soar_ros_slogan_default.svg
    :alt: logo
 
 This ROS2 package provides an interface for the Soar cognitive
