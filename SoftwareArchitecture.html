@@ -14,7 +14,7 @@
       <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css?v=a885cde7" />
 
   
-    <link rel="shortcut icon" href="_static/soar_ros_logo.svg"/>
+    <link rel="shortcut icon" href="_static/soar_ros_icon_default.svg"/>
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=7026087e"></script>
@@ -34,7 +34,7 @@ const load = async () => {
     const mermaids_to_add_zoom = 1 === -1 ? all_mermaids.length : 1;
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
     if(mermaids_to_add_zoom > 0) {
-        var svgs = d3.selectAll(".mermaid[data-zoom-id=id-67c70226-8852-4b2c-9dbe-7fd0446fc27c] svg");
+        var svgs = d3.selectAll(".mermaid[data-zoom-id=id-b4a5ccfe-2fea-474c-b63b-5e530af8af2b] svg");
         if(all_mermaids.length !== mermaids_processed.length) {
             // try again in a sec, wait for mermaids to load
             setTimeout(load, 200);
@@ -74,7 +74,7 @@ window.addEventListener("load", load);
           
           <a href="index.html" class="icon icon-home">
             soar_ros
-              <img src="_static/soar_ros_logo.svg" class="logo" alt="Logo"/>
+              <img src="_static/soar_ros_icon_white.svg" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -594,7 +594,7 @@ responsibility is to create, start and maintain the Soar kernel.</p></li>
 <li><p>Publisher, Subscribers, Service and Clients are added via a separate functions
 to the ROS2 node.</p></li>
 </ul>
-<pre data-zoom-id="id-67c70226-8852-4b2c-9dbe-7fd0446fc27c" class="mermaid">
+<pre data-zoom-id="id-b4a5ccfe-2fea-474c-b63b-5e530af8af2b" class="mermaid">
         sequenceDiagram
 box Soar
 participant SoarRunner
