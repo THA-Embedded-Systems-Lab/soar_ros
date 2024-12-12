@@ -15,5 +15,24 @@ jobs:
       - uses: ros-tooling/action-ros-ci@v0.3
         with:
           package-name: soar_ros
-          import-token: ${{ secrets.GITHUB_TOKEN }}
           target-ros2-distro: humble
+  jazzy:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:noble
+    steps:
+      - uses: ros-tooling/setup-ros@v0.7
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name: soar_ros
+          target-ros2-distro: jazzy
+  rolling:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
+    steps:
+      - uses: ros-tooling/setup-ros@v0.7
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name: soar_ros
+          target-ros2-distro: rolling

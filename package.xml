@@ -15,6 +15,8 @@
   <depend>std_srvs</depend>
   <depend>launch_testing_ament_cmake</depend>
   <depend>ament_index_cpp</depend>
+  <!-- Required for Soar until available as rosdep key. Currently installed via fetchcontent-->
+  <depend>libsqlite3-dev</depend>
 
   <test_depend>launch_ros</test_depend>
 

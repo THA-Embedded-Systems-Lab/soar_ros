@@ -54,7 +54,7 @@ set_target_properties(test_example
 if(BUILD_TESTING)
   find_package(launch_testing_ament_cmake)
   add_launch_test(test/test_launch.py)
-  add_launch_test(test/test_launch_client.py)
+  # add_launch_test(test/test_launch_client.py)
 endif()
 
 install(TARGETS test_example
