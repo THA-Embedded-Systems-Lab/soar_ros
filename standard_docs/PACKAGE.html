@@ -464,7 +464,8 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../standards.html">Standard Documents</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="CHANGELOG.html#changelog-for-package-soar-ros">Changelog for package soar_ros</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="CHANGELOG.html#id1">0.0.1 (2024-09-13)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CHANGELOG.html#id1">0.0.2 (2024-12-17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CHANGELOG.html#id2">0.0.1 (2024-09-13)</a></li>
 </ul>
 </li>
 </ul>
@@ -547,7 +548,7 @@
 <span class="cp">&lt;?xml-model href=&quot;http://download.ros.org/schema/package_format3.xsd&quot; schematypens=&quot;http://www.w3.org/2001/XMLSchema&quot;?&gt;</span>
 <span class="nt">&lt;package</span><span class="w"> </span><span class="na">format=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
 <span class="w">  </span><span class="nt">&lt;name&gt;</span>soar_ros<span class="nt">&lt;/name&gt;</span>
-<span class="w">  </span><span class="nt">&lt;version&gt;</span>0.0.1<span class="nt">&lt;/version&gt;</span>
+<span class="w">  </span><span class="nt">&lt;version&gt;</span>0.0.2<span class="nt">&lt;/version&gt;</span>
 <span class="w">  </span><span class="nt">&lt;description&gt;</span>An<span class="w"> </span>interface<span class="w"> </span>library<span class="w"> </span>to<span class="w"> </span>connect<span class="w"> </span>ROS2<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>Soar<span class="w"> </span>cognitive<span class="w"> </span>architecture.<span class="nt">&lt;/description&gt;</span>
 <span class="w">  </span><span class="nt">&lt;maintainer</span><span class="w"> </span><span class="na">email=</span><span class="s">&quot;moritz.schmidt@tha.de&quot;</span><span class="nt">&gt;</span>Moritz<span class="w"> </span>Schmidt<span class="nt">&lt;/maintainer&gt;</span>
 <span class="w">  </span><span class="nt">&lt;license&gt;</span>Apache<span class="w"> </span>License<span class="w"> </span>2.0<span class="nt">&lt;/license&gt;</span>
@@ -560,6 +561,8 @@
 <span class="w">  </span><span class="nt">&lt;depend&gt;</span>std_srvs<span class="nt">&lt;/depend&gt;</span>
 <span class="w">  </span><span class="nt">&lt;depend&gt;</span>launch_testing_ament_cmake<span class="nt">&lt;/depend&gt;</span>
 <span class="w">  </span><span class="nt">&lt;depend&gt;</span>ament_index_cpp<span class="nt">&lt;/depend&gt;</span>
+<span class="w">  </span><span class="cm">&lt;!-- Required for Soar until available as rosdep key. Currently installed via fetchcontent--&gt;</span>
+<span class="w">  </span><span class="nt">&lt;depend&gt;</span>libsqlite3-dev<span class="nt">&lt;/depend&gt;</span>
 
 <span class="w">  </span><span class="nt">&lt;test_depend&gt;</span>launch_ros<span class="nt">&lt;/test_depend&gt;</span>
 

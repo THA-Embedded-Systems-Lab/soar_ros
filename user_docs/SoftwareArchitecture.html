@@ -34,7 +34,7 @@ const load = async () => {
     const mermaids_to_add_zoom = 1 === -1 ? all_mermaids.length : 1;
     const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
     if(mermaids_to_add_zoom > 0) {
-        var svgs = d3.selectAll(".mermaid[data-zoom-id=id-0352bb7c-a6f9-461a-8daf-b9eee0d9a0cb] svg");
+        var svgs = d3.selectAll(".mermaid[data-zoom-id=id-8a7d5069-f975-4e08-b8f7-d7bc5d8c28b0] svg");
         if(all_mermaids.length !== mermaids_processed.length) {
             // try again in a sec, wait for mermaids to load
             setTimeout(load, 200);
@@ -501,7 +501,8 @@ window.addEventListener("load", load);
 <li class="toctree-l1"><a class="reference internal" href="../standards.html">Standard Documents</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../standard_docs/CHANGELOG.html">CHANGELOG</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../standard_docs/CHANGELOG.html#changelog-for-package-soar-ros">Changelog for package soar_ros</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../standard_docs/CHANGELOG.html#id1">0.0.1 (2024-09-13)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../standard_docs/CHANGELOG.html#id1">0.0.2 (2024-12-17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../standard_docs/CHANGELOG.html#id2">0.0.1 (2024-09-13)</a></li>
 </ul>
 </li>
 </ul>
@@ -597,7 +598,7 @@ responsibility is to create, start and maintain the Soar kernel.</p></li>
 <li><p>Publisher, Subscribers, Service and Clients are added via a separate functions
 to the ROS2 node.</p></li>
 </ul>
-<pre data-zoom-id="id-0352bb7c-a6f9-461a-8daf-b9eee0d9a0cb" class="mermaid">
+<pre data-zoom-id="id-8a7d5069-f975-4e08-b8f7-d7bc5d8c28b0" class="mermaid">
         sequenceDiagram
 box Soar
 participant SoarRunner
