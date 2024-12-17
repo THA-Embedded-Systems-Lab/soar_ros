@@ -2,8 +2,8 @@
 Changelog for package soar_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2024-12-17)
+------------------
 * ci: add jazzy and rolling tests. Disable flaky client test
 * docs: Add logos and update images.
 * fix: Stop SoarRunner Kernel thread on error.
