@@ -30,7 +30,7 @@ include(FetchContent)
 FetchContent_Declare(
     soar
     GIT_REPOSITORY https://github.com/moschmdt/Soar.git
-    GIT_TAG cmake # main branch, 2024-09-03
+    GIT_TAG cmake
 )
 
 FetchContent_MakeAvailable(soar)
