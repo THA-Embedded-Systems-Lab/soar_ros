@@ -15,6 +15,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   std_msgs
   std_srvs
   ament_index_cpp
+  SQLite3
 )
 
 find_package(example_interfaces REQUIRED)
@@ -29,7 +30,7 @@ include(FetchContent)
 FetchContent_Declare(
     soar
     GIT_REPOSITORY https://github.com/moschmdt/Soar.git
-    GIT_TAG 0b92a17a7953ec525bc14d2f7333d7b7c8278117 # main branch, 2024-09-03
+    GIT_TAG cmake # main branch, 2024-09-03
 )
 
 FetchContent_MakeAvailable(soar)
@@ -40,7 +41,7 @@ target_include_directories(soar_ros
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
 ament_target_dependencies(soar_ros rclcpp std_msgs std_srvs ament_index_cpp)
-target_link_libraries(soar_ros soar)
+target_link_libraries(soar_ros soar_lib)
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
@@ -66,7 +67,7 @@ install(
 )
 
 install(
-  TARGETS soar_ros soar
+  TARGETS soar_ros soar_lib
   EXPORT export_${PROJECT_NAME}
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
