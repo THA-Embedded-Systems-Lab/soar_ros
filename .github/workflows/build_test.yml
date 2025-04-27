@@ -9,15 +9,15 @@ on:
 
 jobs:
     includes_only:
-        runs-on: ${{ matrix.ubuntu }}
+        runs-on: ${{ matrix.os}}
         strategy:
             matrix:
                 include:
-                    - ubuntu: "jammy"
+                    - os: "ubuntu-22.04"
                       target_ros2_distro: "humble"
-                    - ubuntu: "noble"
+                    - os: "ubuntu-24.04"
                       target_ros2_distro: "jazzy"
-                    - ubuntu: "noble"
+                    - os: "ubuntu-24.04"
                       target_ros2_distro: "rolling"
         steps:
             - uses: ros-tooling/setup-ros@v0.7
