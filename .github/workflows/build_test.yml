@@ -6,33 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  humble:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:jammy
-    steps:
-      - uses: ros-tooling/setup-ros@v0.7
-      - uses: ros-tooling/action-ros-ci@v0.3
-        with:
-          package-name: soar_ros
-          target-ros2-distro: humble
-  jazzy:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:noble
-    steps:
-      - uses: ros-tooling/setup-ros@v0.7
-      - uses: ros-tooling/action-ros-ci@v0.3
-        with:
-          package-name: soar_ros
-          target-ros2-distro: jazzy
-  rolling:
-    runs-on: ubuntu-latest
-    container:
-      image: ubuntu:latest
-    steps:
-      - uses: ros-tooling/setup-ros@v0.7
-      - uses: ros-tooling/action-ros-ci@v0.3
-        with:
-          package-name: soar_ros
-          target-ros2-distro: rolling
+    includes_only:
+        runs-on: ${{ matrix.ubuntu }}
+        strategy:
+            matrix:
+                include:
+                    - ubuntu: "jammy"
+                      target_ros2_distro: "humble"
+                    - ubuntu: "noble"
+                      target_ros2_distro: "jazzy"
+                    - ubuntu: "noble"
+                      target_ros2_distro: "rolling"
+        steps:
+            - uses: ros-tooling/setup-ros@v0.7
+            - uses: ros-tooling/action-ros-ci@v0.3
+              with:
+                  package-name: soar_ros
+                  target-ros2-distro: ${{ matrix.target_ros2_distro }}
