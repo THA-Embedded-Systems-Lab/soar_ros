@@ -5,6 +5,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+option(SOAR_ROS_ENABLE_CONVERSION "Enable conversion component for different ROS messages to Soar WMEs" OFF)
+set(CONVERSION_INCLUDE_DEPENDS
+    geometry_msgs)
+
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(ament_cmake REQUIRED)
@@ -18,6 +22,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   SQLite3
 )
 
+# TODO Separate testing and example application
 find_package(example_interfaces REQUIRED)
 
 foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
@@ -51,6 +56,17 @@ target_link_libraries(test_example soar_ros)
 set_target_properties(test_example
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
+if(SOAR_ROS_ENABLE_CONVERSION)
+foreach(Dependency IN ITEMS ${CONVERSION_INCLUDE_DEPENDS})
+  find_package(${Dependency} REQUIRED)
+endforeach()
+
+target_include_directories(soar_ros
+  PUBLIC
+    "$<INSTALL_INTERFACE:include/conversion/>")
+ament_target_dependencies(soar_ros ${CONVERSION_INCLUDE_DEPENDS})
+ament_export_dependencies(${CONVERSION_INCLUDE_DEPENDS})
+endif()
 
 if(BUILD_TESTING)
   find_package(launch_testing_ament_cmake)
