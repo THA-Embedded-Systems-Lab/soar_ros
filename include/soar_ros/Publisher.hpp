@@ -28,7 +28,7 @@ namespace soar_ros
 template<typename T>
 class Publisher : public Output<T>, public Interface
 {
-private:
+protected:
   std::atomic<bool> isRunning;
   std::thread publisher;
   std::string m_topic;
