@@ -51,13 +51,6 @@ void SoarRunner::processInput()
   pAgent->Commit();
 }
 
-void SoarRunner::run()
-{
-  while (isRunning.load()) {
-    pAgent->RunSelf(1);
-  }
-}
-
 std::string SoarRunner::getSoarLogFilePath()
 {
   auto currentTime = std::chrono::system_clock::now();

@@ -129,9 +129,16 @@ private:
   /// Called in SoarRunner::updateWorld()
   void processInput();
 
-  /// @brief Initialize runThread and execute pAgent->RunSelfForever() in
+  /// @brief Initialize runThread and execute pAgent->RunSelf(1) in
   /// separate thread.
-  void run();
+  void run()
+  {
+    while (isRunning.load()) {
+      if(pAgent) {
+        pAgent->RunSelf(1);
+      }
+    }
+  }
 
   /// @brief Compute filepath for the Soar log in ROS2 ecosystem.
   /// @return Filepath with ISO8601 timestamp in UTC
