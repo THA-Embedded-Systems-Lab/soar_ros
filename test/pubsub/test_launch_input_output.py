@@ -13,26 +13,24 @@
 # limitations under the License.
 
 import unittest
+import uuid
 
 import launch
 import launch_ros
 import launch_ros.actions
 import launch_testing.actions
-import launch_testing.markers
 import pytest
 
 import rclpy
 
 import std_msgs.msg
-import example_interfaces.srv
-import threading
 
 
 @pytest.mark.launch_test
 def generate_test_description():
     soar_ros_node = launch_ros.actions.Node(
         package="soar_ros",
-        executable="test_example",
+        executable="test_input_output",
         shell=True,
         emulate_tty=True,
         output='screen'
@@ -42,11 +40,6 @@ def generate_test_description():
         soar_ros_node,
         launch_testing.actions.ReadyToTest()
     ])
-
-
-def spin_node(node, stop_event):
-    while not stop_event.is_set():
-        rclpy.spin_once(node)
 
 
 class TestSoarRos(unittest.TestCase):
@@ -60,35 +53,20 @@ class TestSoarRos(unittest.TestCase):
 
     def setUp(self):
         self.node = rclpy.create_node('test_soar_ros')
-        self.srv = self.node.create_service(
-            example_interfaces.srv.AddTwoInts, "AddTwoIntsClient", self.add_two_ints_callback)
 
     def tearDown(self):
         self.node.destroy_node()
 
-    def test_client(self, proc_output):
-        pub = self.node.create_publisher(std_msgs.msg.String, "Trigger", 10)
+    def test_republisher(self, proc_output):
+        pub = self.node.create_publisher(
+            std_msgs.msg.String,
+            "testinput",
+            10
+        )
+
         msg = std_msgs.msg.String()
-        msg.data = "start"
+        msg.data = str(uuid.uuid4())
+        pub.publish(msg)
 
-        # Start the event loop via spin, otherwise the service does not react.
-        self.stop_event = threading.Event()
-        self.spin_thread = threading.Thread(
-            target=spin_node, args=(self.node, self.stop_event))
-        self.spin_thread.start()
+        proc_output.assertWaitFor(msg.data, timeout=5, stream='stdout')
 
-        for _ in range(10):
-            pub.publish(msg)
-            print(f'Published Trigger message: {msg.data}')
-
-        proc_output.assertWaitFor("12", timeout=5)
-
-        # Stop spin thread and wait until stopped until further tests are executed.
-        self.stop_event.set()
-        self.spin_thread.join()
-
-    def add_two_ints_callback(self, request, response):
-        response.sum = request.a + request.b
-        self.node.get_logger().info(
-            f"AddTwoIntsClient a: {request.a} b: {request.b} = {response.sum}")
-        return response

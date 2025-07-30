@@ -20,6 +20,7 @@
   <depend>libsqlite3-dev</depend>
 
   <test_depend>launch_ros</test_depend>
+  <test_depend>example_interfaces</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

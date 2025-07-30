@@ -17,9 +17,9 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   std_srvs
   ament_index_cpp
   SQLite3
+  rclcpp_action
 )
 
-find_package(example_interfaces REQUIRED)
 
 foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
   find_package(${Dependency} REQUIRED)
@@ -46,26 +46,42 @@ target_link_libraries(soar_ros soar_lib)
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
+add_executable(test_example test/test_soar_ros.cpp)
+ament_target_dependencies(test_example ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
+target_link_libraries(test_example soar_ros)
+set_target_properties(test_example
+  PROPERTIES CMAKE_CXX_STANDARD 20)
+
+
 if(BUILD_TESTING)
-  add_executable(test_example test/test_soar_ros.cpp)
-  ament_target_dependencies(test_example ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
-  target_link_libraries(test_example soar_ros)
-  set_target_properties(test_example
-    PROPERTIES CMAKE_CXX_STANDARD 20)
+  find_package(example_interfaces REQUIRED)
+  find_package(launch_testing_ament_cmake)
+
+  add_executable(test_input_output test/pubsub/test_input_output.cpp)
+  ament_target_dependencies(test_input_output ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(test_input_output soar_ros)
+
+  add_executable(test_service test/service/test_service.cpp)
+  ament_target_dependencies(test_service ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
+  target_link_libraries(test_service soar_ros)
+
+  add_executable(test_client test/client/test_client.cpp)
+  ament_target_dependencies(test_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
+  target_link_libraries(test_client soar_ros)
 
   add_executable(test_action_client test/test_action_client.cpp)
   ament_target_dependencies(test_action_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
   target_link_libraries(test_action_client soar_ros)
-  set_target_properties(test_action_client
-    PROPERTIES CMAKE_CXX_STANDARD 20)
 
-  find_package(launch_testing_ament_cmake)
-  add_launch_test(test/test_launch.py)
-  # add_launch_test(test/test_launch_client.py)
-  add_launch_test(test/test_launch_actionClient.py)
+  add_launch_test(test/pubsub/test_launch_input_output.py)
+  add_launch_test(test/service/test_launch_service.py)
+  add_launch_test(test/client/test_launch_client.py)
+
+  install(TARGETS test_input_output test_service test_client test_action_client
+      DESTINATION lib/${PROJECT_NAME})
 endif()
 
-install(TARGETS test_example test_action_client
+install(TARGETS test_example
     DESTINATION lib/${PROJECT_NAME})
 
 install(

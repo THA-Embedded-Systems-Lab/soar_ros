@@ -1,0 +1,22 @@
+source init_agent.soar
+source wait.soar
+
+sp {any*propose*test_republisher
+   (state <s> ^io.input-link.testinput <pMessage>)
+   -(<pMessage> ^status complete)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name test_republisher
+      ^pMessage <pMessage>)
+}
+
+sp {any*apply*test_republisher
+   (state <s> ^operator <o>
+      ^io.output-link <ol>)
+   (<o> ^name test_republisher
+      ^pMessage <pMessage>)
+   (<pMessage> ^data <message>)
+-->
+   (<ol> ^test.data <message>)
+   (<pMessage> ^status complete)
+}

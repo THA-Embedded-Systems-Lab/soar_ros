@@ -1,0 +1,22 @@
+source init_agent.soar
+source wait.soar
+
+sp {any*propose*add_two_ints_client
+   (state <s> ^io.input-link.Trigger <Trigger>)
+   (<Trigger> -^status complete)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name add_two_ints_client
+      ^Trigger <Trigger>)
+}
+
+sp {any*apply*add_two_ints_client
+   (state <s> ^operator <o>
+      ^io.output-link <ol>)
+   (<o> ^name add_two_ints_client
+      ^Trigger <Trigger>)
+-->
+   (<ol> ^AddTwoIntsClient <pAddTwoIntsClient>)
+   (<pAddTwoIntsClient> ^a 6 ^b 6)
+   (<Trigger> ^status complete)
+}
