@@ -38,10 +38,11 @@ configurations were not tested. It provides
 -  Subscriber
 -  Service
 -  Client
+-  Action Client
 
 The following features are **not supported**, yet.
 
--  Action Server and Client
+-  Action Server
 -  Multiple Soar agents
 
 Definition and description of the public API

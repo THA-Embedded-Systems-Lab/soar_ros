@@ -1,0 +1,67 @@
+sp {topstate*propose*init-agent
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name init-agent)
+}
+
+sp {topstate*apply*init-agent
+   (state <s> ^operator.name init-agent)
+-->
+   (<s> ^name TestAgent)
+}
+
+source wait.soar
+
+# Rule 1: create goal request with fibonacci order
+sp {fibonacci*propose*send-goal
+   (state <s> ^name TestAgent
+             -^goal-sent)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name send-fibonacci-goal)
+}
+
+sp {fibonacci*apply*send-goal
+   (state <s> ^operator <o>
+              ^io.output-link <ol>)
+   (<o> ^name send-fibonacci-goal)
+-->
+   (<ol> ^ros-action-client-fibonacci <rag>)
+   (<rag> ^goal <goal>)
+   (<goal> ^request <gr>)
+   (<gr> ^order 5)
+   (<s> ^goal-sent true)
+}
+
+# Rule 3: Elaboration rule to copy feedback to working memory
+sp {fibonacci*elaborate*feedback
+   (state <s> ^name TestAgent
+              ^io.input-link.ros-action-client-fibonacci.feedback <feedback>)
+-->
+   (<s> ^current-feedback <feedback>)
+}
+
+# Rule 4: Rule that listens for result response indicating action completed
+sp {fibonacci*propose*process-result
+   (state <s> ^name TestAgent
+              ^io.input-link.ros-action-client-fibonacci.result.response <result>
+             -^action-completed)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name process-final-result
+        ^result <result>)
+}
+
+sp {fibonacci*apply*process-result
+   (state <s> ^operator <o>)
+   (<o> ^name process-final-result
+        ^result <result>)
+-->
+   (<s> ^action-completed true
+        ^response <result>)
+}
+
+
+

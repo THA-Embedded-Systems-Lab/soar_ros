@@ -22,6 +22,7 @@
 #include "Subscriber.hpp"
 #include "Service.hpp"
 #include "Client.hpp"
+#include "ActionClient.hpp"
 
 
 #endif  // SOAR_ROS__SOAR_ROS_HPP_

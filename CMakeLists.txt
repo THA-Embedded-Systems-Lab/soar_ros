@@ -12,6 +12,7 @@ find_package(rclcpp REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
+  rclcpp_action
   std_msgs
   std_srvs
   ament_index_cpp
@@ -40,25 +41,31 @@ target_include_directories(soar_ros
   PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-ament_target_dependencies(soar_ros rclcpp std_msgs std_srvs ament_index_cpp)
+ament_target_dependencies(soar_ros rclcpp rclcpp_action std_msgs std_srvs ament_index_cpp)
 target_link_libraries(soar_ros soar_lib)
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
-add_executable(test_example test/test_soar_ros.cpp)
-ament_target_dependencies(test_example ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
-target_link_libraries(test_example soar_ros)
-set_target_properties(test_example
-  PROPERTIES CMAKE_CXX_STANDARD 20)
-
-
 if(BUILD_TESTING)
+  add_executable(test_example test/test_soar_ros.cpp)
+  ament_target_dependencies(test_example ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
+  target_link_libraries(test_example soar_ros)
+  set_target_properties(test_example
+    PROPERTIES CMAKE_CXX_STANDARD 20)
+
+  add_executable(test_action_client test/test_action_client.cpp)
+  ament_target_dependencies(test_action_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
+  target_link_libraries(test_action_client soar_ros)
+  set_target_properties(test_action_client
+    PROPERTIES CMAKE_CXX_STANDARD 20)
+
   find_package(launch_testing_ament_cmake)
   add_launch_test(test/test_launch.py)
   # add_launch_test(test/test_launch_client.py)
+  add_launch_test(test/test_launch_actionClient.py)
 endif()
 
-install(TARGETS test_example
+install(TARGETS test_example test_action_client
     DESTINATION lib/${PROJECT_NAME})
 
 install(

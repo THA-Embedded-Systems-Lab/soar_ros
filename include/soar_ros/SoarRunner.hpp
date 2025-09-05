@@ -35,6 +35,7 @@
 #include "Publisher.hpp"
 #include "Service.hpp"
 #include "Subscriber.hpp"
+#include "ActionClient.hpp"
 
 namespace soar_ros
 {
@@ -249,7 +250,7 @@ public:
   /// @param output
   /// @return
   template<typename T>
-  bool addPublisher(std::shared_ptr<soar_ros::Publisher<T>> output)
+  bool addPublisher(std::shared_ptr<Publisher<T>> output)
   {
     outputs[output.get()->getTopic()] = output;
     return true;
@@ -263,7 +264,7 @@ public:
   /// @return
   template<typename T>
   bool addPublisher(
-    std::shared_ptr<soar_ros::Publisher<T>> output,
+    std::shared_ptr<Publisher<T>> output,
     const std::string & commandName)
   {
     outputs[commandName] = output;
@@ -271,7 +272,7 @@ public:
   }
 
   template<typename T>
-  bool addSubscriber(std::shared_ptr<soar_ros::Subscriber<T>> input)
+  bool addSubscriber(std::shared_ptr<Subscriber<T>> input)
   {
     inputs.push_back(input);
     return true;
@@ -283,7 +284,7 @@ public:
   /// @param service
   /// @return
   template<typename T>
-  bool addService(std::shared_ptr<soar_ros::Service<T>> service)
+  bool addService(std::shared_ptr<Service<T>> service)
   {
     return addService(service, service.get()->getTopic());
   }
@@ -295,7 +296,7 @@ public:
   /// @return
   template<typename T>
   bool addService(
-    std::shared_ptr<soar_ros::Service<T>> service,
+    std::shared_ptr<Service<T>> service,
     const std::string & commandName)
   {
     outputs[commandName] =
@@ -310,7 +311,7 @@ public:
   /// @param service
   /// @return
   template<typename T>
-  bool addClient(std::shared_ptr<soar_ros::Client<T>> client)
+  bool addClient(std::shared_ptr<Client<T>> client)
   {
     return addClient(client, client.get()->getTopic());
   }
@@ -322,12 +323,43 @@ public:
   /// @return
   template<typename T>
   bool addClient(
-    std::shared_ptr<soar_ros::Client<T>> client,
+    std::shared_ptr<Client<T>> client,
     const std::string & commandName)
   {
     outputs[commandName] =
       std::static_pointer_cast<soar_ros::OutputBase>(client);
     inputs.push_back(std::static_pointer_cast<soar_ros::InputBase>(client));
+    return true;
+  }
+
+  /// @brief Add a new soar_ros::ActionClient with default command name
+  /// @tparam T The action type
+  /// @param action_client The action client to add
+  /// @return true if successful
+  template<typename T>
+  bool addActionClient(std::shared_ptr<ActionClient<T>> action_client)
+  {
+    return addActionClient(action_client, action_client.get()->getTopic());
+  }
+
+  /// @brief Add a new soar_ros::ActionClient with a custom callback command
+  /// @tparam T The action type
+  /// @param action_client The action client to add
+  /// @param commandName The command name for Soar output-link
+  /// @return true if successful
+  template<typename T>
+  bool addActionClient(
+    std::shared_ptr<ActionClient<T>> action_client,
+    const std::string & commandName)
+  {
+    outputs[commandName] =
+      std::static_pointer_cast<soar_ros::Output<typename T::Goal::SharedPtr>>(action_client);
+    inputs.push_back(std::static_pointer_cast<soar_ros::Input<typename T::Feedback::SharedPtr>>(
+        action_client));
+    inputs.push_back(std::static_pointer_cast<
+        soar_ros::Input<typename rclcpp_action::ClientGoalHandle<T>::WrappedResult>>(
+        action_client));
+    inputs.push_back(std::static_pointer_cast<soar_ros::Input<bool>>(action_client));
     return true;
   }
 
