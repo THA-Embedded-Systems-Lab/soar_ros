@@ -19,6 +19,8 @@ jobs:
                     - os: "ubuntu-24.04"
                       target_ros2_distro: "jazzy"
                     - os: "ubuntu-24.04"
+                      target_ros2_distro: "kilted"
+                    - os: "ubuntu-24.04"
                       target_ros2_distro: "rolling"
         steps:
             - uses: ros-tooling/setup-ros@v0.7
