@@ -8,7 +8,6 @@ endif()
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(ament_cmake REQUIRED)
-find_package(rclcpp REQUIRED)
 
 set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
@@ -17,7 +16,6 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   std_srvs
   ament_index_cpp
   SQLite3
-  rclcpp_action
 )
 
 
@@ -46,13 +44,6 @@ target_link_libraries(soar_ros soar_lib)
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
-add_executable(test_example test/test_soar_ros.cpp)
-ament_target_dependencies(test_example ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
-target_link_libraries(test_example soar_ros)
-set_target_properties(test_example
-  PROPERTIES CMAKE_CXX_STANDARD 20)
-
-
 if(BUILD_TESTING)
   find_package(example_interfaces REQUIRED)
   find_package(launch_testing_ament_cmake)
@@ -76,13 +67,11 @@ if(BUILD_TESTING)
   add_launch_test(test/pubsub/test_launch_input_output.py)
   add_launch_test(test/service/test_launch_service.py)
   add_launch_test(test/client/test_launch_client.py)
+  add_launch_test(test/test_launch_actionClient.py)
 
   install(TARGETS test_input_output test_service test_client test_action_client
       DESTINATION lib/${PROJECT_NAME})
 endif()
-
-install(TARGETS test_example
-    DESTINATION lib/${PROJECT_NAME})
 
 install(
   DIRECTORY include/
