@@ -17,7 +17,7 @@ jobs:
           check-modified-files-only: "yes"
           base-branch: main
 
-      - uses: tj-actions/changed-files@v41
+      - uses: tj-actions/changed-files@v46
         id: changed-files
         with:
           files: "**/*.md"
