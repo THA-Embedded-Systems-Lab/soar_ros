@@ -44,6 +44,10 @@ target_link_libraries(soar_ros soar_lib)
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
+add_executable(start src/main.cpp)
+ament_target_dependencies(start ${THIS_PACKAGE_INCLUDE_DEPENDS})
+target_link_libraries(start soar_ros)
+
 if(BUILD_TESTING)
   find_package(example_interfaces REQUIRED)
   find_package(launch_testing_ament_cmake)
@@ -77,6 +81,9 @@ install(
   DIRECTORY include/
   DESTINATION include/${PROJECT_NAME}
 )
+
+install(TARGETS start
+    DESTINATION lib/${PROJECT_NAME})
 
 install(
   TARGETS soar_ros soar_lib

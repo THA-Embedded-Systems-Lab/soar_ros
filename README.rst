@@ -176,16 +176,15 @@ How to build and install
 
 3. Source the ROS workspace
 
-4. Run the test executable via ``ros2 run soar_ros test_example``. The
+4. Run the test executable via ``ros2 run soar_ros start``. The
    output should look similar to the following:
 
    .. code:: shell
 
-      $ ros2 run soar_ros test_example
+      $ ros2 run soar_ros start
       [INFO] [1721823668.516038530] [SoarRunner]: Starting runThread
       [INFO] [1721823668.516344554] [SoarRunner]: Test Agent:      1:    O: O1 (init-agent)
       [INFO] [1721823668.516466911] [SoarRunner]: Test Agent:      2:    ==>S: S2 (state no-change)
-      [WARN] [1721823669.516121281] [SoarRunner]: AddTwoIntsClient service not available, waiting again...
 
 .. Warning::
    If you would like to use the Java-based debugger, the
