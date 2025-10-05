@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(soar_ros)
 
+option(BUILD_BENCHMARK "Build benchmark executables (Sender, Receiver, System)" ON)
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -56,6 +58,10 @@ target_link_libraries(soar_ros
     ${THIS_PACKAGE_LINK_DEPENDS})
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
+target_compile_definitions(soar_ros PUBLIC BUILD_BENCHMARK)
+if(BUILD_BENCHMARK)
+  target_compile_options(soar_ros PRIVATE -g)
+endif()
 
 add_executable(start src/main.cpp)
 target_link_libraries(start soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
@@ -187,6 +193,24 @@ if(BUILD_TESTING)
 
   install(TARGETS test_input_output test_service test_client test_action_client test_multi_agent test_shared_input
       DESTINATION lib/${PROJECT_NAME})
+endif()
+
+
+if(BUILD_BENCHMARK)
+  add_executable(Sender test/benchmark/Sender.cpp)
+  ament_target_dependencies(Sender ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(Sender soar_ros)
+
+  add_executable(Receiver test/benchmark/Receiver.cpp)
+  ament_target_dependencies(Receiver ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(Receiver soar_ros)
+
+  add_executable(System test/benchmark/System.cpp)
+  ament_target_dependencies(System ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(System soar_ros)
+
+  install(TARGETS Sender Receiver System
+    DESTINATION lib/${PROJECT_NAME})
 endif()
 
 install(

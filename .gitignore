@@ -39,5 +39,7 @@ qtcreator-*
 CATKIN_IGNORE
 
 .venv/
-.DS_Store
 .vscode/
+*.DS_Store
+paper/
+callgrind*
