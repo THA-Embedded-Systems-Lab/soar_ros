@@ -306,6 +306,18 @@ void SoarPrintEventHandler(
 
   std::string str(pMessage);
 
+  // Trim leading and trailing whitespace from str
+  str.erase(0, str.find_first_not_of(" \t\n\r\f\v"));
+  str.erase(str.find_last_not_of(" \t\n\r\f\v") + 1);
+
+  if (str.empty()) {
+    return;
+  }
+
+  if (str.front() == '<') {
+    return;
+  }
+
   if (str.find("(wait)") != std::string::npos) {
     return;
   }

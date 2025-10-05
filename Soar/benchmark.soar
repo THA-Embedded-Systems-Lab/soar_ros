@@ -1,0 +1,49 @@
+source init_agent.soar
+source wait.soar
+
+# Add an attribute to the top-state SanderAgent which can be used in substates
+# to reference this topstate. Creates <substate> ^top-state <top-state>, where
+# <top-state> points to the SanderAgent top-state (s1) independet of the level
+# of substates.
+sp {elaborate*top-state*top-state
+   (state <s> ^superstate nil)
+-->
+   (<s> ^top-state <s>)
+}
+
+
+# Create a link to top-state in every substate
+sp {elaborate*state*top-state
+   (state <s> ^superstate.top-state <ts>)
+-->
+   (<s> ^top-state <ts>)
+}
+
+sp {propose*add-header-to-output
+   (state <s> ^top-state.io.input-link.input <h>)
+   (<h> ^frame_id <fid>
+        ^stamp_sec <sec>
+        ^stamp_nanosec <nsec>
+        -^status complete)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name add-header-to-output
+        ^header <h>)
+}
+
+sp {apply*add-header-to-output
+   (state <s> ^operator <o>
+        ^top-state.io.output-link <ol>)
+   (<o> ^name add-header-to-output
+        ^header <h>)
+   (<h> ^frame_id <fid>
+        ^stamp_sec <sec>
+        ^stamp_nanosec <nsec>)
+-->
+   (<ol> ^output <h2>)
+   (<h2> ^frame_id <fid>
+         ^stamp_sec <sec>
+         ^stamp_nanosec <nsec>)
+   (<h> ^status complete)
+}
+

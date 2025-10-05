@@ -82,6 +82,25 @@ if(BUILD_TESTING)
       DESTINATION lib/${PROJECT_NAME})
 endif()
 
+option(BUILD_BENCHMARK "Build benchmark executables (Sender, Receiver, System)" ON)
+
+if(BUILD_BENCHMARK)
+  add_executable(Sender test/benchmark/Sender.cpp)
+  ament_target_dependencies(Sender ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(Sender soar_ros)
+
+  add_executable(Receiver test/benchmark/Receiver.cpp)
+  ament_target_dependencies(Receiver ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(Receiver soar_ros)
+
+  add_executable(System test/benchmark/System.cpp)
+  ament_target_dependencies(System ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(System soar_ros)
+
+  install(TARGETS Sender Receiver System
+    DESTINATION lib/${PROJECT_NAME})
+endif()
+
 install(
   DIRECTORY include/
   DESTINATION include/${PROJECT_NAME}
