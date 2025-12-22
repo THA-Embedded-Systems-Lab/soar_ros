@@ -4,16 +4,16 @@
 
 using Header = std_msgs::msg::Header;
 
-#define NUM_OUTPUTS 3
-
 class ReceiverMIMO : public rclcpp::Node
 {
 public:
     ReceiverMIMO()
         : Node("receiver_mimo")
     {
+        this->declare_parameter<int>("num_outputs", 3);
+        this->get_parameter("num_outputs", num_outputs_);
         // Create multiple subscriptions for multiple outputs
-        for (int i = 0; i < NUM_OUTPUTS; i++)
+        for (int i = 0; i < num_outputs_; i++)
         {
             std::string topic_name = "output" + std::to_string(i);
             subscriptions_.push_back(
@@ -31,6 +31,7 @@ public:
 
 private:
     std::vector<rclcpp::Subscription<Header>::SharedPtr> subscriptions_;
+    int num_outputs_ = 3;
 };
 
 int main(int argc, char *argv[])

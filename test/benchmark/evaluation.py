@@ -57,6 +57,8 @@ def main():
         df['run_id'] = run_id
         results.append(df)
 
+        df.to_csv(os.path.join(os.getcwd(), "out", "run_id", f'results_{run_id}_f{frequency}.csv'), index=False)
+
         # Dropped messages
         dropped = []
         frame_ids = df['frame_id'].values

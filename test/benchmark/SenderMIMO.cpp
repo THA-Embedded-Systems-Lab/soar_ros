@@ -7,7 +7,6 @@ using namespace std::chrono_literals;
 using Header = std_msgs::msg::Header;
 
 #define MESSAGES_TO_SEND 1000
-#define NUM_INPUTS 3
 
 class SenderMIMO : public rclcpp::Node
 {
@@ -16,10 +15,12 @@ public:
         : Node("sender_mimo")
     {
         this->declare_parameter<int>("frequency", 1.0);
+        this->declare_parameter<int>("num_inputs", 3);
         this->get_parameter("frequency", frequency_);
+        this->get_parameter("num_inputs", num_inputs_);
 
         // Create multiple publishers for multiple inputs
-        for (int i = 0; i < NUM_INPUTS; i++)
+        for (int i = 0; i < num_inputs_; i++)
         {
             std::string topic_name = "input" + std::to_string(i);
             publishers_.push_back(this->create_publisher<Header>(topic_name, 10));
@@ -45,7 +46,7 @@ private:
             auto timestamp = this->now();
 
             // Publish to all input topics
-            for (int i = 0; i < NUM_INPUTS; i++)
+            for (int i = 0; i < num_inputs_; i++)
             {
                 Header msg;
                 msg.frame_id = std::to_string(frame_counter_) + "_" + std::to_string(i);
@@ -66,7 +67,7 @@ private:
                 [this]()
                 {
                     RCLCPP_INFO_STREAM(this->get_logger(),
-                                       "Sent " << MESSAGES_TO_SEND << " messages to " << NUM_INPUTS << " topics. Shutting down.");
+                                       "Sent " << MESSAGES_TO_SEND << " messages to " << num_inputs_ << " topics. Shutting down.");
                     rclcpp::shutdown();
                 });
             timer_->cancel();
@@ -77,6 +78,7 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::TimerBase::SharedPtr shutdown_timer;
     int frequency_ = 1;
+    int num_inputs_ = 3;
     uint64_t frame_counter_ = 0;
 };
 

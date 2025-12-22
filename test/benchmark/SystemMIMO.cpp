@@ -6,9 +6,6 @@ using Header = std_msgs::msg::Header;
 #include <sml_Client.h>
 #include <fstream>
 
-#define NUM_INPUTS 3
-#define NUM_OUTPUTS 3
-
 class Output : public soar_ros::Publisher<Header>
 {
 public:
@@ -68,8 +65,13 @@ int main(int argc, char *argv[])
     auto node = std::make_shared<soar_ros::SoarRunner>("benchmark_mimo",
                                                        soar_path);
 
+    node->declare_parameter<int>("num_inputs", 3);
+    node->declare_parameter<int>("num_outputs", 3);
+    int num_inputs = node->get_parameter("num_inputs").as_int();
+    int num_outputs = node->get_parameter("num_outputs").as_int();
+
     // Add multiple publishers for multiple outputs
-    for (int i = 0; i < NUM_OUTPUTS; i++)
+    for (int i = 0; i < num_outputs; i++)
     {
         std::string topic_name = "output" + std::to_string(i);
         std::shared_ptr<soar_ros::Publisher<Header>> p =
@@ -78,7 +80,7 @@ int main(int argc, char *argv[])
     }
 
     // Add multiple subscribers for multiple inputs
-    for (int i = 0; i < NUM_INPUTS; i++)
+    for (int i = 0; i < num_inputs; i++)
     {
         std::string topic_name = "input" + std::to_string(i);
         std::shared_ptr<soar_ros::Subscriber<Header>> s =
