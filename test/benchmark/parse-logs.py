@@ -116,50 +116,6 @@ def main():
         all_df.to_csv(os.path.join(data_dir, f'all_results.csv'), index=False)
 
         
-        # # Plot per output
-        # for channel in sorted(all_df['channel'].unique()):
-        #     plt.figure()
-        #     output_df = all_df[all_df['channel'] == channel]
-        #     for freq in sorted(output_df['frequency'].unique()):
-        #         sub = output_df[output_df['frequency'] == freq]
-        #         plt.plot(sub['counter'], sub['duration'], label=f'f={freq} Hz', alpha=0.7)
-        #     plt.title(f'Duration between sender and receiver (Output {channel})')
-        #     plt.xlabel('Frame Counter')
-        #     plt.ylabel('Duration (s)')
-        #     plt.legend()
-        #     plt.grid()
-        #     plt.savefig(os.path.join(eval_dir, f'duration_vs_frameid_output{channel}.png'))
-        #     plt.close()
-
-        # # Overall duration plot (all outputs)
-        # plt.figure()
-        # for freq in sorted(all_df['frequency'].unique()):
-        #     sub = all_df[all_df['frequency'] == freq]
-        #     plt.plot(sub['counter'], sub['duration'], '.', label=f'f={freq} Hz', alpha=0.5)
-        # plt.title('Duration between sender and receiver (All Outputs)')
-        # plt.xlabel('Frame Counter')
-        # plt.ylabel('Duration (s)')
-        # plt.legend()
-        # plt.grid()
-        # plt.savefig(os.path.join(eval_dir, 'duration_vs_frameid_all.png'))
-        # plt.close()
-
-        # # New plot: receive time vs duration (normalized so each frequency starts at t=0)
-        # for channel in sorted(all_df['channel'].unique()):
-        #     plt.figure()
-        #     output_df = all_df[all_df['channel'] == channel]
-        #     for freq in sorted(output_df['frequency'].unique()):
-        #         sub = output_df[output_df['frequency'] == freq].copy()
-        #         sub['norm_receive_time'] = sub['receive_time'] - sub['receive_time'].iloc[0]
-        #         plt.plot(sub['norm_receive_time'], sub['duration'], label=f'f={freq} Hz', alpha=0.7)
-        #     plt.title(f'Duration vs Receive Time (Output {channel}, normalized t=0)')
-        #     plt.xlabel('Normalized Receive Time (s)')
-        #     plt.ylabel('Duration (s)')
-        #     plt.legend()
-        #     plt.grid()
-        #     plt.savefig(os.path.join(eval_dir, f'duration_vs_time_output{channel}.png'))
-        #     plt.close()
-
         print(f'\nEvaluation complete! Results saved to {eval_dir}')
 
 if __name__ == '__main__':
