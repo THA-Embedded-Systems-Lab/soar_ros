@@ -97,7 +97,19 @@ if(BUILD_BENCHMARK)
   ament_target_dependencies(System ${THIS_PACKAGE_INCLUDE_DEPENDS})
   target_link_libraries(System soar_ros)
 
-  install(TARGETS Sender Receiver System
+  add_executable(SenderMIMO test/benchmark/SenderMIMO.cpp)
+  ament_target_dependencies(SenderMIMO ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(SenderMIMO soar_ros)
+
+  add_executable(ReceiverMIMO test/benchmark/ReceiverMIMO.cpp)
+  ament_target_dependencies(ReceiverMIMO ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(ReceiverMIMO soar_ros)
+
+  add_executable(SystemMIMO test/benchmark/SystemMIMO.cpp)
+  ament_target_dependencies(SystemMIMO ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(SystemMIMO soar_ros)
+
+  install(TARGETS Sender Receiver System SenderMIMO ReceiverMIMO SystemMIMO
     DESTINATION lib/${PROJECT_NAME})
 endif()
 

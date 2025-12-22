@@ -3,7 +3,7 @@
 source ~/.bashrc
 LOG_DIR="$HOME/tmp/soar_ros_benchmark_logs"
 RUN_ID=$(date +%s | sha256sum | cut -c1-16)
-FREQS=(100 250 500 1000 2000)
+FREQS=(250 500 1000)
 
 mkdir -p "$LOG_DIR"
 
