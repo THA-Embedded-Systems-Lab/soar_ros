@@ -1,0 +1,1350 @@
+{
+  "version": "6",
+  "datamap": {
+    "rootId": "105651236df5b53a4769c5942f9c3e6d",
+    "vertices": [
+      {
+        "id": "105651236df5b53a4769c5942f9c3e6d",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "epmem",
+            "toId": "20bc58b3950ea3430ffc23d10b6e21c0"
+          },
+          {
+            "name": "io",
+            "toId": "a1eba44bccbf43149d79d22052f9100e"
+          },
+          {
+            "name": "name",
+            "toId": "fbe238199fb5da5095e32922f88b6b2a"
+          },
+          {
+            "name": "operator",
+            "toId": "197ff990b3d7de15df2e5e379c8287f1"
+          },
+          {
+            "name": "reward-link",
+            "toId": "91687da16d79f0c3b65e9c4af989c9b7"
+          },
+          {
+            "name": "smem",
+            "toId": "a9bafdc5787065e6282e457fa4e4ca31"
+          },
+          {
+            "name": "superstate",
+            "toId": "68ca2dd2ae10e7a27593daf732f38f93"
+          },
+          {
+            "name": "top-state",
+            "toId": "105651236df5b53a4769c5942f9c3e6d"
+          },
+          {
+            "name": "type",
+            "toId": "a51b62095a31fb129d701bfac7c1441c"
+          },
+          {
+            "name": "ros_msg_definitions",
+            "toId": "105651237"
+          }
+        ]
+      },
+      {
+        "id": "a1eba44bccbf43149d79d22052f9100e",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "input-link",
+            "toId": "8de8e5343b348d77b88ec45e11a89cd4"
+          },
+          {
+            "name": "output-link",
+            "toId": "03578bc33aa9d05559406b41fa8f05b4"
+          }
+        ]
+      },
+      {
+        "id": "8de8e5343b348d77b88ec45e11a89cd4",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "tcp_pose",
+            "toId": "105651249"
+          }
+        ]
+      },
+      {
+        "id": "03578bc33aa9d05559406b41fa8f05b4",
+        "type": "SOAR_ID",
+        "outEdges": []
+      },
+      {
+        "id": "fbe238199fb5da5095e32922f88b6b2a",
+        "type": "ENUMERATION",
+        "choices": [
+          "soar-ros-agent"
+        ]
+      },
+      {
+        "id": "a51b62095a31fb129d701bfac7c1441c",
+        "type": "ENUMERATION",
+        "choices": [
+          "state"
+        ]
+      },
+      {
+        "id": "68ca2dd2ae10e7a27593daf732f38f93",
+        "type": "ENUMERATION",
+        "choices": [
+          "nil"
+        ]
+      },
+      {
+        "id": "197ff990b3d7de15df2e5e379c8287f1",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "name",
+            "toId": "1f085895095fac752508fd9ef4c913f8"
+          }
+        ]
+      },
+      {
+        "id": "1f085895095fac752508fd9ef4c913f8",
+        "type": "ENUMERATION",
+        "choices": [
+          "initialize-soar-ros-agent"
+        ]
+      },
+      {
+        "id": "20bc58b3950ea3430ffc23d10b6e21c0",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "command",
+            "toId": "57070b0be1ca9e0af90557a94ea9b0ee"
+          },
+          {
+            "name": "present-id",
+            "toId": "cedfd766c5196e150d99d41ba573de67"
+          },
+          {
+            "name": "result",
+            "toId": "29e827f5c934417e541d6d22c2ccfe07"
+          }
+        ]
+      },
+      {
+        "id": "57070b0be1ca9e0af90557a94ea9b0ee",
+        "type": "SOAR_ID",
+        "outEdges": []
+      },
+      {
+        "id": "cedfd766c5196e150d99d41ba573de67",
+        "type": "INTEGER"
+      },
+      {
+        "id": "29e827f5c934417e541d6d22c2ccfe07",
+        "type": "SOAR_ID",
+        "outEdges": []
+      },
+      {
+        "id": "a9bafdc5787065e6282e457fa4e4ca31",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "command",
+            "toId": "16eee97a8c894ad74887c24b37cd1d30"
+          },
+          {
+            "name": "result",
+            "toId": "848a65e56eb82f34231dd59ae2c9465c"
+          }
+        ]
+      },
+      {
+        "id": "16eee97a8c894ad74887c24b37cd1d30",
+        "type": "SOAR_ID",
+        "outEdges": []
+      },
+      {
+        "id": "848a65e56eb82f34231dd59ae2c9465c",
+        "type": "SOAR_ID",
+        "outEdges": []
+      },
+      {
+        "id": "91687da16d79f0c3b65e9c4af989c9b7",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "reward",
+            "toId": "f9891a80da0bdee99c61bc9329059666"
+          }
+        ]
+      },
+      {
+        "id": "f9891a80da0bdee99c61bc9329059666",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "value",
+            "toId": "324b2e6039f71078a8c90271c55020b5"
+          }
+        ]
+      },
+      {
+        "id": "324b2e6039f71078a8c90271c55020b5",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651237",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "std_msgs",
+            "toId": "105651238"
+          },
+          {
+            "name": "geometry_msgs",
+            "toId": "105651239"
+          },
+          {
+            "name": "builtin_interfaces",
+            "toId": "105651252"
+          }
+        ]
+      },
+      {
+        "id": "105651238",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "Header",
+            "toId": "105651250"
+          },
+          {
+            "name": "Bool",
+            "toId": "105651300"
+          },
+          {
+            "name": "Byte",
+            "toId": "105651301"
+          },
+          {
+            "name": "Char",
+            "toId": "105651302"
+          },
+          {
+            "name": "ColorRGBA",
+            "toId": "105651303"
+          },
+          {
+            "name": "Empty",
+            "toId": "105651307"
+          },
+          {
+            "name": "Float32",
+            "toId": "105651308"
+          },
+          {
+            "name": "Float64",
+            "toId": "105651309"
+          },
+          {
+            "name": "Int8",
+            "toId": "105651310"
+          },
+          {
+            "name": "Int16",
+            "toId": "105651311"
+          },
+          {
+            "name": "Int32",
+            "toId": "105651312"
+          },
+          {
+            "name": "Int64",
+            "toId": "105651313"
+          },
+          {
+            "name": "String",
+            "toId": "105651314"
+          },
+          {
+            "name": "UInt8",
+            "toId": "105651315"
+          },
+          {
+            "name": "UInt16",
+            "toId": "105651316"
+          },
+          {
+            "name": "UInt32",
+            "toId": "105651317"
+          },
+          {
+            "name": "UInt64",
+            "toId": "105651318"
+          }
+        ]
+      },
+      {
+        "id": "105651239",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "Point",
+            "toId": "105651240"
+          },
+          {
+            "name": "Point32",
+            "toId": "105651319"
+          },
+          {
+            "name": "Quaternion",
+            "toId": "105651244"
+          },
+          {
+            "name": "Pose",
+            "toId": "105651249"
+          },
+          {
+            "name": "Pose2D",
+            "toId": "105651323"
+          },
+          {
+            "name": "PoseStamped",
+            "toId": "105651327"
+          },
+          {
+            "name": "PoseWithCovariance",
+            "toId": "105651329"
+          },
+          {
+            "name": "PoseWithCovarianceStamped",
+            "toId": "105651331"
+          },
+          {
+            "name": "QuaternionStamped",
+            "toId": "105651333"
+          },
+          {
+            "name": "Transform",
+            "toId": "105651335"
+          },
+          {
+            "name": "TransformStamped",
+            "toId": "105651337"
+          },
+          {
+            "name": "Twist",
+            "toId": "105651339"
+          },
+          {
+            "name": "TwistStamped",
+            "toId": "105651343"
+          },
+          {
+            "name": "TwistWithCovariance",
+            "toId": "105651345"
+          },
+          {
+            "name": "TwistWithCovarianceStamped",
+            "toId": "105651347"
+          },
+          {
+            "name": "Vector3",
+            "toId": "105651349"
+          },
+          {
+            "name": "Vector3Stamped",
+            "toId": "105651353"
+          },
+          {
+            "name": "Wrench",
+            "toId": "105651355"
+          },
+          {
+            "name": "WrenchStamped",
+            "toId": "105651359"
+          },
+          {
+            "name": "Accel",
+            "toId": "105651361"
+          },
+          {
+            "name": "AccelStamped",
+            "toId": "105651365"
+          },
+          {
+            "name": "AccelWithCovariance",
+            "toId": "105651367"
+          },
+          {
+            "name": "AccelWithCovarianceStamped",
+            "toId": "105651369"
+          },
+          {
+            "name": "Inertia",
+            "toId": "105651371"
+          },
+          {
+            "name": "InertiaStamped",
+            "toId": "105651381"
+          },
+          {
+            "name": "PointStamped",
+            "toId": "105651383"
+          },
+          {
+            "name": "Polygon",
+            "toId": "105651385"
+          },
+          {
+            "name": "PolygonStamped",
+            "toId": "105651387"
+          },
+          {
+            "name": "PoseArray",
+            "toId": "105651389"
+          }
+        ]
+      },
+      {
+        "id": "105651240",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "x",
+            "toId": "105651241"
+          },
+          {
+            "name": "y",
+            "toId": "105651242"
+          },
+          {
+            "name": "z",
+            "toId": "105651243"
+          }
+        ]
+      },
+      {
+        "id": "105651241",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651242",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651243",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651244",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "x",
+            "toId": "105651245"
+          },
+          {
+            "name": "y",
+            "toId": "105651246"
+          },
+          {
+            "name": "z",
+            "toId": "105651247"
+          },
+          {
+            "name": "w",
+            "toId": "105651248"
+          }
+        ]
+      },
+      {
+        "id": "105651245",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651246",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651247",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651248",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651249",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "Point",
+            "toId": "105651240"
+          },
+          {
+            "name": "Orientation",
+            "toId": "105651244",
+            "comment": "This links to the Quaternion definition but replicates the ROS 2 naming convention."
+          }
+        ]
+      },
+      {
+        "id": "105651250",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "frame_id",
+            "toId": "105651251"
+          },
+          {
+            "name": "stamp",
+            "toId": "105651253"
+          }
+        ]
+      },
+      {
+        "id": "105651251",
+        "type": "STRING"
+      },
+      {
+        "id": "105651252",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "Time",
+            "toId": "105651253"
+          },
+          {
+            "name": "Duration",
+            "toId": "105651391"
+          }
+        ]
+      },
+      {
+        "id": "105651253",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "sec",
+            "toId": "105651254"
+          },
+          {
+            "name": "nanosec",
+            "toId": "105651255"
+          }
+        ]
+      },
+      {
+        "id": "105651254",
+        "type": "INTEGER"
+      },
+      {
+        "id": "105651255",
+        "type": "INTEGER"
+      },
+      {
+        "id": "105651300",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651392"
+          }
+        ]
+      },
+      {
+        "id": "105651301",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651393"
+          }
+        ]
+      },
+      {
+        "id": "105651302",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651394"
+          }
+        ]
+      },
+      {
+        "id": "105651303",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "r",
+            "toId": "105651304"
+          },
+          {
+            "name": "g",
+            "toId": "105651305"
+          },
+          {
+            "name": "b",
+            "toId": "105651306"
+          },
+          {
+            "name": "a",
+            "toId": "105651395"
+          }
+        ]
+      },
+      {
+        "id": "105651304",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651305",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651306",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651307",
+        "type": "SOAR_ID",
+        "outEdges": []
+      },
+      {
+        "id": "105651308",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651396"
+          }
+        ]
+      },
+      {
+        "id": "105651309",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651397"
+          }
+        ]
+      },
+      {
+        "id": "105651310",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651398"
+          }
+        ]
+      },
+      {
+        "id": "105651311",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651399"
+          }
+        ]
+      },
+      {
+        "id": "105651312",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651400"
+          }
+        ]
+      },
+      {
+        "id": "105651313",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651401"
+          }
+        ]
+      },
+      {
+        "id": "105651314",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651402"
+          }
+        ]
+      },
+      {
+        "id": "105651315",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651403"
+          }
+        ]
+      },
+      {
+        "id": "105651316",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651404"
+          }
+        ]
+      },
+      {
+        "id": "105651317",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651405"
+          }
+        ]
+      },
+      {
+        "id": "105651318",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "data",
+            "toId": "105651406"
+          }
+        ]
+      },
+      {
+        "id": "105651319",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "x",
+            "toId": "105651320"
+          },
+          {
+            "name": "y",
+            "toId": "105651321"
+          },
+          {
+            "name": "z",
+            "toId": "105651322"
+          }
+        ]
+      },
+      {
+        "id": "105651320",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651321",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651322",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651323",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "x",
+            "toId": "105651324"
+          },
+          {
+            "name": "y",
+            "toId": "105651325"
+          },
+          {
+            "name": "theta",
+            "toId": "105651326"
+          }
+        ]
+      },
+      {
+        "id": "105651324",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651325",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651326",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651327",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "pose",
+            "toId": "105651249"
+          }
+        ]
+      },
+      {
+        "id": "105651329",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "pose",
+            "toId": "105651249"
+          },
+          {
+            "name": "covariance",
+            "toId": "105651330"
+          }
+        ]
+      },
+      {
+        "id": "105651330",
+        "type": "FLOAT",
+        "comment": "Array of 36 floats"
+      },
+      {
+        "id": "105651331",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "pose",
+            "toId": "105651329"
+          }
+        ]
+      },
+      {
+        "id": "105651333",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "quaternion",
+            "toId": "105651244"
+          }
+        ]
+      },
+      {
+        "id": "105651335",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "translation",
+            "toId": "105651349"
+          },
+          {
+            "name": "rotation",
+            "toId": "105651244"
+          }
+        ]
+      },
+      {
+        "id": "105651337",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "child_frame_id",
+            "toId": "105651338"
+          },
+          {
+            "name": "transform",
+            "toId": "105651335"
+          }
+        ]
+      },
+      {
+        "id": "105651338",
+        "type": "STRING"
+      },
+      {
+        "id": "105651339",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "linear",
+            "toId": "105651349"
+          },
+          {
+            "name": "angular",
+            "toId": "105651349"
+          }
+        ]
+      },
+      {
+        "id": "105651343",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "twist",
+            "toId": "105651339"
+          }
+        ]
+      },
+      {
+        "id": "105651345",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "twist",
+            "toId": "105651339"
+          },
+          {
+            "name": "covariance",
+            "toId": "105651346"
+          }
+        ]
+      },
+      {
+        "id": "105651346",
+        "type": "FLOAT",
+        "comment": "Array of 36 floats"
+      },
+      {
+        "id": "105651347",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "twist",
+            "toId": "105651345"
+          }
+        ]
+      },
+      {
+        "id": "105651349",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "x",
+            "toId": "105651350"
+          },
+          {
+            "name": "y",
+            "toId": "105651351"
+          },
+          {
+            "name": "z",
+            "toId": "105651352"
+          }
+        ]
+      },
+      {
+        "id": "105651350",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651351",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651352",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651353",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "vector",
+            "toId": "105651349"
+          }
+        ]
+      },
+      {
+        "id": "105651355",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "force",
+            "toId": "105651349"
+          },
+          {
+            "name": "torque",
+            "toId": "105651349"
+          }
+        ]
+      },
+      {
+        "id": "105651359",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "wrench",
+            "toId": "105651355"
+          }
+        ]
+      },
+      {
+        "id": "105651361",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "linear",
+            "toId": "105651349"
+          },
+          {
+            "name": "angular",
+            "toId": "105651349"
+          }
+        ]
+      },
+      {
+        "id": "105651365",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "accel",
+            "toId": "105651361"
+          }
+        ]
+      },
+      {
+        "id": "105651367",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "accel",
+            "toId": "105651361"
+          },
+          {
+            "name": "covariance",
+            "toId": "105651368"
+          }
+        ]
+      },
+      {
+        "id": "105651368",
+        "type": "FLOAT",
+        "comment": "Array of 36 floats"
+      },
+      {
+        "id": "105651369",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "accel",
+            "toId": "105651367"
+          }
+        ]
+      },
+      {
+        "id": "105651371",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "m",
+            "toId": "105651372"
+          },
+          {
+            "name": "com",
+            "toId": "105651349"
+          },
+          {
+            "name": "ixx",
+            "toId": "105651373"
+          },
+          {
+            "name": "ixy",
+            "toId": "105651374"
+          },
+          {
+            "name": "ixz",
+            "toId": "105651375"
+          },
+          {
+            "name": "iyy",
+            "toId": "105651376"
+          },
+          {
+            "name": "iyz",
+            "toId": "105651377"
+          },
+          {
+            "name": "izz",
+            "toId": "105651378"
+          }
+        ]
+      },
+      {
+        "id": "105651372",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651373",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651374",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651375",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651376",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651377",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651378",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651381",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "inertia",
+            "toId": "105651371"
+          }
+        ]
+      },
+      {
+        "id": "105651383",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "point",
+            "toId": "105651240"
+          }
+        ]
+      },
+      {
+        "id": "105651385",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "points",
+            "toId": "105651319",
+            "comment": "Array of Point32"
+          }
+        ]
+      },
+      {
+        "id": "105651387",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "polygon",
+            "toId": "105651385"
+          }
+        ]
+      },
+      {
+        "id": "105651389",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "header",
+            "toId": "105651250"
+          },
+          {
+            "name": "poses",
+            "toId": "105651249",
+            "comment": "Array of Pose"
+          }
+        ]
+      },
+      {
+        "id": "105651391",
+        "type": "SOAR_ID",
+        "outEdges": [
+          {
+            "name": "sec",
+            "toId": "105651254"
+          },
+          {
+            "name": "nanosec",
+            "toId": "105651255"
+          }
+        ]
+      },
+      {
+        "id": "105651392",
+        "type": "ENUMERATION",
+        "choices": [
+          "true",
+          "false"
+        ]
+      },
+      {
+        "id": "105651393",
+        "type": "INTEGER",
+        "comment": "uint8"
+      },
+      {
+        "id": "105651394",
+        "type": "INTEGER",
+        "comment": "uint8"
+      },
+      {
+        "id": "105651395",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651396",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651397",
+        "type": "FLOAT"
+      },
+      {
+        "id": "105651398",
+        "type": "INTEGER",
+        "comment": "int8"
+      },
+      {
+        "id": "105651399",
+        "type": "INTEGER",
+        "comment": "int16"
+      },
+      {
+        "id": "105651400",
+        "type": "INTEGER",
+        "comment": "int32"
+      },
+      {
+        "id": "105651401",
+        "type": "INTEGER",
+        "comment": "int64"
+      },
+      {
+        "id": "105651402",
+        "type": "STRING"
+      },
+      {
+        "id": "105651403",
+        "type": "INTEGER",
+        "comment": "uint8"
+      },
+      {
+        "id": "105651404",
+        "type": "INTEGER",
+        "comment": "uint16"
+      },
+      {
+        "id": "105651405",
+        "type": "INTEGER",
+        "comment": "uint32"
+      },
+      {
+        "id": "105651406",
+        "type": "INTEGER",
+        "comment": "uint64"
+      }
+    ]
+  },
+  "layout": {
+    "id": "1c71a2c73378d3fc1448282a422f0502",
+    "name": "soar-ros-agent",
+    "type": "OPERATOR_ROOT",
+    "folder": "soar-ros-agent",
+    "children": [
+      {
+        "id": "22e65130433f6ccde845b0f7c88c48c7",
+        "name": "_firstload",
+        "type": "FILE_OPERATOR",
+        "file": "_firstload.soar"
+      },
+      {
+        "id": "9759d415b4b4ceb633d4ff9278520129",
+        "name": "all",
+        "type": "FOLDER",
+        "folder": "all"
+      },
+      {
+        "id": "930306a9f25cf6814bbd60bdbd253765",
+        "name": "elaborations",
+        "type": "FOLDER",
+        "folder": "elaborations",
+        "children": [
+          {
+            "id": "e9db4d291f538182b270873af36154b1",
+            "name": "_all",
+            "type": "FILE_OPERATOR",
+            "file": "_all.soar"
+          },
+          {
+            "id": "598da2213fb85464bb35bf4352cf42e7",
+            "name": "top-state",
+            "type": "FILE_OPERATOR",
+            "file": "top-state.soar"
+          }
+        ]
+      },
+      {
+        "id": "fffbdfb8989a65dda452d45c967479f9",
+        "name": "initialize-soar-ros-agent",
+        "type": "OPERATOR",
+        "file": "initialize-soar-ros-agent.soar"
+      }
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+pushd soar-ros-agent
+source soar-ros-agent_source.soar
+popd

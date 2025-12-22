@@ -1,0 +1,15 @@
+sp {propose*initialize-soar-ros-agent
+   (state <s> ^superstate nil
+             -^name)
+-->
+   (<s> ^operator <o> +)
+   (<o> ^name initialize-soar-ros-agent)
+}
+
+sp {apply*initialize-soar-ros-agent
+   (state <s> ^operator <op>)
+   (<op> ^name initialize-soar-ros-agent)
+-->
+   (<s> ^name soar-ros-agent)
+}
+
