@@ -25,6 +25,7 @@ import rclpy
 
 import std_msgs.msg
 
+from time import sleep
 
 @pytest.mark.launch_test
 def generate_test_description():
@@ -66,6 +67,8 @@ class TestSoarRos(unittest.TestCase):
 
         msg = std_msgs.msg.String()
         msg.data = str(uuid.uuid4())
+
+        sleep(1)
         pub.publish(msg)
 
         proc_output.assertWaitFor(msg.data, timeout=5, stream='stdout')

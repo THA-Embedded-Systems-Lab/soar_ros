@@ -63,7 +63,7 @@ def generate_test_description():
         fibonacci_server,
         # Wait a bit for the server to start
         launch.actions.TimerAction(
-            period=2.0,
+            period=1.0,
             actions=[action_client_test]
         ),
         launch_testing.actions.ReadyToTest()

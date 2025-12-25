@@ -88,13 +88,11 @@ def main(args=None):
     
     fibonacci_server = FibonacciActionServer()
     
-    try:
+    while rclpy.ok():
         rclpy.spin(fibonacci_server)
-    except KeyboardInterrupt:
-        fibonacci_server.get_logger().info('Shutting down Fibonacci action server')
-    finally:
-        fibonacci_server.destroy_node()
-        rclpy.shutdown()
+
+    fibonacci_server.destroy_node()
+    rclpy.shutdown()
 
 
 if __name__ == '__main__':
