@@ -8,11 +8,11 @@ using Header = std_msgs::msg::Header;
 
 #define MESSAGES_TO_SEND 1000
 
-class SenderMIMO : public rclcpp::Node
+class Sender : public rclcpp::Node
 {
 public:
-    SenderMIMO()
-        : Node("sender_mimo")
+    Sender()
+        : Node("sender")
     {
         this->declare_parameter<int>("frequency", 1.0);
         this->declare_parameter<int>("num_inputs", 3);
@@ -36,7 +36,7 @@ private:
         RCLCPP_INFO(this->get_logger(), "Publishing period: %.6f seconds", period.count());
         timer_ = this->create_wall_timer(
             std::chrono::duration_cast<std::chrono::milliseconds>(period),
-            std::bind(&SenderMIMO::publish_header, this));
+            std::bind(&Sender::publish_header, this));
     }
 
     void publish_header()
@@ -85,7 +85,7 @@ private:
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<SenderMIMO>();
+    auto node = std::make_shared<Sender>();
     while (rclcpp::ok())
     {
         rclcpp::spin_some(node);

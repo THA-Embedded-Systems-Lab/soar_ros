@@ -1,7 +1,7 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, TextSubstitution, PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument, TimerAction
+from launch.substitutions import LaunchConfiguration
 
 import string
 
@@ -32,13 +32,19 @@ def generate_launch_description():
             default_value='3',
             description='Number of output channels (for SISO/MIMO)'
         ),
-        Node(
-            package='soar_ros',
-            executable='Sender',
-            name='sender',
-            parameters=[
-                {'frequency': LaunchConfiguration('f')},
-                {'num_inputs': LaunchConfiguration('num_inputs')},
+        # Start sender with two second delay, so the receiver and system are ready
+        TimerAction(
+            period=2.0,
+            actions=[
+                Node(
+                    package='soar_ros',
+                    executable='Sender',
+                    name='sender',
+                    parameters=[
+                        {'frequency': LaunchConfiguration('f')},
+                        {'num_inputs': LaunchConfiguration('num_inputs')},
+                    ]
+                )
             ]
         ),
         Node(

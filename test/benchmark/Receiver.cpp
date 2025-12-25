@@ -4,11 +4,11 @@
 
 using Header = std_msgs::msg::Header;
 
-class ReceiverMIMO : public rclcpp::Node
+class Receiver : public rclcpp::Node
 {
 public:
-    ReceiverMIMO()
-        : Node("receiver_mimo")
+    Receiver()
+        : Node("receiver")
     {
         this->declare_parameter<int>("num_outputs", 3);
         this->get_parameter("num_outputs", num_outputs_);
@@ -37,7 +37,7 @@ private:
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<ReceiverMIMO>();
+    auto node = std::make_shared<Receiver>();
     while (rclcpp::ok())
     {
         rclcpp::spin_some(node);

@@ -60,9 +60,9 @@ int main(int argc, char *argv[])
     const std::string package_name = "soar_ros";
     const std::string share_directory =
         ament_index_cpp::get_package_share_directory(package_name);
-    std::string soar_path = share_directory + "/Soar/benchmark_mimo.soar";
+    std::string soar_path = share_directory + "/Soar/benchmark.soar";
 
-    auto node = std::make_shared<soar_ros::SoarRunner>("benchmark_mimo",
+    auto node = std::make_shared<soar_ros::SoarRunner>("benchmark",
                                                        soar_path);
 
     node->declare_parameter<int>("num_inputs", 3);

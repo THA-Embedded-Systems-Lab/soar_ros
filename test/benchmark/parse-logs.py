@@ -21,7 +21,7 @@ def parse_log_file(filepath):
                 sec = int(sender_match.group(3))
                 nanosec = int(sender_match.group(4))
                 sender_msgs[(counter, channel)] = sec + nanosec * 1e-9
-                
+
             receiver_match = receiver_pattern.search(line)
             if receiver_match:
                 channel = int(receiver_match.group(1))
@@ -37,7 +37,7 @@ def parse_log_file(filepath):
                     'channel': channel,
                     'receive_time': receive_time
                 })
-                
+
     return sender_msgs, receiver_msgs
 
 def main():
@@ -53,29 +53,29 @@ def main():
 
     run_id = os.path.basename(os.path.normpath(args.run_dir))
 
-    log_pattern = r'.*mimo.*f_(\d+\.?\d*)_id_([\d\-T:+]+)\.log'
+    log_pattern = r'.*f_(\d+\.?\d*)_id_([\d\-T:+]+)\.log'
     log_files = [f for f in os.listdir(log_dir) if re.match(log_pattern, f)]
     if run_id:
         log_files = [f for f in log_files if f'id_{run_id}.log' in f]
-    
+
     if log_files == []:
         raise Exception('No log files found matching the criteria.')
-        
+
     results = []
     for log_file in log_files:
         freq_match = re.search(r'f_(\d+\.?\d*)', log_file)
         runid_match = re.search(r'id_([\d\-T:+]+)', log_file)
         frequency = float(freq_match.group(1)) if freq_match else None
         run_id = runid_match.group(1) if runid_match else None
-        
+
         sender_msgs, receiver_msgs = parse_log_file(os.path.join(log_dir, log_file))
         df = pd.DataFrame(receiver_msgs)
-        
+
         # Map sender time based on frame_id and derive input_index from frame_id
         def get_sender_time(row):
             # Match sender time using counter and channel columns
             return sender_msgs.get((row['counter'], row['channel']), None)
-            
+
         df['sender_time'] = df.apply(get_sender_time, axis=1)
         df['duration'] = df['receive_time'] - df['sender_time']
         df['frequency'] = frequency
@@ -89,7 +89,7 @@ def main():
             output_df = df[df['channel'] == channel].sort_values('receive_time')
             dropped = []
             counters = output_df['counter'].values
-            
+
             for i in range(1, len(counters)):
                 if counters[i] != counters[i-1] + 1:
                     dropped.append((counters[i-1], counters[i]))
@@ -100,7 +100,7 @@ def main():
             output_df = df[df['channel'] == channel].sort_values('receive_time').reset_index(drop=True)
             counters = output_df['counter'].values
             derivative = pd.Series(counters).diff().fillna(0)
-            
+
             plt.figure()
             plt.plot(output_df.index, derivative, marker='x')
             plt.title(f'Frame ID Derivative Output{channel} (Run {run_id}, f={frequency} Hz)')
@@ -115,7 +115,7 @@ def main():
         all_df = pd.concat(results)
         all_df.to_csv(os.path.join(data_dir, f'all_results.csv'), index=False)
 
-        
+
         print(f'\nEvaluation complete! Results saved to {eval_dir}')
 
 if __name__ == '__main__':
