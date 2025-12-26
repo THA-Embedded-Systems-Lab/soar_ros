@@ -32,6 +32,11 @@ def generate_launch_description():
             default_value='3',
             description='Number of output channels (for SISO/MIMO)'
         ),
+        DeclareLaunchArgument(
+            'messages_to_send',
+            default_value='1000',
+            description='Number of messages to send from Sender node'
+        ),
         # Start sender with two second delay, so the receiver and system are ready
         TimerAction(
             period=2.0,
@@ -43,6 +48,7 @@ def generate_launch_description():
                     parameters=[
                         {'frequency': LaunchConfiguration('f')},
                         {'num_inputs': LaunchConfiguration('num_inputs')},
+                        {'messages_to_send': LaunchConfiguration('messages_to_send')},
                     ]
                 )
             ]

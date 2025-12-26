@@ -8,9 +8,14 @@ def parse_log_file(filepath):
     sender_pattern = re.compile(r'Published header to input(\d+): frame_id=([^,]+), sec=(\d+), nanosec=(\d+)')
     receiver_pattern = re.compile(r'Received header on output(\d+): frame_id=([^,]+), sec=(\d+), nanosec=(\d+)')
     receive_time_pattern = re.compile(r'receive_time=(\d+\.\d+)')
+    soar_decision_pattern = re.compile(r'Soar decision cycle executed')
+    # Example log: [INFO] [1766742660.710005840] [SoarRunner]: Soar decision cycle executed
+    log_prefix_pattern = re.compile(r'\[(?:INFO|DEBUG|WARN|ERROR)\] \[(\d+\.\d+)\]')
 
     sender_msgs = {}  # {(frame_id, input_index): timestamp}
     receiver_msgs = []
+    soar_decision_records = []
+
 
     with open(filepath, 'r') as f:
         for line in f:
@@ -20,7 +25,13 @@ def parse_log_file(filepath):
                 counter = int(sender_match.group(2).split("_")[0])
                 sec = int(sender_match.group(3))
                 nanosec = int(sender_match.group(4))
-                sender_msgs[(counter, channel)] = sec + nanosec * 1e-9
+                # capture log prefix timestamp for this sender line if present
+                prefix_match = log_prefix_pattern.search(line)
+                log_time_sender = float(prefix_match.group(1)) if prefix_match else None
+                sender_msgs[(counter, channel)] = {
+                    'sender_time': sec + nanosec * 1e-9,
+                    'log_time_sender': log_time_sender
+                }
 
             receiver_match = receiver_pattern.search(line)
             if receiver_match:
@@ -32,13 +43,24 @@ def parse_log_file(filepath):
                 if receive_time_match == None:
                     raise "No receive time found via regex."
                 receive_time = float(receive_time_match.group(1))
+                # capture log prefix timestamp for this receiver line if present
+                prefix_match = log_prefix_pattern.search(line)
+                log_time_receiver = float(prefix_match.group(1)) if prefix_match else None
                 receiver_msgs.append({
                     'counter': counter,
                     'channel': channel,
-                    'receive_time': receive_time
+                    'receive_time': receive_time,
+                    'log_time_receiver': log_time_receiver
                 })
 
-    return sender_msgs, receiver_msgs
+            # Collect Soar decision cycle messages with timestamp from log prefix
+            if soar_decision_pattern.search(line):
+                prefix_match = log_prefix_pattern.search(line)
+                timestamp = float(prefix_match.group(1)) if prefix_match else None
+                soar_decision_records.append({'timestamp': timestamp, 'counter': None})
+
+    soar_decision_df = pd.DataFrame(soar_decision_records)
+    return sender_msgs, receiver_msgs, soar_decision_df
 
 def main():
     parser = argparse.ArgumentParser(description='Evaluate MIMO sender/receiver log files.')
@@ -51,72 +73,58 @@ def main():
     os.makedirs(data_dir, exist_ok=True)
     os.makedirs(eval_dir, exist_ok=True)
 
-    run_id = os.path.basename(os.path.normpath(args.run_dir))
-
-    log_pattern = r'.*f_(\d+\.?\d*)_id_([\d\-T:+]+)\.log'
+    log_pattern = r'.*f_(\d+)\.log'
+    print(os.listdir(log_dir))
     log_files = [f for f in os.listdir(log_dir) if re.match(log_pattern, f)]
-    if run_id:
-        log_files = [f for f in log_files if f'id_{run_id}.log' in f]
 
     if log_files == []:
-        raise Exception('No log files found matching the criteria.')
+        log_message = f'No log files found in {log_dir} matching pattern.'
+        raise Exception(log_message)
 
-    results = []
+    message_results = []
+    soar_decision_dfs = []
+
     for log_file in log_files:
         freq_match = re.search(r'f_(\d+\.?\d*)', log_file)
-        runid_match = re.search(r'id_([\d\-T:+]+)', log_file)
         frequency = float(freq_match.group(1)) if freq_match else None
-        run_id = runid_match.group(1) if runid_match else None
 
-        sender_msgs, receiver_msgs = parse_log_file(os.path.join(log_dir, log_file))
+        sender_msgs, receiver_msgs, soar_decision_df = parse_log_file(os.path.join(log_dir, log_file))
+
+        # Save Soar decision cycle DataFrame to a file if any
+        if not soar_decision_df.empty:
+            soar_decision_df["frequency"] = frequency
+            soar_decision_dfs.append(soar_decision_df)
+
+        if receiver_msgs == []:
+            print(f'No receiver messages found in log file {log_file}, skipping.')
+            continue
+
         df = pd.DataFrame(receiver_msgs)
+
 
         # Map sender time based on frame_id and derive input_index from frame_id
         def get_sender_time(row):
             # Match sender time using counter and channel columns
-            return sender_msgs.get((row['counter'], row['channel']), None)
+            entry = sender_msgs.get((row['counter'], row['channel']), None)
+            if isinstance(entry, dict):
+                return entry.get('sender_time', None)
+            return entry
 
         df['sender_time'] = df.apply(get_sender_time, axis=1)
         df['duration'] = df['receive_time'] - df['sender_time']
         df['frequency'] = frequency
-        df['run_id'] = run_id
-        results.append(df)
-
-        df.to_csv(os.path.join(data_dir, f'results_{run_id}_f{frequency}.csv'), index=False)
-
-        # Analyze dropped messages per output
-        for channel in df['channel'].unique():
-            output_df = df[df['channel'] == channel].sort_values('receive_time')
-            dropped = []
-            counters = output_df['counter'].values
-
-            for i in range(1, len(counters)):
-                if counters[i] != counters[i-1] + 1:
-                    dropped.append((counters[i-1], counters[i]))
-            print(f'Run {run_id}, Frequency {frequency} Hz, Output {channel}: Dropped messages: {dropped}')
-
-        # Message order derivative per output
-        for channel in df['channel'].unique():
-            output_df = df[df['channel'] == channel].sort_values('receive_time').reset_index(drop=True)
-            counters = output_df['counter'].values
-            derivative = pd.Series(counters).diff().fillna(0)
-
-            plt.figure()
-            plt.plot(output_df.index, derivative, marker='x')
-            plt.title(f'Frame ID Derivative Output{channel} (Run {run_id}, f={frequency} Hz)')
-            plt.xlabel('Message Index')
-            plt.ylabel('frame_id derivative')
-            plt.grid()
-            plt.savefig(os.path.join(eval_dir, f'frameid_derivative_{run_id}_f{frequency}_output{channel}.png'))
-            plt.close()
+        message_results.append(df)
 
     # Aggregate and plot duration vs frequency
-    if results:
-        all_df = pd.concat(results)
-        all_df.to_csv(os.path.join(data_dir, f'all_results.csv'), index=False)
+    if message_results:
+        message_results = pd.concat(message_results)
+        message_results.to_csv(os.path.join(data_dir, f'combined_message_results.csv'), index=False)
+    
+    if soar_decision_dfs:
+        soar_decision_dfs = pd.concat(soar_decision_dfs)
+        soar_decision_dfs.to_csv(os.path.join(data_dir, f'combined_soar_decision.csv'), index=False)
 
-
-        print(f'\nEvaluation complete! Results saved to {eval_dir}')
+    print(f'Parsing logs completed! Results saved to {data_dir}')
 
 if __name__ == '__main__':
     main()
