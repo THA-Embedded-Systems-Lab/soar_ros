@@ -6,7 +6,7 @@ NUM_CHANNELS="${1:-3}"
 
 RUN_ID="$(date -Iseconds | cut -d'+' -f1)_CHANNELS_${NUM_CHANNELS}"
 LOG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/out/${RUN_ID}"
-FREQS=(250 500)
+FREQS=(125 250 500)
 
 mkdir -p "$LOG_DIR/logs"
 mkdir -p "$LOG_DIR/data"
