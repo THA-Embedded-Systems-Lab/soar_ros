@@ -5,9 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def parse_log_file(filepath):
-    sender_pattern = re.compile(r'Published header to input(\d+): frame_id=([^,]+), sec=(\d+), nanosec=(\d+)')
-    receiver_pattern = re.compile(r'Received header on output(\d+): frame_id=([^,]+), sec=(\d+), nanosec=(\d+)')
-    receive_time_pattern = re.compile(r'receive_time=(\d+\.\d+)')
+    sender_pattern = re.compile(r'Published to input: frame_id=([^,]+)')
+    receiver_pattern = re.compile(r'Received on output: frame_id=([^,]+)')
     soar_decision_pattern = re.compile(r'Soar decision cycle executed')
     # Example log: [INFO] [1766742660.710005840] [SoarRunner]: Soar decision cycle executed
     log_prefix_pattern = re.compile(r'\[(?:INFO|DEBUG|WARN|ERROR)\] \[(\d+\.\d+)\]')
@@ -21,42 +20,31 @@ def parse_log_file(filepath):
         for line in f:
             sender_match = sender_pattern.search(line)
             if sender_match:
-                channel = int(sender_match.group(1))
-                counter = int(sender_match.group(2).split("_")[0])
-                sec = int(sender_match.group(3))
-                nanosec = int(sender_match.group(4))
+                counter = int(sender_match.group(1).split("_")[0])
+                channel = int(sender_match.group(1).split("_")[1])
                 # capture log prefix timestamp for this sender line if present
                 prefix_match = log_prefix_pattern.search(line)
-                log_time_sender = float(prefix_match.group(1)) if prefix_match else None
+                log_time_sender = float(prefix_match.group(1))
                 sender_msgs[(counter, channel)] = {
-                    'sender_time': sec + nanosec * 1e-9,
-                    'log_time_sender': log_time_sender
+                    'sender_time': log_time_sender,
                 }
 
             receiver_match = receiver_pattern.search(line)
             if receiver_match:
-                channel = int(receiver_match.group(1))
-                counter = int(receiver_match.group(2).split("_")[0])
-                sec = int(receiver_match.group(3))
-                nanosec = int(receiver_match.group(4))
-                receive_time_match = receive_time_pattern.search(line)
-                if receive_time_match == None:
-                    raise "No receive time found via regex."
-                receive_time = float(receive_time_match.group(1))
-                # capture log prefix timestamp for this receiver line if present
+                counter = int(receiver_match.group(1).split("_")[0])
+                channel = int(receiver_match.group(1).split("_")[1])
                 prefix_match = log_prefix_pattern.search(line)
-                log_time_receiver = float(prefix_match.group(1)) if prefix_match else None
+                log_time_receiver = float(prefix_match.group(1))
                 receiver_msgs.append({
                     'counter': counter,
                     'channel': channel,
-                    'receive_time': receive_time,
-                    'log_time_receiver': log_time_receiver
+                    'receive_time': log_time_receiver,
                 })
 
             # Collect Soar decision cycle messages with timestamp from log prefix
             if soar_decision_pattern.search(line):
                 prefix_match = log_prefix_pattern.search(line)
-                timestamp = float(prefix_match.group(1)) if prefix_match else None
+                timestamp = float(prefix_match.group(1))
                 soar_decision_records.append({'timestamp': timestamp, 'counter': None})
 
     soar_decision_df = pd.DataFrame(soar_decision_records)

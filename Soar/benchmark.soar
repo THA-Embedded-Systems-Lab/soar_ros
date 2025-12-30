@@ -20,88 +20,70 @@ sp {elaborate*state*top-state
 }
 
 # Process input0 messages
-sp {propose*add-header-to-output0
+sp {propose*add-frame-id-to-output0
    (state <s> ^top-state.io.input-link.input0 <h>)
-   (<h> ^frame_id <fid>
-        ^stamp_sec <sec>
-        ^stamp_nanosec <nsec>
-        -^status complete)
+   (<h> \^frame_id <val>
+      -^status complete)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name add-header-to-output0
-        ^header <h>)
+   (<o> ^name add-frame-id-to-output0
+      ^input <h>)
 }
 
-sp {apply*add-header-to-output0
+sp {apply*add-frame-id-to-output0
    (state <s> ^operator <o>
-        ^top-state.io.output-link <ol>)
-   (<o> ^name add-header-to-output0
-        ^header <h>)
-   (<h> ^frame_id <fid>
-        ^stamp_sec <sec>
-        ^stamp_nanosec <nsec>)
+      ^top-state.io.output-link <ol>)
+   (<o> ^name add-frame-id-to-output0
+      ^input <h>)
+   (<h> \^frame_id <val>)
 -->
-   (<ol> ^output0 <h2>)
-   (<h2> ^frame_id <fid>
-         ^stamp_sec <sec>
-         ^stamp_nanosec <nsec>)
+   (<ol> ^output0 <out>)
+   (<out> \^frame_id <val>)
    (<h> ^status complete)
 }
 
 # Process input1 messages
-sp {propose*add-header-to-output1
+sp {propose*add-frame-id-to-output1
    (state <s> ^top-state.io.input-link.input1 <h>)
-   (<h> ^frame_id <fid>
-        ^stamp_sec <sec>
-        ^stamp_nanosec <nsec>
-        -^status complete)
+   (<h> ^frame_id <val>
+      -^status complete)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name add-header-to-output1
-        ^header <h>)
+   (<o> ^name add-frame-id-to-output1
+      ^input <h>)
 }
 
-sp {apply*add-header-to-output1
+sp {apply*add-frame-id-to-output1
    (state <s> ^operator <o>
-        ^top-state.io.output-link <ol>)
-   (<o> ^name add-header-to-output1
-        ^header <h>)
-   (<h> ^frame_id <fid>
-        ^stamp_sec <sec>
-        ^stamp_nanosec <nsec>)
+      ^top-state.io.output-link <ol>)
+   (<o> ^name add-frame-id-to-output1
+      ^input <h>)
+   (<h> ^frame_id <val>)
 -->
-   (<ol> ^output1 <h2>)
-   (<h2> ^frame_id <fid>
-         ^stamp_sec <sec>
-         ^stamp_nanosec <nsec>)
+   (<ol> ^output1 <out>)
+   (<out> ^frame_id <val>)
    (<h> ^status complete)
 }
 
 # Process input2 messages
-sp {propose*add-header-to-output2
+sp {propose*add-frame-id-to-output2
    (state <s> ^top-state.io.input-link.input2 <h>)
-   (<h> ^frame_id <fid>
-        ^stamp_sec <sec>
-        ^stamp_nanosec <nsec>
-        -^status complete)
+   (<h> ^frame_id <val>
+      -^status complete)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name add-header-to-output2
-        ^header <h>)
+   (<o> ^name add-frame-id-to-output2
+      ^input <h>)
 }
 
-sp {apply*add-header-to-output2
+sp {apply*add-frame-id-to-output2
    (state <s> ^operator <o>
-        ^top-state.io.output-link <ol>)
-   (<o> ^name add-header-to-output2
-        ^header <h>)
-   (<h> ^frame_id <fid>
-        ^stamp_sec <sec>
-        ^stamp_nanosec <nsec>)
+      ^top-state.io.output-link <ol>)
+   (<o> ^name add-frame-id-to-output2
+      ^input <h>)
+   (<h> ^frame_id <val>)
 -->
-   (<ol> ^output2 <h2>)
-   (<h2> ^frame_id <fid>
-         ^stamp_sec <sec>
-         ^stamp_nanosec <nsec>)
+   (<ol> ^output2 <out>)
+   (<out> ^frame_id <val>)
    (<h> ^status complete)
 }

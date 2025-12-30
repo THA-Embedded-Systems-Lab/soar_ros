@@ -39,7 +39,7 @@ def generate_launch_description():
         ),
         # Start sender with two second delay, so the receiver and system are ready
         TimerAction(
-            period=2.0,
+            period=0.5,
             actions=[
                 Node(
                     package='soar_ros',
