@@ -22,7 +22,8 @@ public:
     for (int i = 0; i < num_inputs_; i++)
     {
       std::string topic_name = "input" + std::to_string(i);
-      publishers_.push_back(this->create_publisher<Header>(topic_name, 10));
+      rclcpp::QoS qos(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
+      publishers_.push_back(this->create_publisher<Header>(topic_name, qos));
     }
 
     set_timer();
