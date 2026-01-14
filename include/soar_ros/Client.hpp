@@ -15,15 +15,15 @@
 #ifndef SOAR_ROS__CLIENT_HPP_
 #define SOAR_ROS__CLIENT_HPP_
 
-namespace soar_ros
-{
-
 #include <rclcpp/rclcpp.hpp>
 #include <string>
 
 #include "Interface.hpp"
 #include "SafeQueue.hpp"
 #include "sml_Client.h"
+
+namespace soar_ros
+{
 
 template<typename T, typename pRequestType = typename T::Request::SharedPtr,
   typename pResponseType = typename T::Response::SharedPtr>
