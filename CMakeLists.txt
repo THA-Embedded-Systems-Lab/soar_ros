@@ -64,14 +64,14 @@ if(BUILD_TESTING)
   ament_target_dependencies(test_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
   target_link_libraries(test_client soar_ros)
 
-  add_executable(test_action_client test/test_action_client.cpp)
+  add_executable(test_action_client test/action_client/test_action_client.cpp)
   ament_target_dependencies(test_action_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
   target_link_libraries(test_action_client soar_ros)
 
   add_launch_test(test/pubsub/test_launch_input_output.py)
   add_launch_test(test/service/test_launch_service.py)
   add_launch_test(test/client/test_launch_client.py)
-  add_launch_test(test/test_launch_actionClient.py)
+  add_launch_test(test/action_client/test_launch_action_client.py)
 
   install(TARGETS test_input_output test_service test_client test_action_client
       DESTINATION lib/${PROJECT_NAME})

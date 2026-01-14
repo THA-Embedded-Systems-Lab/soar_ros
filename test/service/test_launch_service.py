@@ -30,6 +30,7 @@ import threading
 # Constants for timeouts
 SERVICE_TIMEOUT = 1.0
 
+from time import sleep
 
 @pytest.mark.launch_test
 def generate_test_description():
@@ -80,6 +81,7 @@ class TestSoarRos(unittest.TestCase):
         req.a = 2
         req.b = 2
 
+        sleep(1)
         future = cli.call_async(req)
         rclpy.spin_until_future_complete(self.node, future)
 

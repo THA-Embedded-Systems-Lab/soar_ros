@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from time import sleep
 import unittest
 
 import launch
@@ -99,15 +100,17 @@ class TestSoarRos(unittest.TestCase):
         self.spin_thread = threading.Thread(target=self.spin_node)
         self.spin_thread.start()
 
-        try:
-            pub.publish(msg)
-            self.node.get_logger().info(f'Published Trigger message: {msg.data}')
+        # Wait for the soar_ros node to be ready
+        sleep(1)
 
-            proc_output.assertWaitFor("Result: 12", timeout=PROC_OUTPUT_TIMEOUT)
-        finally:
-            # Stop spin thread and wait until stopped until further tests are executed.
-            self.executor.shutdown()
-            self.spin_thread.join()
+        pub.publish(msg)
+        self.node.get_logger().info(f'Published Trigger message: {msg.data}')
+
+        proc_output.assertWaitFor("Result: 12", timeout=PROC_OUTPUT_TIMEOUT)
+
+        # Stop spin thread and wait until stopped until further tests are executed.
+        self.executor.shutdown()
+        self.spin_thread.join()
 
     def add_two_ints_callback(self, request, response):
         response.sum = request.a + request.b

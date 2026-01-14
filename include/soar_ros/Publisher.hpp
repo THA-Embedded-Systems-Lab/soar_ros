@@ -25,7 +25,7 @@
 
 namespace soar_ros
 {
-template<typename T>
+template <typename T>
 class Publisher : public Output<T>, public Interface
 {
 protected:
@@ -33,19 +33,29 @@ protected:
   std::thread publisher;
   std::string m_topic;
   rclcpp::Node::SharedPtr m_node;
-  sml::Agent * m_pAgent;
+  sml::Agent* m_pAgent;
+  rclcpp::CallbackGroup::SharedPtr m_callback_group;
 
 public:
-  Publisher(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & topic)
-  : Output<T>(), isRunning(true), m_topic(topic), m_node(node), m_pAgent(agent)
+  Publisher(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& topic,
+            rclcpp::QoS qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default)),
+            rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+    : Output<T>(), isRunning(true), m_topic(topic), m_node(node), m_pAgent(agent), m_callback_group(callback_group)
   {
-    pub = m_node->create_publisher<T>(m_topic, 10);
+    if (!m_callback_group)
+    {
+      m_callback_group = m_node->get_node_base_interface()->get_default_callback_group();
+    }
+    rclcpp::PublisherOptions options;
+    options.callback_group = m_callback_group;
+    pub = m_node->create_publisher<T>(m_topic, qos, options);
     publisher = std::thread(&Publisher<T>::run, this);
   }
   ~Publisher()
   {
     isRunning.store(false);
-    if (publisher.joinable()) {
+    if (publisher.joinable())
+    {
       publisher.join();
     }
   }
@@ -53,21 +63,22 @@ public:
 
   void run()
   {
-    while (isRunning.load()) {
+    while (isRunning.load())
+    {
       auto msg = this->m_s2rQueue.pop();
       RCLCPP_INFO(m_node->get_logger(), "Sending on %s", m_topic.c_str());
       pub->publish(msg);
     }
   }
 
-  T parse(sml::Identifier * id) override = 0;
+  T parse(sml::Identifier* id) override = 0;
 
   std::string getTopic() override
   {
     return m_topic;
   }
 
-  sml::Agent * getAgent() override
+  sml::Agent* getAgent() override
   {
     return m_pAgent;
   }

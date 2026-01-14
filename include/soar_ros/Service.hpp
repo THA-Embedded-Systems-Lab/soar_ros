@@ -27,21 +27,20 @@
 
 namespace soar_ros
 {
-template<typename T, typename pRequestType = typename T::Request::SharedPtr,
-  typename pResponseType = typename T::Response::SharedPtr>
-class Service : public virtual Input<pRequestType>,
-  public virtual Output<pResponseType>,
-  public Interface
+template <typename T, typename pRequestType = typename T::Request::SharedPtr,
+          typename pResponseType = typename T::Response::SharedPtr>
+class Service : public virtual Input<pRequestType>, public virtual Output<pResponseType>, public Interface
 {
 protected:
   typename rclcpp::Service<T>::SharedPtr m_service;
   std::string m_topic;
   rclcpp::Node::SharedPtr m_node;
-  sml::Agent * m_pAgent;
+  sml::Agent* m_pAgent;
+  rclcpp::CallbackGroup::SharedPtr m_callback_group;
+  rclcpp::QoS m_qos;
 
-  void callback(
-    [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
-    pRequestType request, pResponseType response)
+  void callback([[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header, pRequestType request,
+                pResponseType response)
   {
     // send data via createWMEs
     this->m_r2sQueue.push(request);
@@ -50,24 +49,36 @@ protected:
   }
 
 public:
-  Service(
-    sml::Agent * agent, rclcpp::Node::SharedPtr node,
-    const std::string & service_name)
-  : m_topic(service_name), m_node(node), m_pAgent(agent)
+  Service(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& service_name,
+          rclcpp::QoS qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_services_default)),
+          rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+    : m_topic(service_name), m_node(node), m_pAgent(agent), m_callback_group(callback_group), m_qos(qos)
   {
+    if (!m_callback_group)
+    {
+      m_callback_group = m_node->get_node_base_interface()->get_default_callback_group();
+    }
+
     m_service = m_node.get()->create_service<T>(
-      m_topic, std::bind(
-        &Service::callback, this, std::placeholders::_1,
-        std::placeholders::_2, std::placeholders::_3));
+        m_topic,
+        std::bind(&Service::callback, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3), qos);
   }
-  ~Service() {}
+  ~Service()
+  {
+  }
 
   virtual void parse(pRequestType msg) = 0;
-  pResponseType parse(sml::Identifier * id) override = 0;
+  pResponseType parse(sml::Identifier* id) override = 0;
 
-  std::string getTopic() override {return m_topic;}
+  std::string getTopic() override
+  {
+    return m_topic;
+  }
 
-  sml::Agent * getAgent() override {return m_pAgent;}
+  sml::Agent* getAgent() override
+  {
+    return m_pAgent;
+  }
 };
 }  // namespace soar_ros
 

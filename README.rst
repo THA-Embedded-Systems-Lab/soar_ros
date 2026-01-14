@@ -223,6 +223,14 @@ How to develop
 
 Clone the package in your ROS2 workspace.
 
+Dev Container
+~~~~~~~~~~~~~
+
+This repository includes a VS Code Dev Container configuration that provides
+a ready-to-use development environment with ROS 2 and the package
+dependencies. The soar_ros package is build on startup.
+
+
 Usage
 -----
 
