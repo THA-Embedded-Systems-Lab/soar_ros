@@ -15,8 +15,8 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y python3-pip python3-venv
+RUN apt-get update && apt-get upgrade -y \
+    && apt-get install -y python3-pip python3-venv
 ENV SHELL=/bin/bash
 
 RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/${USERNAME}/.bashrc

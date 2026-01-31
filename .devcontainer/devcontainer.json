@@ -15,7 +15,8 @@
             "extensions": [
                 "ms-vscode.cpptools",
                 "twxs.cmake",
-                "ranch-hand-robotics.rde-ros-2"
+                "ranch-hand-robotics.rde-ros-2",
+                "ms-toolsai.jupyter"
             ]
         }
     },
