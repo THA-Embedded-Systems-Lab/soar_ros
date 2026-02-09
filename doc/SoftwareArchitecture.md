@@ -8,13 +8,14 @@ provided on their website in the [Soar manual][soar_manual] or the [Soar
 Threading Model][soar_threads].
 
 The user should only be required to do two things: Initialize the Soar
-kernel with an Agent and add adapted publisher, subscriber, services and
-clients afterwards. For each message/ topic, the conversion between Soar
-working memory elements (WMEs) and ROS2 message, or vice versa, types must be
-implemented manually.
+kernel via `SoarRunner`, add one or more agents with `addAgent`, and then add
+adapted publisher, subscriber, services and clients. For each message/ topic,
+the conversion between Soar working memory elements (WMEs) and ROS2 message, or
+vice versa, types must be implemented manually.
 
 - The kernel is wrapped in a single class called `SoarRunner`. The main
-responsibility is to create, start and maintain the Soar kernel.
+responsibility is to create, start and maintain the Soar kernel and manage
+multiple agents in one kernel.
 
 - Publisher, Subscribers, Service and Clients are added via a separate functions
 to the ROS2 node.

@@ -1,0 +1,22 @@
+source init_agent.soar
+source wait.soar
+
+sp {agent-b*propose*output
+   (state <s> ^io.input-link.agent_b_input <pMessage>)
+   -(<pMessage> ^status complete)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name agent_b_output
+      ^pMessage <pMessage>)
+}
+
+sp {agent-b*apply*output
+   (state <s> ^operator <o>
+      ^io.output-link <ol>)
+   (<o> ^name agent_b_output
+      ^pMessage <pMessage>)
+   (<pMessage> ^data <message>)
+-->
+   (<ol> ^agent_b.data <message>)
+   (<pMessage> ^status complete)
+}

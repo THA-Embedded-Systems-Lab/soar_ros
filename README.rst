@@ -39,11 +39,12 @@ configurations were not tested. It provides
 -  Service
 -  Client
 -  Action Client
+-  Multiple Soar agents in one kernel
 
 The following features are **not supported**, yet.
 
 -  Action Server
--  Multiple Soar agents
+
 
 Definition and description of the public API
 --------------------------------------------
@@ -56,7 +57,8 @@ Examples
 --------
 
 The following examples are an extract of the test cases in
-`test/test_soar_ros.cpp <./test/test_soar_ros.cpp>`__.
+`test/pubsub/test_input_output.cpp <./test/pubsub/test_input_output.cpp>`__ and
+`test/service/test_service.cpp <./test/service/test_service.cpp>`__.
 
 Publisher
 ~~~~~~~~~
@@ -88,7 +90,7 @@ Service
 In the following example, the ROS2 example ``AddTwoInts`` is
 implemented. Soar adds two integers and sends the result as a ROS2
 Service, based on the ``soar_ros::Service`` class. The code is from
-`test/test_soar_ros.cpp <./test/test_soar_ros.cpp>`__.
+`test/service/test_service.cpp <./test/service/test_service.cpp>`__.
 
 .. code:: cpp
 
@@ -126,10 +128,11 @@ adding it to the node similar to a builder pattern, cf.
 
 .. code:: cpp
 
-   auto node = std::make_shared<soar_ros::SoarRunner>("Test Agent", soar_path);
+      auto node = std::make_shared<soar_ros::SoarRunner>();
+      auto agent = node->addAgent("Test Agent", soar_path);
 
-   std::shared_ptr<soar_ros::Service<example_interfaces::srv::AddTwoInts>> service =
-       std::make_shared<TestService>(node.get()->getAgent(), node, "AddTwoInts");
+      std::shared_ptr<soar_ros::Service<example_interfaces::srv::AddTwoInts>> service =
+         std::make_shared<TestService>(agent, node, "AddTwoInts");
    node->addService(service);
 
    node->startThread();

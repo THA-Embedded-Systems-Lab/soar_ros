@@ -10,7 +10,7 @@ class TestOutput : public soar_ros::Publisher<std_msgs::msg::String>
 public:
   using Publisher<std_msgs::msg::String>::Publisher;
 
-  std_msgs::msg::String parse(sml::Identifier* id) override
+  std_msgs::msg::String parse(sml::Identifier * id) override
   {
     std_msgs::msg::String msg;
     msg.data = id->GetParameterValue("data");
@@ -26,13 +26,13 @@ public:
 
   void parse(std_msgs::msg::String msg) override
   {
-    sml::Identifier* il = this->m_pAgent->GetInputLink();
-    sml::Identifier* pId = il->CreateIdWME(this->m_topic.c_str());
+    sml::Identifier * il = this->m_pAgent->GetInputLink();
+    sml::Identifier * pId = il->CreateIdWME(this->m_topic.c_str());
     pId->CreateStringWME("data", msg.data.c_str());
   }
 };
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
 
@@ -41,24 +41,23 @@ int main(int argc, char* argv[])
   std::string soar_path = share_directory + "/Soar/test_input_output.soar";
   std::cout << "Soar file path: " << soar_path << std::endl;
   std::ifstream soar_file(soar_path);
-  if (!soar_file.is_open())
-  {
+  if (!soar_file.is_open()) {
     std::cerr << "Error: Soar file not found at " << soar_path << std::endl;
     return 1;
   }
 
-  auto node = std::make_shared<soar_ros::SoarRunner>("TestRepublisher", soar_path);
+  auto node = std::make_shared<soar_ros::SoarRunner>();
+  auto agent = node->addAgent("TestRepublisher", soar_path);
 
   std::shared_ptr<soar_ros::Publisher<std_msgs::msg::String>> p =
-      std::make_shared<TestOutput>(node.get()->getAgent(), node, "test");
+    std::make_shared<TestOutput>(agent, node, "test");
   node->addPublisher(p);
 
   std::shared_ptr<soar_ros::Subscriber<std_msgs::msg::String>> s =
-      std::make_shared<TestInput>(node.get()->getAgent(), node, "testinput");
+    std::make_shared<TestInput>(agent, node, "testinput");
   node->addSubscriber(s);
 
-  if (!node->get_parameter("debug").as_bool())
-  {
+  if (!node->get_parameter("debug").as_bool()) {
     node->startThread();
   }
 

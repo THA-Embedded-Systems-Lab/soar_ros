@@ -12,7 +12,8 @@ int main(int argc, char ** argv)
     ament_index_cpp::get_package_share_directory(package_name);
 
   std::string soar_path = share_directory + "/Soar/main.soar";
-  auto node = std::make_shared<soar_ros::SoarRunner>("Main Soar Agent", soar_path);
+  auto node = std::make_shared<soar_ros::SoarRunner>();
+  node->addAgent("Main Soar Agent", soar_path);
 
   if (!node->get_parameter("debug").as_bool()) {
     node->startThread();

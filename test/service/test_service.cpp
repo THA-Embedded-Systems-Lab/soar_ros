@@ -23,10 +23,10 @@ class TestService : public soar_ros::Service<example_interfaces::srv::AddTwoInts
 public:
   using Service<example_interfaces::srv::AddTwoInts>::Service;
 
-  example_interfaces::srv::AddTwoInts::Response::SharedPtr parse(sml::Identifier* id) override
+  example_interfaces::srv::AddTwoInts::Response::SharedPtr parse(sml::Identifier * id) override
   {
     example_interfaces::srv::AddTwoInts::Response::SharedPtr response =
-        std::make_shared<example_interfaces::srv::AddTwoInts::Response>();
+      std::make_shared<example_interfaces::srv::AddTwoInts::Response>();
     auto sum = id->GetParameterValue("sum");
     int32_t num = std::stoi(sum);
     response.get()->sum = num;
@@ -36,14 +36,14 @@ public:
 
   void parse(example_interfaces::srv::AddTwoInts::Request::SharedPtr msg) override
   {
-    sml::Identifier* il = getAgent()->GetInputLink();
-    sml::Identifier* pId = il->CreateIdWME("AddTwoInts");
+    sml::Identifier * il = getAgent()->GetInputLink();
+    sml::Identifier * pId = il->CreateIdWME("AddTwoInts");
     pId->CreateIntWME("a", msg.get()->a);
     pId->CreateIntWME("b", msg.get()->b);
   }
 };
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
 
@@ -51,13 +51,13 @@ int main(int argc, char* argv[])
   const std::string share_directory = ament_index_cpp::get_package_share_directory(package_name);
   std::string soar_path = share_directory + "/Soar/test_service.soar";
 
-  auto node = std::make_shared<soar_ros::SoarRunner>("TestService", soar_path);
+  auto node = std::make_shared<soar_ros::SoarRunner>();
+  auto agent = node->addAgent("TestService", soar_path);
   std::shared_ptr<soar_ros::Service<example_interfaces::srv::AddTwoInts>> service =
-      std::make_shared<TestService>(node->getAgent(), node, "AddTwoInts");
+    std::make_shared<TestService>(agent, node, "AddTwoInts");
   node->addService(service);
 
-  if (!node->get_parameter("debug").as_bool())
-  {
+  if (!node->get_parameter("debug").as_bool()) {
     node->startThread();
   }
 
