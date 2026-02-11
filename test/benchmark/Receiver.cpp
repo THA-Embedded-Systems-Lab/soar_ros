@@ -7,7 +7,7 @@ class Receiver : public rclcpp::Node
 public:
   Receiver() : Node("receiver")
   {
-    this->declare_parameter<int>("num_outputs", 3);
+    this->declare_parameter<int>("num_outputs", 2);
     this->get_parameter("num_outputs", num_outputs_);
     for (int i = 0; i < num_outputs_; i++)
     {

@@ -2,11 +2,11 @@
 
 source ~/.bashrc
 
-NUM_CHANNELS="${1:-3}"
+NUM_CHANNELS="${1:-2}"
 
 RUN_ID="$(date -Iseconds | cut -d'+' -f1)_CHANNELS_${NUM_CHANNELS}"
 LOG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/out/${RUN_ID}"
-FREQS=(125 250 500)
+FREQS=(250 500 1000)
 
 mkdir -p "$LOG_DIR/logs"
 mkdir -p "$LOG_DIR/data"
@@ -14,7 +14,7 @@ mkdir -p "$LOG_DIR/evaluation"
 
 for F in "${FREQS[@]}"; do
   LOG_FILE_NAME="benchmark_f_${F}.log"
-  ros2 launch soar_ros benchmark.launch.py f:=${F} run_id:=${RUN_ID} num_inputs:=${NUM_CHANNELS} num_outputs:=${NUM_CHANNELS} 
+  ros2 launch soar_ros benchmark.launch.py f:=${F} num_inputs:=${NUM_CHANNELS} num_outputs:=${NUM_CHANNELS} messages_to_send:=10000
   cp ~/.ros/log/latest/launch.log "$LOG_DIR/logs/$LOG_FILE_NAME"
 done
 

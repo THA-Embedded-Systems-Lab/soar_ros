@@ -10,9 +10,9 @@ class Sender : public rclcpp::Node
 public:
   Sender() : Node("sender")
   {
-    this->declare_parameter<int>("frequency", 1.0);
-    this->declare_parameter<int>("num_inputs", 3);
-    this->declare_parameter<int>("messages_to_send", 1000);
+    this->declare_parameter<int>("frequency", 1);
+    this->declare_parameter<int>("num_inputs", 2);
+    this->declare_parameter<int>("messages_to_send", 10);
     this->get_parameter("frequency", frequency_);
     this->get_parameter("num_inputs", num_inputs_);
     this->get_parameter("messages_to_send", messages_to_send_);

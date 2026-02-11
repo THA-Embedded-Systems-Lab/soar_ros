@@ -9,13 +9,8 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'f',
-            default_value='1.0',
+            default_value='1',
             description='Frequency for Sender node (Hz)'
-        ),
-        DeclareLaunchArgument(
-            'run_id',
-            default_value='default',
-            description='Run identifier string'
         ),
         DeclareLaunchArgument(
             'debug',
@@ -24,17 +19,17 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'num_inputs',
-            default_value='3',
+            default_value='2',
             description='Number of input channels (for SISO/MIMO)'
         ),
         DeclareLaunchArgument(
             'num_outputs',
-            default_value='3',
+            default_value='2',
             description='Number of output channels (for SISO/MIMO)'
         ),
         DeclareLaunchArgument(
             'messages_to_send',
-            default_value='1000',
+            default_value='3000',
             description='Number of messages to send from Sender node'
         ),
         # Start sender with two second delay, so the receiver and system are ready
