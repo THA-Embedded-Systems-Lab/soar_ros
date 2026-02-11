@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include <unordered_set>
+#include <ament_index_cpp/get_package_share_directory.hpp>
 
 #include "rclcpp/rclcpp.hpp"
 
@@ -46,7 +47,7 @@ void SoarRunner::processOutputLinkChanges(sml::Agent * agent)
     }
 
     // Save input removal ids
-    if (name == "soar-input-removal-id") {
+    if (m_auto_delete_soar_io_on_complete && name == "soar-input-removal-id") {
       auto value = pId->GetParameterValue("value");
       pending_ids.push_back(std::stoll(value));
       pId->AddStatusComplete();
@@ -75,6 +76,11 @@ void SoarRunner::processInput(sml::Agent * agent)
     for (const auto & input : inputs_it->second) {
       input->process_r2s();
     }
+  }
+
+  if (!m_auto_delete_soar_io_on_complete) {
+    agent->Commit();
+    return;
   }
 
   sml::Identifier * input_link = agent->GetInputLink();
@@ -227,6 +233,12 @@ SoarRunner::SoarRunner()
   this->declare_parameter("debug", false, param_desc);
   m_debug = this->get_parameter("debug").as_bool();
 
+  auto auto_delete_desc = rcl_interfaces::msg::ParameterDescriptor{};
+  auto_delete_desc.description = "Enable automatic deletion of completed input/output messages.";
+  this->declare_parameter("auto_delete_soar_io_on_complete", false, auto_delete_desc);
+  m_auto_delete_soar_io_on_complete =
+    this->get_parameter("auto_delete_soar_io_on_complete").as_bool();
+
   pKernel = sml::Kernel::CreateKernelInNewThread();
   if (pKernel->HadError()) {
     std::string err_msg = pKernel->GetLastErrorDescription();
@@ -362,6 +374,18 @@ sml::Agent * SoarRunner::addAgent(
   }
 
   pAgent->RegisterForPrintEvent(sml::smlEVENT_PRINT, SoarPrintEventHandler, this);
+
+  if (m_auto_delete_soar_io_on_complete) {
+
+    const std::string share_directory = ament_index_cpp::get_package_share_directory("soar_ros");
+    std::string soar_productions = share_directory + "/Soar/input-output-deletion.soar";
+    pAgent->LoadProductions(soar_productions.c_str());
+
+    if (pAgent->HadError()) {
+      std::string err_msg = pAgent->GetLastErrorDescription();
+      RCLCPP_ERROR_STREAM(this->get_logger(), err_msg);
+    }
+  }
 
   std::string filepath = getSoarLogFilePath();
   std::string cmd = "output log " + filepath;

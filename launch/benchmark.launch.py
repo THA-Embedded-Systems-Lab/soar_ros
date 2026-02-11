@@ -32,6 +32,11 @@ def generate_launch_description():
             default_value='3000',
             description='Number of messages to send from Sender node'
         ),
+        DeclareLaunchArgument(
+            'auto_delete_soar_io_on_complete',
+            default_value='false',
+            description='Enable automatic deletion of completed input/output messages'
+        ),
         # Start sender with two second delay, so the receiver and system are ready
         TimerAction(
             period=0.5,
@@ -62,6 +67,7 @@ def generate_launch_description():
             name='system',
             parameters=[
                 {'debug': LaunchConfiguration('debug')},
+                {'auto_delete_soar_io_on_complete': LaunchConfiguration('auto_delete_soar_io_on_complete')},
                 {'num_inputs': LaunchConfiguration('num_inputs')},
                 {'num_outputs': LaunchConfiguration('num_outputs')},
            ]

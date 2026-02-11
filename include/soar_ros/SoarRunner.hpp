@@ -114,6 +114,9 @@ private:
   /// @brief Variable set via ROS2 params.
   bool m_debug;
 
+  /// @brief Enable automatic deletion of completed input/output messages.
+  bool m_auto_delete_soar_io_on_complete;
+
   /// @brief Permanent reference to the output link per agent.
   std::map<sml::Agent *, sml::Identifier *> output_links;
 
@@ -430,7 +433,9 @@ public:
         RCLCPP_DEBUG(this->get_logger(), "Output link reference invalid!");
       }
 
-      removeCompletedInput(agent);
+      if (m_auto_delete_soar_io_on_complete) {
+        removeCompletedInput(agent);
+      }
       // Write to Soar input-link
       processInput(agent);
     }
