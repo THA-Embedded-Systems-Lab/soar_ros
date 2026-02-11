@@ -60,7 +60,8 @@ int main(int argc, char* argv[])
   const std::string share_directory = ament_index_cpp::get_package_share_directory(package_name);
   std::string soar_path = share_directory + "/Soar/benchmark.soar";
 
-  auto node = std::make_shared<soar_ros::SoarRunner>("benchmark", soar_path);
+  auto node = std::make_shared<soar_ros::SoarRunner>();
+  auto agent = node->addAgent("benchmark", soar_path);
 
   node->declare_parameter<int>("num_inputs", 3);
   node->declare_parameter<int>("num_outputs", 3);
@@ -72,7 +73,7 @@ int main(int argc, char* argv[])
   {
     std::string topic_name = "output" + std::to_string(i);
     std::shared_ptr<soar_ros::Publisher<StringMsg>> p =
-        std::make_shared<Output>(node.get()->getAgent(), node, topic_name, i);
+        std::make_shared<Output>(agent, node, topic_name, i);
     node->addPublisher(p);
   }
 
@@ -80,7 +81,7 @@ int main(int argc, char* argv[])
   {
     std::string topic_name = "input" + std::to_string(i);
     std::shared_ptr<soar_ros::Subscriber<StringMsg>> s =
-        std::make_shared<Input>(node.get()->getAgent(), node, topic_name, i);
+        std::make_shared<Input>(agent, node, topic_name, i);
     node->addSubscriber(s);
   }
 

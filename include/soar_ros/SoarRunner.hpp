@@ -421,6 +421,8 @@ public:
         RCLCPP_DEBUG(this->get_logger(), "Output link reference invalid!");
       }
 
+      // TODO Remove input with ^status complete
+      // removeCompletedInput(agent);
       // Write to Soar input-link
       processInput(agent);
     }

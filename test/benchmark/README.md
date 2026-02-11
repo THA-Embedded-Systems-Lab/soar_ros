@@ -2,10 +2,11 @@
 
 This directory contains two benchmark configurations for testing the soar_ros system:
 
-## 1. SISO Benchmark (Single Input Single Output)
+
+## Benchmark
 
 The original benchmark configuration tests a single input topic → Soar system →
-single output topic pipeline.
+single output topic pipeline and multi input to multi output.
 
 ### Components
 
@@ -34,87 +35,53 @@ cd /home/ws/src/soar_ros/test/benchmark
 ros2 launch soar_ros benchmark.launch.py f:=100
 ```
 
-## 2. MIMO Benchmark (Multiple Input Multiple Output)
-
-Extended benchmark configuration that tests 3 input topics → Soar system → 3 output topics pipeline.
-
-### Components:
-
--   **Sender**: Publishes messages to `input0`, `input1`, `input2` topics
--   **Receiver**: Subscribes to `output0`, `output1`, `output2` topics
--   **System**: Soar agent that processes multiple inputs and produces multiple outputs
-
-### Files:
-
--   `Sender.cpp` - MIMO sender node (3 publishers)
--   `Receiver.cpp` - MIMO receiver node (3 subscribers)
--   `System.cpp` - MIMO Soar system node
--   `benchmark.sh` - Script to run MIMO benchmark tests
--   `evaluation.py` - Analysis script for MIMO results
--   `../launch/benchmark.launch.py` - MIMO launch file
--   `../Soar/benchmark.soar` - MIMO Soar rules
-
-### Usage:
-
-```bash
-# Run the benchmark
-cd /home/ws/src/soar_ros/test/benchmark
-./benchmark_mimo.sh
-
-# Or manually run at a specific frequency:
-ros2 launch soar_ros benchmark_mimo.launch.py f:=100
-```
 
 ## Topic Structure
 
-### SISO:
-
--   Input: `input` (std_msgs/msg/Header)
--   Output: `output` (std_msgs/msg/Header)
-
-### MIMO:
-
--   Inputs: `input0`, `input1`, `input2` (std_msgs/msg/Header)
--   Outputs: `output0`, `output1`, `output2` (std_msgs/msg/Header)
 
 ## Message Format
 
 Both benchmarks use the same message type (`std_msgs/msg/Header`):
 
--   `frame_id`: "counter_channel" format (e.g., "0_0", "0_1", "0_2")
--   `stamp`: ROS2 timestamp from sender
+see sender system and receiver.cpp
+times are based on log messages.
 
 ## Benchmark Parameters
 
 Both scripts test at multiple frequencies:
 
--   100 Hz
--   250 Hz
--   500 Hz
--   1000 Hz
--   2000 Hz
-
-Each benchmark sends 2000 messages at each frequency.
+see benchmark.sh
 
 ## Results
 
-Results are saved to:
-
--   SISO: `~/tmp/soar_ros_benchmark_logs/`
--   MIMO: `~/tmp/soar_ros_benchmark_mimo_logs/`
-
-The evaluation scripts generate:
-
--   Duration vs frame ID plots
--   Frame ID derivative plots (to detect dropped/reordered messages)
--   Duration vs receive time plots
+See Jupyter notebook
 
 ## Building
 
-After adding the MIMO files, rebuild the workspace:
 
 ```bash
 cd /home/ws
-colcon build --packages-select soar_ros
+colcon build --packages-select soar_ros --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo
 source install/setup.bash
+```
+
+## Profiling
+
+See profiling guide of Nav2 stack for detailed information: https://docs.nav2.org/tutorials/docs/get_profile.html
+
+```shell
+sudo apt-get install valgrind kcachegrind
+```
+
+terminal 1:
+
+```shell
+valgrind --tool=callgrind ./install/soar_ros/lib/soar_ros/System 
+```
+
+
+Wait until you see the decision cycle execution debug message and launch this in terminal 2:
+
+```shell
+ros2 launch soar_ros benchmark-send-receive.profiling.launch.py
 ```

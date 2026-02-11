@@ -87,3 +87,23 @@ sp {apply*add-frame-id-to-output2
    (<out> ^frame_id <val>)
    (<h> ^status complete)
 }
+
+# sp {propose*retract-completed-output
+#    (state <s> ^top-state.io.output-link <ol>)
+#    (<ol> ^<message> <msg>)
+#    (<msg> ^status complete)
+# -->
+#    (<s> ^operator <o> + =)
+#    (<o> ^name retract-completed-output
+#       ^message <message>)
+# }
+
+# sp {apply*retract-completed-output
+#    (state <s> ^operator <o>
+#       ^top-state.io.output-link <ol>)
+#    (<o> ^name retract-completed-output
+#       ^message <message>)
+#    (<ol> ^<message> <msg>)
+# -->
+#    (<ol> ^<message> <msg> -)
+# }

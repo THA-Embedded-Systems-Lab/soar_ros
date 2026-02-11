@@ -23,7 +23,11 @@ RUN echo "source /opt/ros/jazzy/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo "source /home/ws/install/setup.bash" >> /home/${USERNAME}/.bashrc
 
 RUN apt-get install -y \
-    clang-format
+    clang-format \
+    htop \ 
+    valgrind \
+    kcachegrind
+
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME

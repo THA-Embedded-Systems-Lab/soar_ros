@@ -37,3 +37,4 @@ qtcreator-*
 CATKIN_IGNORE
 
 .venv/
+*.DS_Store
