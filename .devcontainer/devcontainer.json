@@ -16,7 +16,9 @@
                 "ms-vscode.cpptools",
                 "twxs.cmake",
                 "ranch-hand-robotics.rde-ros-2",
-                "ms-toolsai.jupyter"
+                "ms-toolsai.jupyter",
+                "github.copilot-chat",
+                "zachflower.uncrustify"
             ]
         }
     },
@@ -33,5 +35,5 @@
         "DISPLAY=${env:DISPLAY}"
     ],
     "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R $(whoami) /home/ws/ || true",
-    "postAttachCommand": "colcon build --symlink-install"
+    "postAttachCommand": "colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo"
 }

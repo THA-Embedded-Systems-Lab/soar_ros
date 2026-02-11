@@ -24,10 +24,32 @@ RUN echo "source /home/ws/install/setup.bash" >> /home/${USERNAME}/.bashrc
 
 RUN apt-get install -y \
     clang-format \
-    htop \ 
+    htop \
     valgrind \
-    kcachegrind
+    kcachegrind \
+    dbus-x11 \
+    wget \
+    unzip \ 
+    default-jre
 
+# Install Soar for the debugger only 
+# The soar library is not on PATH, thus will not be used. Therefore, we can
+# build Soar with the CMAKEBUILDTYPE of the workspace for better debugging.
+ARG SOAR_VERSION=9.6.4
+# SOAR Setup
+WORKDIR /opt/soar
+RUN wget https://github.com/SoarGroup/Soar/releases/download/releases%2F${SOAR_VERSION}/SoarSuite_${SOAR_VERSION}-Multiplatform.zip \
+    && unzip SoarSuite_${SOAR_VERSION}-Multiplatform.zip
+
+ENV SOAR_DIR=/opt/soar/SoarSuite_${SOAR_VERSION}-Multiplatform
+RUN /opt/soar/SoarSuite_${SOAR_VERSION}-Multiplatform/SoarJavaDebugger.sh
+WORKDIR /opt/soar/
+RUN rm -rf **/*.zip
+ENV SOAR_HOME=/opt/soar/SoarSuite_${SOAR_VERSION}-Multiplatform/bin/
+
+RUN echo 'alias sbin="cd ${SOAR_DIR}/"' >> /home/${USERNAME}/.bashrc
+RUN echo 'alias sjd="${SOAR_DIR}/SoarJavaDebugger.sh"' >> /home/${USERNAME}/.bashrc
+RUN echo 'alias svis="${SOAR_DIR}/VisualSoar.sh"' >> /home/${USERNAME}/.bashrc
 
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME

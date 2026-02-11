@@ -75,7 +75,7 @@ private:
 
   /// @brief Reference to the Soar kernel instaniated in
   /// SoarRunner::SoarRunner()
-  sml::Kernel* pKernel;
+  sml::Kernel * pKernel;
 
   /// @brief Reference to the thread running the Soar instance.
   std::thread runThread;
@@ -117,6 +117,12 @@ private:
   /// @brief Permanent reference to the output link per agent.
   std::map<sml::Agent *, sml::Identifier *> output_links;
 
+  /// @brief Pending input removal ids collected from output-link.
+  std::map<sml::Agent *, std::vector<long long>> pending_input_removals;
+
+  /// @brief Per-agent counter for input removal ids.
+  std::map<sml::Agent *, long long> input_removal_counters;
+
   /// @brief Called in SoarRunner::updateWorld()
   void processOutputLinkChanges(sml::Agent * agent);
 
@@ -126,6 +132,9 @@ private:
   /// Called in SoarRunner::updateWorld()
   void processInput(sml::Agent * agent);
 
+  /// @brief Remove completed input messages from the input-link.
+  void removeCompletedInput(sml::Agent * agent);
+
   /// @brief Initialize runThread and execute pKernel->RunAllAgents(1) in
   /// separate thread.
   void run()
@@ -133,9 +142,9 @@ private:
     while (isRunning.load()) {
       pKernel->RunAllAgents(1);
 #ifdef BUILD_BENCHMARK
-        RCLCPP_INFO(this->get_logger(), "Soar decision cycle executed");
+      RCLCPP_INFO(this->get_logger(), "Soar decision cycle executed");
 #endif
-      }
+    }
   }
 
   /// @brief Compute filepath for the Soar log in ROS2 ecosystem.
@@ -237,7 +246,10 @@ public:
   ~SoarRunner();
 
   /// @brief Returns all agents managed by the SoarRunner.
-  const std::vector<sml::Agent *> & getAgents() const {return agents;}
+  const std::vector<sml::Agent *> & getAgents() const
+  {
+    return agents;
+  }
 
   /// @brief Adds a soar_ros::Publisher() to the SoarRunner.
   ///
@@ -246,7 +258,7 @@ public:
   /// @tparam T ROS2 message type
   /// @param output
   /// @return
-  template <typename T>
+  template<typename T>
   bool addPublisher(std::shared_ptr<Publisher<T>> output)
   {
     auto agent = output.get()->getAgent();
@@ -268,7 +280,7 @@ public:
     return true;
   }
 
-  template <typename T>
+  template<typename T>
   bool addSubscriber(std::shared_ptr<Subscriber<T>> input)
   {
     auto agent = input.get()->getAgent();
@@ -281,7 +293,7 @@ public:
   /// @tparam T ROS2 service message type definition
   /// @param service
   /// @return
-  template <typename T>
+  template<typename T>
   bool addService(std::shared_ptr<Service<T>> service)
   {
     return addService(service, service.get()->getTopic());
@@ -306,7 +318,7 @@ public:
   /// @tparam T ROS2 Service Message type definition
   /// @param service
   /// @return
-  template <typename T>
+  template<typename T>
   bool addClient(std::shared_ptr<Client<T>> client)
   {
     return addClient(client, client.get()->getTopic());
@@ -330,7 +342,7 @@ public:
   /// @tparam T The action type
   /// @param action_client The action client to add
   /// @return true if successful
-  template <typename T>
+  template<typename T>
   bool addActionClient(std::shared_ptr<ActionClient<T>> action_client)
   {
     return addActionClient(action_client, action_client.get()->getTopic());
@@ -341,8 +353,10 @@ public:
   /// @param action_client The action client to add
   /// @param commandName The command name for Soar output-link
   /// @return true if successful
-  template <typename T>
-  bool addActionClient(std::shared_ptr<ActionClient<T>> action_client, const std::string& commandName)
+  template<typename T>
+  bool addActionClient(
+    std::shared_ptr<ActionClient<T>> action_client,
+    const std::string & commandName)
   {
     auto agent = action_client.get()->getAgent();
     outputs_by_agent[agent][commandName] =
@@ -366,13 +380,10 @@ public:
   void startThread()
   {
     // If thread is already running, skip
-    if (isRunning.load() == true)
-    {
+    if (isRunning.load() == true) {
       RCLCPP_WARN(this->get_logger(), "runThread already running");
       return;
-    }
-    else
-    {
+    } else {
       isRunning.store(true);
     }
 
@@ -384,8 +395,7 @@ public:
   /// SoarRunner::isRunning flag.
   void stopThread()
   {
-    if (isRunning.load() == false)
-    {
+    if (isRunning.load() == false) {
       RCLCPP_INFO(this->get_logger(), "Run thread already stopped!");
       return;
     }
@@ -393,8 +403,7 @@ public:
     isRunning.store(false);
     RCLCPP_WARN(this->get_logger(), "Stopping runThread");
 
-    if (runThread.joinable())
-    {
+    if (runThread.joinable()) {
       RCLCPP_INFO(this->get_logger(), "Waiting for run thread to join");
       runThread.join();
     }
@@ -421,8 +430,7 @@ public:
         RCLCPP_DEBUG(this->get_logger(), "Output link reference invalid!");
       }
 
-      // TODO Remove input with ^status complete
-      // removeCompletedInput(agent);
+      removeCompletedInput(agent);
       // Write to Soar input-link
       processInput(agent);
     }

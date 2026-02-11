@@ -88,22 +88,45 @@ sp {apply*add-frame-id-to-output2
    (<h> ^status complete)
 }
 
-# sp {propose*retract-completed-output
-#    (state <s> ^top-state.io.output-link <ol>)
-#    (<ol> ^<message> <msg>)
-#    (<msg> ^status complete)
-# -->
-#    (<s> ^operator <o> + =)
-#    (<o> ^name retract-completed-output
-#       ^message <message>)
-# }
+# Emit input-removal id when a message completes
+sp {propose*remove-completed-input
+   (state <s> ^top-state.io.input-link <il>)
+   (<il> ^<message> <msg>)
+   (<msg> ^status complete
+      ^soar-input-removal-id <rid>)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name remove-completed-input
+      ^removal-id <rid>)
+}
 
-# sp {apply*retract-completed-output
-#    (state <s> ^operator <o>
-#       ^top-state.io.output-link <ol>)
-#    (<o> ^name retract-completed-output
-#       ^message <message>)
-#    (<ol> ^<message> <msg>)
-# -->
-#    (<ol> ^<message> <msg> -)
-# }
+sp {apply*remove-completed-input
+   (state <s> ^operator <o>
+      ^top-state.io.output-link <ol>)
+   (<o> ^name remove-completed-input
+      ^removal-id <rid>)
+-->
+   (<ol> ^soar-input-removal-id <rid-id>)
+   (<rid-id> ^value <rid>)
+}
+
+sp {propose*retract-completed-output
+   (state <s> ^top-state.io.output-link <ol>)
+   (<ol> ^<message> <msg>)
+   (<msg> ^status complete)
+-->
+   (<s> ^operator <o> + =)
+   (<o> ^name retract-completed-output
+      ^message <message>)
+}
+
+sp {apply*retract-completed-output
+   (state <s> ^operator <o>
+      ^top-state.io.output-link <ol>)
+   (<o> ^name retract-completed-output
+      ^message <message>)
+   (<ol> ^<message> <msg>)
+-->
+   (<ol> ^<message> <msg> -)
+}
+

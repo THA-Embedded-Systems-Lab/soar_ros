@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <unordered_set>
+
 #include "rclcpp/rclcpp.hpp"
 
 #include "soar_ros/Publisher.hpp"
@@ -30,6 +32,7 @@ void SoarRunner::processOutputLinkChanges(sml::Agent * agent)
     return;
   }
 
+  std::vector<long long> & pending_ids = pending_input_removals[agent];
   int numberCommands = agent->GetNumberCommands();
   for (int i = 0; i < numberCommands; i++) {
     sml::Identifier * pId = agent->GetCommand(i);
@@ -42,6 +45,15 @@ void SoarRunner::processOutputLinkChanges(sml::Agent * agent)
       continue;
     }
 
+    // Save input removal ids
+    if (name == "soar-input-removal-id") {
+      auto value = pId->GetParameterValue("value");
+      pending_ids.push_back(std::stoll(value));
+      pId->AddStatusComplete();
+      continue;
+    }
+
+    // If the output command is no internal representation, check for external represenations.
     auto it = outputs_it->second.find(name);
     if (it == outputs_it->second.end()) {
       RCLCPP_ERROR(this->get_logger(), "No mapping for topic: %s found!", name.c_str());
@@ -64,7 +76,104 @@ void SoarRunner::processInput(sml::Agent * agent)
       input->process_r2s();
     }
   }
+
+  sml::Identifier * input_link = agent->GetInputLink();
+  if (input_link != nullptr) {
+    long long & counter = input_removal_counters[agent];
+
+    int child_count = input_link->GetNumberChildren();
+    for (int i = 0; i < child_count; ++i) {
+      sml::WMElement * child = input_link->GetChild(i);
+      if (child == nullptr) {
+        continue;
+      }
+
+      auto * message_id = dynamic_cast<sml::Identifier *>(child);
+      if (message_id == nullptr) {
+        continue;
+      }
+
+      bool has_removal_id = false;
+      int message_child_count = message_id->GetNumberChildren();
+      for (int j = 0; j < message_child_count; ++j) {
+        sml::WMElement * message_child = message_id->GetChild(j);
+        if (message_child == nullptr) {
+          continue;
+        }
+
+        const char * attribute = message_child->GetAttribute();
+        if (attribute != nullptr && std::string(attribute) == "soar-input-removal-id") {
+          has_removal_id = true;
+          break;
+        }
+      }
+
+      if (!has_removal_id) {
+        message_id->CreateIntWME("soar-input-removal-id", counter);
+        ++counter;
+      }
+    }
+  }
+
   agent->Commit();
+}
+
+void SoarRunner::removeCompletedInput(sml::Agent * agent)
+{
+  if (agent == nullptr) {
+    return;
+  }
+
+  sml::Identifier * input_link = agent->GetInputLink();
+  if (input_link == nullptr) {
+    return;
+  }
+
+  auto pending_it = pending_input_removals.find(agent);
+  if (pending_it == pending_input_removals.end() || pending_it->second.empty()) {
+    return;
+  }
+
+  std::unordered_set<long long> pending_ids(pending_it->second.begin(), pending_it->second.end());
+  pending_it->second.clear();
+
+  int child_count = input_link->GetNumberChildren();
+  for (int i = 0; i < child_count; ++i) {
+    sml::WMElement * child = input_link->GetChild(i);
+    if (child == nullptr) {
+      continue;
+    }
+
+    auto * message_id = dynamic_cast<sml::Identifier *>(child);
+    if (message_id == nullptr) {
+      continue;
+    }
+
+    int message_child_count = message_id->GetNumberChildren();
+    for (int j = 0; j < message_child_count; ++j) {
+      sml::WMElement * message_child = message_id->GetChild(j);
+      if (message_child == nullptr) {
+        continue;
+      }
+
+      const char * attribute = message_child->GetAttribute();
+      if (attribute == nullptr || std::string(attribute) != "soar-input-removal-id") {
+        continue;
+      }
+
+      std::string removal_id_value;
+      message_child->GetValueAsString(removal_id_value);
+      try {
+        long long removal_id = std::stoll(removal_id_value);
+        if (pending_ids.find(removal_id) != pending_ids.end()) {
+          child->DestroyWME();
+          break;
+        }
+      } catch (const std::exception &) {
+        continue;
+      }
+    }
+  }
 }
 
 std::string SoarRunner::getSoarLogFilePath()
