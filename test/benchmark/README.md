@@ -119,7 +119,8 @@ kcachegrind callgrind.out.<number>
             ],
             "type": "ros2",
             "arguments": [
-                "debug:=True"
+                "debug:=True",
+                "auto_delete_soar_io_on_complete:=True"
             ],
         }
     ]

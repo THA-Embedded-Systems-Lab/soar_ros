@@ -9,7 +9,7 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'f',
-            default_value='250',
+            default_value='1',
             description='Frequency for Sender node (Hz)'
         ),
         DeclareLaunchArgument(
@@ -34,7 +34,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'messages_to_send',
-            default_value='100',
+            default_value='1000',
             description='Number of messages to send from Sender node'
         ),
         # Start sender with two second delay, so the receiver and system are ready
