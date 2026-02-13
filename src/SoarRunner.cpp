@@ -235,7 +235,7 @@ SoarRunner::SoarRunner()
 
   auto auto_delete_desc = rcl_interfaces::msg::ParameterDescriptor{};
   auto_delete_desc.description = "Enable automatic deletion of completed input/output messages.";
-  this->declare_parameter("auto_delete_soar_io_on_complete", false, auto_delete_desc);
+  this->declare_parameter("auto_delete_soar_io_on_complete", true, auto_delete_desc);
   m_auto_delete_soar_io_on_complete =
     this->get_parameter("auto_delete_soar_io_on_complete").as_bool();
 

@@ -8,7 +8,8 @@ using namespace std::chrono_literals;
 class Sender : public rclcpp::Node
 {
 public:
-  Sender() : Node("sender")
+  Sender()
+  : Node("sender")
   {
     this->declare_parameter<int>("frequency", 1);
     this->declare_parameter<int>("num_inputs", 2);
@@ -17,14 +18,13 @@ public:
     this->get_parameter("num_inputs", num_inputs_);
     this->get_parameter("messages_to_send", messages_to_send_);
 
-    for (int i = 0; i < num_inputs_; i++)
-    {
+    for (int i = 0; i < num_inputs_; i++) {
       std::string topic_name = "input" + std::to_string(i);
       rclcpp::QoS qos(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
       publishers_.push_back(this->create_publisher<std_msgs::msg::String>(topic_name, qos));
-      while (!publishers_.back()->get_subscription_count())
-      {
-        RCLCPP_INFO(this->get_logger(), "Waiting for subscribers on topic '%s'...", topic_name.c_str());
+      while (!publishers_.back()->get_subscription_count()) {
+        RCLCPP_INFO(this->get_logger(), "Waiting for subscribers on topic '%s'...",
+          topic_name.c_str());
         rclcpp::sleep_for(100ms);
       }
     }
@@ -36,16 +36,14 @@ private:
   {
     auto period = std::chrono::duration<double>(1.0 / frequency_);
     RCLCPP_INFO(this->get_logger(), "Publishing period: %.6f seconds", period.count());
-    timer_ = this->create_wall_timer(std::chrono::duration_cast<std::chrono::milliseconds>(period),
+    timer_ = this->create_wall_timer(std::chrono::duration_cast<std::chrono::nanoseconds>(period),
                                      std::bind(&Sender::publish_string, this));
   }
 
   void publish_string()
   {
-    if (frame_id_ < messages_to_send_)
-    {
-      for (int i = 0; i < num_inputs_; i++)
-      {
+    if (frame_id_ < messages_to_send_) {
+      for (int i = 0; i < num_inputs_; i++) {
         std_msgs::msg::String msg;
         msg.data = std::to_string(frame_id_) + "_" + std::to_string(i);
         publishers_[i]->publish(msg);
@@ -53,12 +51,12 @@ private:
       }
       frame_id_++;
     }
-    if (frame_id_ == messages_to_send_)
-    {
+    if (frame_id_ == messages_to_send_) {
       shutdown_timer = this->create_wall_timer(std::chrono::seconds(1), [this]() {
-        RCLCPP_INFO_STREAM(this->get_logger(),
-                           "Sent " << messages_to_send_ << " messages to " << num_inputs_ << " topics. Shutting down.");
-        rclcpp::shutdown();
+            RCLCPP_INFO_STREAM(this->get_logger(),
+                           "Sent " << messages_to_send_ << " messages to " << num_inputs_ <<
+              " topics. Shutting down.");
+            rclcpp::shutdown();
       });
       timer_->cancel();
     }
@@ -73,12 +71,11 @@ private:
   int messages_to_send_ = 1000;
 };
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
   auto node = std::make_shared<Sender>();
-  while (rclcpp::ok())
-  {
+  while (rclcpp::ok()) {
     rclcpp::spin_some(node);
   }
   rclcpp::shutdown();

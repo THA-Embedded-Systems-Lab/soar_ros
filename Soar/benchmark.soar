@@ -22,7 +22,7 @@ sp {elaborate*state*top-state
 # Process input0 messages
 sp {propose*add-frame-id-to-output0
    (state <s> ^top-state.io.input-link.input0 <h>)
-   (<h> \^frame_id <val>
+   (<h> ^frame_id <val>
       -^status complete)
 -->
    (<s> ^operator <o> + =)
@@ -35,10 +35,10 @@ sp {apply*add-frame-id-to-output0
       ^top-state.io.output-link <ol>)
    (<o> ^name add-frame-id-to-output0
       ^input <h>)
-   (<h> \^frame_id <val>)
+   (<h> ^frame_id <val>)
 -->
    (<ol> ^output0 <out>)
-   (<out> \^frame_id <val>)
+   (<out> ^frame_id <val>)
    (<h> ^status complete)
 }
 

@@ -34,7 +34,7 @@ def generate_launch_description():
         ),
         DeclareLaunchArgument(
             'messages_to_send',
-            default_value='1000',
+            default_value='100',
             description='Number of messages to send from Sender node'
         ),
         # Start sender with two second delay, so the receiver and system are ready
