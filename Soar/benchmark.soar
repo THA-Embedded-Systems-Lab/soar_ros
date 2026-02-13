@@ -88,3 +88,14 @@ sp {apply*add-frame-id-to-output2
    (<h> ^status complete)
 }
 
+# Operator preference: prefer inputs with smaller timestamps
+sp {prefer*add-frame-id-to-output*smaller-timestamp
+   (state <s> ^operator <o1> +
+              ^operator <o2> + <> <o1>)
+   (<o1> ^name << add-frame-id-to-output0 add-frame-id-to-output1 add-frame-id-to-output2 >>
+         ^input.timestamp <ts1>)
+   (<o2> ^name << add-frame-id-to-output0 add-frame-id-to-output1 add-frame-id-to-output2 >>
+         ^input.timestamp <ts2> > <ts1>)
+-->
+   (<s> ^operator <o1> > <o2>)
+}

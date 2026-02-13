@@ -9,15 +9,15 @@ using StringMsg = std_msgs::msg::String;
 class Output : public soar_ros::Publisher<StringMsg>
 {
 public:
-  Output(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& topic, int index)
-    : Publisher<StringMsg>(agent, node, topic), index_(index)
+  Output(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & topic, int index)
+  : Publisher<StringMsg>(agent, node, topic), index_(index)
   {
   }
   ~Output()
   {
   }
 
-  StringMsg parse(sml::Identifier* id) override
+  StringMsg parse(sml::Identifier * id) override
   {
     StringMsg msg;
     std::string frame_id = id->GetParameterValue("frame_id");
@@ -32,8 +32,8 @@ private:
 class Input : public soar_ros::Subscriber<StringMsg>
 {
 public:
-  Input(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& topic, int index)
-    : Subscriber<StringMsg>(agent, node, topic), index_(index)
+  Input(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & topic, int index)
+  : Subscriber<StringMsg>(agent, node, topic), index_(index)
   {
   }
   ~Input()
@@ -42,17 +42,18 @@ public:
 
   void parse(StringMsg msg) override
   {
-    sml::Identifier* il = this->m_pAgent->GetInputLink();
-    sml::Identifier* pId = il->CreateIdWME(this->m_topic.c_str());
+    sml::Identifier * il = this->m_pAgent->GetInputLink();
+    sml::Identifier * pId = il->CreateIdWME(this->m_topic.c_str());
     pId->CreateStringWME("frame_id", msg.data.c_str());
     pId->CreateIntWME("index", index_);
+    pId->CreateIntWME("timestamp", rclcpp::Clock().now().nanoseconds());
   }
 
 private:
   int index_;
 };
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
 
@@ -69,29 +70,25 @@ int main(int argc, char* argv[])
   int num_outputs = node->get_parameter("num_outputs").as_int();
 
   // Add multiple publishers for multiple outputs
-  for (int i = 0; i < num_outputs; i++)
-  {
+  for (int i = 0; i < num_outputs; i++) {
     std::string topic_name = "output" + std::to_string(i);
     std::shared_ptr<soar_ros::Publisher<StringMsg>> p =
-        std::make_shared<Output>(agent, node, topic_name, i);
+      std::make_shared<Output>(agent, node, topic_name, i);
     node->addPublisher(p);
   }
 
-  for (int i = 0; i < num_inputs; i++)
-  {
+  for (int i = 0; i < num_inputs; i++) {
     std::string topic_name = "input" + std::to_string(i);
     std::shared_ptr<soar_ros::Subscriber<StringMsg>> s =
-        std::make_shared<Input>(agent, node, topic_name, i);
+      std::make_shared<Input>(agent, node, topic_name, i);
     node->addSubscriber(s);
   }
 
-  if (!node->get_parameter("debug").as_bool())
-  {
+  if (!node->get_parameter("debug").as_bool()) {
     node->startThread();
   }
 
-  while (rclcpp::ok())
-  {
+  while (rclcpp::ok()) {
     rclcpp::spin_some(node);
   }
   node->~SoarRunner();
