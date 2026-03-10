@@ -38,3 +38,5 @@ CATKIN_IGNORE
 
 .venv/
 *.DS_Store
+paper/
+callgrind*
