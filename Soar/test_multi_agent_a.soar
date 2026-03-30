@@ -2,7 +2,7 @@ source init_agent.soar
 source wait.soar
 
 sp {agent-a*propose*output
-   (state <s> ^io.input-link.agent_a_input <pMessage>)
+   (state <s> ^io.input-link.shared_input <pMessage>)
    -(<pMessage> ^status complete)
 -->
    (<s> ^operator <o> + =)

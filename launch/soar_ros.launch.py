@@ -32,7 +32,7 @@ def generate_launch_description():
     return LaunchDescription(declared_arguments + [
         Node(
             package='soar_ros',
-            executable='start',
+            executable='test_input_output',
             name='soar_ros',
             emulate_tty=True,
             output={'screen'},

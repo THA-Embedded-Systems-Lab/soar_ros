@@ -10,7 +10,7 @@ class AgentAOutput : public soar_ros::Publisher<std_msgs::msg::String>
 public:
   using Publisher<std_msgs::msg::String>::Publisher;
 
-  std_msgs::msg::String parse(sml::Identifier * id) override
+  std_msgs::msg::String parse(sml::Identifier *id) override
   {
     std_msgs::msg::String msg;
     msg.data = id->GetParameterValue("data");
@@ -26,8 +26,8 @@ public:
 
   void parse(std_msgs::msg::String msg) override
   {
-    sml::Identifier * il = this->m_pAgent->GetInputLink();
-    sml::Identifier * pId = il->CreateIdWME(this->m_topic.c_str());
+    sml::Identifier *il = this->m_pAgent->GetInputLink();
+    sml::Identifier *pId = il->CreateIdWME(this->m_topic.c_str());
     pId->CreateStringWME("data", msg.data.c_str());
   }
 };
@@ -37,7 +37,7 @@ class AgentBOutput : public soar_ros::Publisher<std_msgs::msg::String>
 public:
   using Publisher<std_msgs::msg::String>::Publisher;
 
-  std_msgs::msg::String parse(sml::Identifier * id) override
+  std_msgs::msg::String parse(sml::Identifier *id) override
   {
     std_msgs::msg::String msg;
     msg.data = id->GetParameterValue("data");
@@ -53,13 +53,13 @@ public:
 
   void parse(std_msgs::msg::String msg) override
   {
-    sml::Identifier * il = this->m_pAgent->GetInputLink();
-    sml::Identifier * pId = il->CreateIdWME(this->m_topic.c_str());
+    sml::Identifier *il = this->m_pAgent->GetInputLink();
+    sml::Identifier *pId = il->CreateIdWME(this->m_topic.c_str());
     pId->CreateStringWME("data", msg.data.c_str());
   }
 };
 
-int main(int argc, char * argv[])
+int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
 
@@ -69,38 +69,41 @@ int main(int argc, char * argv[])
   std::string soar_path_b = share_directory + "/Soar/test_multi_agent_b.soar";
 
   std::ifstream soar_file_a(soar_path_a);
-  if (!soar_file_a.is_open()) {
+  if (!soar_file_a.is_open())
+  {
     std::cerr << "Error: Soar file not found at " << soar_path_a << std::endl;
     return 1;
   }
 
   std::ifstream soar_file_b(soar_path_b);
-  if (!soar_file_b.is_open()) {
+  if (!soar_file_b.is_open())
+  {
     std::cerr << "Error: Soar file not found at " << soar_path_b << std::endl;
     return 1;
   }
 
-  auto node = std::make_shared<soar_ros::SoarRunner>();
-  sml::Agent * agent_a = node->addAgent("AgentA", soar_path_a);
-  sml::Agent * agent_b = node->addAgent("AgentB", soar_path_b);
+  auto node = std::make_shared<soar_ros::SoarRunner>("soar_ros");
+  auto agent_a = node->addAgent("AgentA", soar_path_a);
+  auto agent_b = node->addAgent("AgentB", soar_path_b);
 
   std::shared_ptr<soar_ros::Publisher<std_msgs::msg::String>> output_a =
-    std::make_shared<AgentAOutput>(agent_a, node, "agent_a_output");
-  node->addPublisher(output_a, "agent_a");
+      std::make_shared<AgentAOutput>(agent_a->getSmlAgent(), node, "agent_a_output");
+  agent_a->addPublisher(output_a, "agent_a");
 
   std::shared_ptr<soar_ros::Subscriber<std_msgs::msg::String>> input_a =
-    std::make_shared<AgentAInput>(agent_a, node, "agent_a_input");
-  node->addSubscriber(input_a);
+      std::make_shared<AgentAInput>(agent_a->getSmlAgent(), node, "shared_input");
+  agent_a->addSubscriber(input_a);
 
   std::shared_ptr<soar_ros::Publisher<std_msgs::msg::String>> output_b =
-    std::make_shared<AgentBOutput>(agent_b, node, "agent_b_output");
-  node->addPublisher(output_b, "agent_b");
+      std::make_shared<AgentBOutput>(agent_b->getSmlAgent(), node, "agent_b_output");
+  agent_b->addPublisher(output_b, "agent_b");
 
   std::shared_ptr<soar_ros::Subscriber<std_msgs::msg::String>> input_b =
-    std::make_shared<AgentBInput>(agent_b, node, "agent_b_input");
-  node->addSubscriber(input_b);
+      std::make_shared<AgentBInput>(agent_b->getSmlAgent(), node, "shared_input");
+  agent_b->addSubscriber(input_b);
 
-  if (!node->get_parameter("debug").as_bool()) {
+  if (!node->get_parameter("debug").as_bool())
+  {
     node->startThread();
   }
 

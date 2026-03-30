@@ -17,6 +17,7 @@
 
 #include "Interface.hpp"
 #include "SafeQueue.hpp"
+#include "SoarAgent.hpp"
 #include "SoarRunner.hpp"
 #include "Publisher.hpp"
 #include "Subscriber.hpp"
@@ -24,5 +25,4 @@
 #include "Client.hpp"
 #include "ActionClient.hpp"
 
-
-#endif  // SOAR_ROS__SOAR_ROS_HPP_
+#endif // SOAR_ROS__SOAR_ROS_HPP_

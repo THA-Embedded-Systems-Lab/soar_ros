@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Test: two agents subscribed to the same ROS 2 topic both receive the
+# message on their Soar input links and independently echo it to their
+# output links.
+
 import unittest
 import uuid
 
@@ -22,7 +26,6 @@ import launch_testing.actions
 import pytest
 
 import rclpy
-
 import std_msgs.msg
 
 from time import sleep
@@ -32,7 +35,7 @@ from time import sleep
 def generate_test_description():
     soar_ros_node = launch_ros.actions.Node(
         package="soar_ros",
-        executable="test_multi_agent",
+        executable="test_shared_input",
         shell=True,
         emulate_tty=True,
         output='screen'
@@ -44,7 +47,7 @@ def generate_test_description():
     ])
 
 
-class TestMultiAgentSoarRos(unittest.TestCase):
+class TestSharedInputMultiAgent(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         rclpy.init()
@@ -54,12 +57,14 @@ class TestMultiAgentSoarRos(unittest.TestCase):
         rclpy.shutdown()
 
     def setUp(self):
-        self.node = rclpy.create_node('test_multi_agent_soar_ros')
+        self.node = rclpy.create_node('test_shared_input_soar_ros')
 
     def tearDown(self):
         self.node.destroy_node()
 
-    def test_two_agents(self, proc_output):
+    def test_both_agents_receive_shared_input(self, proc_output):
+        """Both agents must independently write the received data to their
+        output links when a single message is published to the shared topic."""
         pub = self.node.create_publisher(
             std_msgs.msg.String,
             "shared_input",
@@ -72,5 +77,10 @@ class TestMultiAgentSoarRos(unittest.TestCase):
         sleep(1)
         pub.publish(msg)
 
-        proc_output.assertWaitFor(f"AGENT_A_OUTPUT:{msg.data}", timeout=5, stream='stdout')
-        proc_output.assertWaitFor(f"AGENT_B_OUTPUT:{msg.data}", timeout=5, stream='stdout')
+        # Agent A must have received and echoed the message.
+        proc_output.assertWaitFor(
+            f"SHARED_ECHO_A:{msg.data}", timeout=5, stream='stdout')
+
+        # Agent B must have received and echoed the message independently.
+        proc_output.assertWaitFor(
+            f"SHARED_ECHO_B:{msg.data}", timeout=5, stream='stdout')

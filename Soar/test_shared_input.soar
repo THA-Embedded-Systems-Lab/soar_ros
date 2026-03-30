@@ -1,22 +1,23 @@
 source init_agent.soar
 source wait.soar
 
-sp {agent-b*propose*output
+# When a message arrives on the shared topic, echo its data to the output link.
+sp {any*propose*shared-input-echo
    (state <s> ^io.input-link.shared_input <pMessage>)
    -(<pMessage> ^status complete)
 -->
    (<s> ^operator <o> + =)
-   (<o> ^name agent_b_output
+   (<o> ^name shared_input_echo
       ^pMessage <pMessage>)
 }
 
-sp {agent-b*apply*output
+sp {any*apply*shared-input-echo
    (state <s> ^operator <o>
       ^io.output-link <ol>)
-   (<o> ^name agent_b_output
+   (<o> ^name shared_input_echo
       ^pMessage <pMessage>)
    (<pMessage> ^data <message>)
 -->
-   (<ol> ^agent_b.data <message>)
+   (<ol> ^shared_echo.data <message>)
    (<pMessage> ^status complete)
 }

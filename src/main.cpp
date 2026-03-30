@@ -3,19 +3,20 @@
 
 #include "soar_ros/soar_ros.hpp"
 
-int main(int argc, char ** argv)
+int main(int argc, char **argv)
 {
   rclcpp::init(argc, argv);
 
   const std::string package_name = "soar_ros";
   const std::string share_directory =
-    ament_index_cpp::get_package_share_directory(package_name);
+      ament_index_cpp::get_package_share_directory(package_name);
 
   std::string soar_path = share_directory + "/Soar/main.soar";
-  auto node = std::make_shared<soar_ros::SoarRunner>();
+  auto node = std::make_shared<soar_ros::SoarRunner>("soar_ros");
   node->addAgent("Main Soar Agent", soar_path);
 
-  if (!node->get_parameter("debug").as_bool()) {
+  if (!node->get_parameter("debug").as_bool())
+  {
     node->startThread();
   }
 

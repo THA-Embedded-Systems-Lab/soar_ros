@@ -12,332 +12,368 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "rclcpp/rclcpp.hpp"
-
-#include "soar_ros/Publisher.hpp"
-#include "soar_ros/Subscriber.hpp"
-#include "soar_ros/Client.hpp"
-#include "soar_ros/Service.hpp"
 #include "soar_ros/SoarRunner.hpp"
+
+#include <algorithm>
+#include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <thread>
+
+#include <rclcpp/rclcpp.hpp>
+#include <std_srvs/srv/trigger.hpp>
+#include "sml_Client.h"
 
 namespace soar_ros
 {
-void SoarRunner::processOutputLinkChanges(sml::Agent * agent)
-{
-  // Go through all the commands we've received (if any) since we last ran
-  // Soar.
-  if (agent == nullptr) {
-    return;
-  }
 
-  int numberCommands = agent->GetNumberCommands();
-  for (int i = 0; i < numberCommands; i++) {
-    sml::Identifier * pId = agent->GetCommand(i);
+  // ---------------------------------------------------------------------------
+  // Free-function callbacks registered with the Soar kernel
+  // ---------------------------------------------------------------------------
 
-    std::string name = pId->GetCommandName();
-    auto outputs_it = outputs_by_agent.find(agent);
-    if (outputs_it == outputs_by_agent.end()) {
-      RCLCPP_ERROR(this->get_logger(), "No output mappings registered for agent: %s",
-          agent->GetAgentName());
-      continue;
+  void SoarPrintEventHandler(
+      [[maybe_unused]] sml::smlPrintEventId id,
+      void *pSoarRunner_,
+      sml::Agent *pAgent,
+      char const *pMessage)
+  {
+    SoarRunner *pSoarRunner = static_cast<SoarRunner *>(pSoarRunner_);
+
+    std::string str(pMessage);
+
+    if (str.find("(wait)") != std::string::npos)
+    {
+      return;
     }
 
-    auto it = outputs_it->second.find(name);
-    if (it == outputs_it->second.end()) {
-      RCLCPP_ERROR(this->get_logger(), "No mapping for topic: %s found!", name.c_str());
-      continue;
+    if (str.find("O:") != std::string::npos || str.find("==>") != std::string::npos)
+    {
+      str.erase(
+          std::remove_if(str.begin(), str.end(), [](char ch)
+                         { return std::iscntrl(static_cast<unsigned char>(ch)); }),
+          str.end());
     }
-    it->second.get()->process_s2r(pId);
-    pId->AddStatusComplete();
-  }
-}
 
-void SoarRunner::processInput(sml::Agent * agent)
-{
-  if (agent == nullptr) {
-    return;
-  }
-
-  auto inputs_it = inputs_by_agent.find(agent);
-  if (inputs_it != inputs_by_agent.end()) {
-    for (const auto & input : inputs_it->second) {
-      input->process_r2s();
-    }
-  }
-  agent->Commit();
-}
-
-std::string SoarRunner::getSoarLogFilePath()
-{
-  auto currentTime = std::chrono::system_clock::now();
-  std::time_t currentTime_t = std::chrono::system_clock::to_time_t(currentTime);
-  std::tm * currentTime_tm = std::gmtime(&currentTime_t);
-  std::stringstream ss;
-  ss << std::put_time(currentTime_tm, "%Y_%m_%d-%H_%M_%S");
-
-  std::string timestamp = ss.str();
-
-  std::string root_file_path = "";
-
-  const char * ros_log_dir = std::getenv("ROS_LOG_DIR");
-  const char * ros_home = std::getenv("ROS_HOME");
-  const char * home = std::getenv("HOME");
-  if (ros_log_dir != nullptr) {
-    root_file_path = std::getenv("ROS_LOG_DIR");
-    RCLCPP_INFO_STREAM(this->get_logger(), "ROS_LOG_DIR defined: Log directory:" << root_file_path);
-  } else if (ros_home != nullptr) {
-    std::string ros_home_path(ros_home);
-    root_file_path = ros_home_path + "/log/";
-    RCLCPP_INFO_STREAM(this->get_logger(), "ROS_HOME defined: Log directory: " << root_file_path);
-  } else {
-    if (home == nullptr) {
-      RCLCPP_ERROR_STREAM(this->get_logger(),
-                          "HOME ENV not found/ defined. Log file might be "
-                          "relative to Soar Java debugger.");
-    } else {
-      std::string home_path(home);
-      root_file_path = home_path + "/.ros/log/";
-      RCLCPP_WARN_STREAM(this->get_logger(),
-          "No logging directory via ENV defined; Defaulting to: " << root_file_path);
-    }
-  }
-  return root_file_path;
-}
-
-SoarRunner::SoarRunner()
-: rclcpp::Node("SoarRunner"), isRunning(false)
-{
-  // Sometimes the error binding the listener socket to its port number (Soar)
-  // occurs from: Origin:
-  // https://github.com/SoarGroup/Soar/blob/9530289cc5452fc3a4c75cf5b5f4ca25cb46fde4/Core/ConnectionSML/src/sock_ListenerSocket.cpp#L146C1-L146C93
-  // Potential reason: Soar Java Debugger is openened and has a kernel running
-  // blocking the port.
-
-  auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
-  param_desc.description = "Enable debug mode.";
-  this->declare_parameter("debug", false, param_desc);
-  m_debug = this->get_parameter("debug").as_bool();
-
-  pKernel = sml::Kernel::CreateKernelInNewThread();
-  if (pKernel->HadError()) {
-    std::string err_msg = pKernel->GetLastErrorDescription();
-    RCLCPP_ERROR_STREAM(this->get_logger(), err_msg);
-    throw std::runtime_error(err_msg);
-  }
-
-  pKernel->RegisterForUpdateEvent(sml::smlEVENT_AFTER_ALL_OUTPUT_PHASES, updateEventHandler, this);
-
-  m_getSoarKernelStatus = this->create_service<std_srvs::srv::Trigger>(
-      "/soar_ros/kernel/status",
-      std::bind(&SoarRunner::getSoarKernelStatus, this, std::placeholders::_1,
-                                           std::placeholders::_2, std::placeholders::_3));
-
-  m_kernelRun = this->create_service<std_srvs::srv::Trigger>(
-      "/soar_ros/kernel/run",
-      std::bind(&SoarRunner::runSoarKernel, this, std::placeholders::_1, std::placeholders::_2,
-      std::placeholders::_3));
-
-  m_kernelStop = this->create_service<std_srvs::srv::Trigger>(
-      "/soar_ros/kernel/stop", std::bind(&SoarRunner::stopSoarKernel, this, std::placeholders::_1,
-                                         std::placeholders::_2, std::placeholders::_3));
-
-  m_debuggerLaunch = this->create_service<std_srvs::srv::Trigger>(
-      "/soar_ros/debugger/launch",
-      std::bind(&SoarRunner::debuggerLaunch, this, std::placeholders::_1,
-                                             std::placeholders::_2, std::placeholders::_3));
-}
-
-void SoarRunner::debuggerLaunch(
-  [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
-  [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
-  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
-{
-  stopThread();
-  if (agents.empty()) {
-    std::string err_msg = "No agents available to spawn debugger.";
-    RCLCPP_ERROR_STREAM(this->get_logger(), err_msg);
-    response->success = false;
-    response->message = err_msg;
-    return;
-  }
-
-  bool all_spawned = true;
-  std::string failed_agents;
-  for (auto * agent : agents) {
-    if (agent == nullptr) {
-      continue;
-    }
-    if (!agent->SpawnDebugger()) {
-      all_spawned = false;
-      if (!failed_agents.empty()) {
-        failed_agents += ", ";
+    std::stringstream ss(str);
+    std::string line;
+    while (std::getline(ss, line, '\n'))
+    {
+      std::string message = std::string(pAgent->GetAgentName()) + ": " + str;
+      auto logger = pSoarRunner->get_logger();
+      if (str.find("System halted.") != std::string::npos)
+      {
+        RCLCPP_ERROR(logger, "%s", message.c_str());
+        pSoarRunner->stopThread();
       }
-      failed_agents += agent->GetAgentName();
+      else
+      {
+        RCLCPP_INFO(logger, "%s", message.c_str());
+      }
     }
   }
 
-  if (!all_spawned) {
-    std::string err_msg =
-      "Unable to open Soar Java debugger for agents: " + failed_agents +
-      ". Is Java and the Soar debugger installed?";
-    RCLCPP_ERROR_STREAM(this->get_logger(), err_msg);
-    response->success = false;
-    response->message = err_msg;
-  } else {
-    RCLCPP_INFO_STREAM(this->get_logger(), "Spawning Soar debugger for all agents.");
+  void updateEventHandler(
+      [[maybe_unused]] sml::smlUpdateEventId id,
+      void *pSoarRunner_,
+      [[maybe_unused]] sml::Kernel *kernel_ptr,
+      [[maybe_unused]] sml::smlRunFlags run_flags)
+  {
+    SoarRunner *pSoarRunner = static_cast<SoarRunner *>(pSoarRunner_);
+    pSoarRunner->updateWorld();
+  }
+
+  // ---------------------------------------------------------------------------
+  // SoarRunner member functions
+  // ---------------------------------------------------------------------------
+
+  SoarRunner::SoarRunner(const std::string &node_name)
+      : rclcpp::Node(node_name)
+  {
+    auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+    param_desc.description = "Enable debug mode.";
+    declare_parameter("debug", false, param_desc);
+    m_debug = get_parameter("debug").as_bool();
+
+    m_kernel = sml::Kernel::CreateKernelInNewThread();
+    if (!m_kernel || m_kernel->HadError())
+    {
+      std::string err_msg = m_kernel ? m_kernel->GetLastErrorDescription() : "null kernel";
+      throw std::runtime_error("Failed to create Soar kernel: " + err_msg);
+    }
+
+    // Register the I/O callback — called after every output phase by the kernel.
+    m_kernel->RegisterForUpdateEvent(
+        sml::smlEVENT_AFTER_ALL_OUTPUT_PHASES, updateEventHandler, this);
+
+    // ROS2 service interfaces for external control.
+    m_getSoarKernelStatus = create_service<std_srvs::srv::Trigger>(
+        "/soar_ros/kernel/status",
+        std::bind(&SoarRunner::getSoarKernelStatus, this,
+                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+
+    m_kernelRun = create_service<std_srvs::srv::Trigger>(
+        "/soar_ros/kernel/run",
+        std::bind(&SoarRunner::runSoarKernel, this,
+                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+
+    m_kernelStop = create_service<std_srvs::srv::Trigger>(
+        "/soar_ros/kernel/stop",
+        std::bind(&SoarRunner::stopSoarKernel, this,
+                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+
+    m_debuggerLaunch = create_service<std_srvs::srv::Trigger>(
+        "/soar_ros/debugger/launch",
+        std::bind(&SoarRunner::debuggerLaunch, this,
+                  std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+
+    RCLCPP_INFO(get_logger(), "Soar kernel created");
+  }
+
+  SoarRunner::~SoarRunner()
+  {
+    stopThread();
+
+    for (auto &soar_agent : m_agents)
+    {
+      sml::Agent *raw = soar_agent->getSmlAgent();
+      if (!raw)
+      {
+        continue;
+      }
+      raw->ExecuteCommandLine("output log --close");
+      if (m_debug)
+      {
+        raw->KillDebugger();
+      }
+      m_kernel->DestroyAgent(raw);
+    }
+    m_agents.clear();
+
+    m_kernel->Shutdown();
+    delete m_kernel;
+    m_kernel = nullptr;
+
+    RCLCPP_INFO(get_logger(), "Soar kernel shut down");
+  }
+
+  std::string SoarRunner::getSoarLogFilePath()
+  {
+    auto currentTime = std::chrono::system_clock::now();
+    std::time_t currentTime_t = std::chrono::system_clock::to_time_t(currentTime);
+    std::tm *currentTime_tm = std::gmtime(&currentTime_t);
+    std::stringstream ss;
+    ss << std::put_time(currentTime_tm, "%Y_%m_%d-%H_%M_%S");
+    std::string timestamp = ss.str();
+
+    std::string root_file_path;
+    const char *ros_log_dir = std::getenv("ROS_LOG_DIR");
+    const char *ros_home = std::getenv("ROS_HOME");
+    const char *home = std::getenv("HOME");
+
+    if (ros_log_dir != nullptr)
+    {
+      root_file_path = ros_log_dir;
+      RCLCPP_INFO_STREAM(get_logger(), "ROS_LOG_DIR defined: Log directory: " << root_file_path);
+    }
+    else if (ros_home != nullptr)
+    {
+      root_file_path = std::string(ros_home) + "/log/";
+      RCLCPP_INFO_STREAM(get_logger(), "ROS_HOME defined: Log directory: " << root_file_path);
+    }
+    else
+    {
+      if (home == nullptr)
+      {
+        RCLCPP_ERROR_STREAM(get_logger(),
+                            "HOME ENV not found/defined. Log file might be relative to Soar Java debugger.");
+      }
+      else
+      {
+        root_file_path = std::string(home) + "/.ros/log/";
+        RCLCPP_WARN_STREAM(get_logger(),
+                           "No logging directory via ENV defined; Defaulting to: " << root_file_path);
+      }
+    }
+    return root_file_path;
+  }
+
+  std::shared_ptr<SoarAgent> SoarRunner::addAgent(
+      const std::string &agent_name,
+      const std::string &source_file)
+  {
+    sml::Agent *raw_agent = m_kernel->CreateAgent(agent_name.c_str());
+    if (!raw_agent || m_kernel->HadError())
+    {
+      std::string err_msg = m_kernel->GetLastErrorDescription();
+      RCLCPP_ERROR_STREAM(get_logger(), err_msg);
+      throw std::runtime_error("Failed to create Soar agent: " + agent_name + ": " + err_msg);
+    }
+
+    if (!source_file.empty())
+    {
+      raw_agent->LoadProductions(source_file.c_str());
+      if (raw_agent->HadError())
+      {
+        std::string err_msg = raw_agent->GetLastErrorDescription();
+        RCLCPP_ERROR_STREAM(get_logger(), err_msg);
+        throw std::runtime_error(
+            "Failed to load productions for agent " + agent_name + ": " + err_msg);
+      }
+      RCLCPP_INFO(get_logger(), "Loaded productions for agent '%s'", agent_name.c_str());
+    }
+
+    // Register the Soar print event so agent output is routed to ROS logger.
+    raw_agent->RegisterForPrintEvent(
+        sml::smlEVENT_PRINT, SoarPrintEventHandler, this);
+
+    // Start a Soar log file for this agent.
+    std::string filepath = getSoarLogFilePath();
+    std::string cmd = "output log " + filepath;
+    raw_agent->ExecuteCommandLine(cmd.c_str());
+
+    if (m_debug)
+    {
+      if (!raw_agent->SpawnDebugger())
+      {
+        RCLCPP_ERROR(get_logger(), "Spawning Soar debugger failed for agent '%s'.", agent_name.c_str());
+      }
+      raw_agent->ExecuteCommandLine("watch 5");
+    }
+
+    auto node_ptr = std::static_pointer_cast<rclcpp::Node>(shared_from_this());
+    auto soar_agent = std::make_shared<SoarAgent>(raw_agent, node_ptr);
+
+    m_agents.push_back(soar_agent);
+    RCLCPP_INFO(get_logger(), "Agent '%s' created", agent_name.c_str());
+    return soar_agent;
+  }
+
+  void SoarRunner::run()
+  {
+    startThread();
+  }
+
+  void SoarRunner::soarRunLoop()
+  {
+    RCLCPP_INFO(get_logger(), "Soar run loop started");
+    while (m_running.load() && rclcpp::ok())
+    {
+      m_kernel->RunAllAgents(1);
+    }
+    RCLCPP_INFO(get_logger(), "Soar run loop stopped");
+  }
+
+  // ---------------------------------------------------------------------------
+  // ROS2 service handlers
+  // ---------------------------------------------------------------------------
+
+  void SoarRunner::debuggerLaunch(
+      [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+      [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+      std::shared_ptr<std_srvs::srv::Trigger::Response> response)
+  {
+    stopThread();
+
+    if (m_agents.empty())
+    {
+      std::string err_msg = "No agents available to spawn debugger.";
+      RCLCPP_ERROR_STREAM(get_logger(), err_msg);
+      response->success = false;
+      response->message = err_msg;
+      return;
+    }
+
+    bool all_spawned = true;
+    std::string failed_agents;
+    for (auto &soar_agent : m_agents)
+    {
+      sml::Agent *raw = soar_agent->getSmlAgent();
+      if (!raw)
+      {
+        continue;
+      }
+      if (!raw->SpawnDebugger())
+      {
+        all_spawned = false;
+        if (!failed_agents.empty())
+        {
+          failed_agents += ", ";
+        }
+        failed_agents += raw->GetAgentName();
+      }
+    }
+
+    if (!all_spawned)
+    {
+      std::string err_msg =
+          "Unable to open Soar Java debugger for agents: " + failed_agents +
+          ". Is Java and the Soar debugger installed?";
+      RCLCPP_ERROR_STREAM(get_logger(), err_msg);
+      response->success = false;
+      response->message = err_msg;
+    }
+    else
+    {
+      RCLCPP_INFO_STREAM(get_logger(), "Spawning Soar debugger for all agents.");
+      response->success = true;
+    }
+  }
+
+  void SoarRunner::getSoarKernelStatus(
+      [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+      [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+      std::shared_ptr<std_srvs::srv::Trigger::Response> response)
+  {
+    if (m_running.load())
+    {
+      response->message = "Soar kernel isRunning: true";
+    }
+    else
+    {
+      response->message = "Soar kernel isRunning: false";
+    }
     response->success = true;
   }
-}
 
-void SoarRunner::getSoarKernelStatus(
-  [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
-  [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
-  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
-{
-  if (isRunning.load()) {
-    response->message = "Soar kernel isRunning: true";
-  } else {
-    response->message = "Soar kernel isRunnings: false";
-  }
-  response->success = true;
-}
-
-void SoarRunner::runSoarKernel(
-  [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
-  [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
-  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
-{
-  RCLCPP_INFO(this->get_logger(), "Attempting to run Soar kernel from ROS.");
-  startThread();
-  if (isRunning.load()) {
-    response->message = "Soar kernel isRunning: true";
-    response->success = true;
-  } else {
-    response->message = "Soar kernel isRunnings: false";
-    response->success = false;
-  }
-}
-
-void SoarRunner::stopSoarKernel(
-  [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
-  [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
-  std::shared_ptr<std_srvs::srv::Trigger::Response> response)
-{
-  RCLCPP_INFO(this->get_logger(), "Attempting to stop Soar kernel from ROS.");
-  stopThread();
-  if (isRunning.load()) {
-    response->message = "Soar kernel isRunning: true";
-    response->success = false;
-  } else {
-    response->message = "Soar kernel isRunnings: false";
-    response->success = true;
-  }
-}
-
-sml::Agent * SoarRunner::addAgent(
-  const std::string & agent_name,
-  const std::string & path_productions)
-{
-  sml::Agent * pAgent = pKernel->CreateAgent(agent_name.c_str());
-  if (pKernel->HadError()) {
-    std::string err_msg = pKernel->GetLastErrorDescription();
-    RCLCPP_ERROR_STREAM(this->get_logger(), err_msg);
-    throw std::runtime_error(err_msg);
-  }
-
-  pAgent->LoadProductions(path_productions.c_str());
-  if (pAgent->HadError()) {
-    std::string err_msg = pKernel->GetLastErrorDescription();
-    RCLCPP_ERROR_STREAM(this->get_logger(), err_msg);
-    throw std::runtime_error(err_msg);
-  }
-
-  pAgent->RegisterForPrintEvent(sml::smlEVENT_PRINT, SoarPrintEventHandler, this);
-
-  std::string filepath = getSoarLogFilePath();
-  std::string cmd = "output log " + filepath;
-  pAgent->ExecuteCommandLine(cmd.c_str());
-
-  if (m_debug) {
-    // TODO(moschmdt): Check if another debug window is still open.
-    // Force close it prior to reopening another window.
-    if (pAgent->SpawnDebugger() == false) {
-      // BUG This is not triggered when another window is already open:
-      // Error: Error binding the listener socket to its port number
-      // Failed to create the internet listener socket.  Shutting down
-      // listener thread.
-      RCLCPP_ERROR(this->get_logger(), "Spawning Soar debugger failed.");
+  void SoarRunner::runSoarKernel(
+      [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+      [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+      std::shared_ptr<std_srvs::srv::Trigger::Response> response)
+  {
+    RCLCPP_INFO(get_logger(), "Attempting to run Soar kernel from ROS.");
+    startThread();
+    if (m_running.load())
+    {
+      response->message = "Soar kernel isRunning: true";
+      response->success = true;
     }
-
-    pAgent->ExecuteCommandLine("watch 5");
-  }
-
-  agents.push_back(pAgent);
-
-  return pAgent;
-}
-
-SoarRunner::~SoarRunner()
-{
-  stopThread();
-
-  for (auto * agent : agents) {
-    if (agent == nullptr) {
-      continue;
-    }
-
-    agent->ExecuteCommandLine("output log --close");
-
-    if (m_debug) {
-      agent->KillDebugger();
-    }
-
-    pKernel->DestroyAgent(agent);
-  }
-  pKernel->Shutdown();
-  delete pKernel;
-}
-
-void SoarPrintEventHandler(
-  [[maybe_unused]] sml::smlPrintEventId id, void * pSoarRunner_, sml::Agent * pAgent,
-  char const * pMessage)
-{
-  SoarRunner * pSoarRunner = static_cast<SoarRunner *>(pSoarRunner_);
-
-  std::string str(pMessage);
-
-  if (str.find("(wait)") != std::string::npos) {
-    return;
-  }
-
-  if (str.find("O:") != std::string::npos || str.find("==>") != std::string::npos) {
-    str.erase(
-        std::remove_if(str.begin(), str.end(), [&](char ch) {
-        return std::iscntrl(static_cast<unsigned char>(ch));
-                                                                                                                 }),
-        str.end());
-  }
-
-  std::stringstream ss(str);
-  std::string line;
-
-  while (std::getline(ss, line, '\n')) {
-    std::string message = std::string(pAgent->GetAgentName()) + ": " + str;
-    auto logger = pSoarRunner->get_logger();
-    if (str.find("System halted.") != std::string::npos) {
-      RCLCPP_ERROR(logger, message.c_str());
-      pSoarRunner->stopThread();
-    } else {
-      RCLCPP_INFO(logger, message.c_str());
+    else
+    {
+      response->message = "Soar kernel isRunning: false";
+      response->success = false;
     }
   }
-}
 
-void updateEventHandler(
-  [[maybe_unused]] sml::smlUpdateEventId id, void * pSoarRunner_,
-  [[maybe_unused]] sml::Kernel * kernel_ptr, [[maybe_unused]] sml::smlRunFlags run_flags)
-{
-  SoarRunner * pSoarRunner = static_cast<SoarRunner *>(pSoarRunner_);
-  pSoarRunner->updateWorld();
-}
-}  // namespace soar_ros
+  void SoarRunner::stopSoarKernel(
+      [[maybe_unused]] const std::shared_ptr<rmw_request_id_t> request_header,
+      [[maybe_unused]] std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+      std::shared_ptr<std_srvs::srv::Trigger::Response> response)
+  {
+    RCLCPP_INFO(get_logger(), "Attempting to stop Soar kernel from ROS.");
+    stopThread();
+    if (m_running.load())
+    {
+      response->message = "Soar kernel isRunning: true";
+      response->success = false;
+    }
+    else
+    {
+      response->message = "Soar kernel isRunning: false";
+      response->success = true;
+    }
+  }
+
+} // namespace soar_ros

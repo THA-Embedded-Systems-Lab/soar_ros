@@ -36,20 +36,30 @@ protected:
   rclcpp::CallbackGroup::SharedPtr m_callback_group;
 
 public:
-  Subscriber(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& topic,
-             rclcpp::QoS qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default)),
-             rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
-    : Input<T>(), m_topic(topic), m_node(node), m_pAgent(agent), m_callback_group(callback_group)
+  Subscriber(
+    sml::Agent* agent,
+    rclcpp::Node::SharedPtr node,
+    const std::string& topic,
+    rclcpp::QoS qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default)),
+    rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+    : Input<T>(), m_topic(topic), m_node(node), m_pAgent(agent),
+      m_callback_group(callback_group), m_qos(qos)
+  {}
+
+  ~Subscriber() {}
+
+  /// @brief Create the rclcpp::Subscription.  Called by SoarAgent::addSubscriber().
+  void subscribe(rclcpp::Node::SharedPtr node)
   {
     if (!m_callback_group) {
-      m_callback_group = m_node->get_node_base_interface()->get_default_callback_group();
+      m_callback_group = node->get_node_base_interface()->get_default_callback_group();
     }
     rclcpp::SubscriptionOptions options;
     options.callback_group = m_callback_group;
-    sub = m_node->create_subscription<T>(topic, qos, std::bind(&Subscriber::callback, this, std::placeholders::_1), options);
-  }
-  ~Subscriber()
-  {
+    sub = node->create_subscription<T>(
+      m_topic, m_qos,
+      std::bind(&Subscriber::callback, this, std::placeholders::_1),
+      options);
   }
 
   void callback(const T& msg)
@@ -58,15 +68,11 @@ public:
     this->m_r2sQueue.push(msg);
   }
 
-  std::string getTopic() override
-  {
-    return m_topic;
-  }
+  std::string getTopic() override { return m_topic; }
+  sml::Agent* getAgent() override { return m_pAgent; }
 
-  sml::Agent* getAgent() override
-  {
-    return m_pAgent;
-  }
+private:
+  rclcpp::QoS m_qos;
 };
 }  // namespace soar_ros
 

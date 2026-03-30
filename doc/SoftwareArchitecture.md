@@ -7,25 +7,29 @@ callbacks and events. A detailed explanation of the Soar architecture is
 provided on their website in the [Soar manual][soar_manual] or the [Soar
 Threading Model][soar_threads].
 
-The user should only be required to do two things: Initialize the Soar
-kernel via `SoarRunner`, add one or more agents with `addAgent`, and then add
-adapted publisher, subscriber, services and clients. For each message/ topic,
-the conversion between Soar working memory elements (WMEs) and ROS2 message, or
-vice versa, types must be implemented manually.
+The user is required to do three things: initialize the Soar kernel via
+`SoarRunner`, add one or more agents with `SoarRunner::addAgent()` — which
+returns a `SoarAgent` handle — and then register publishers, subscribers,
+services and clients directly on each `SoarAgent`. For each message / topic
+the conversion between Soar working memory elements (WMEs) and ROS2 message
+types must be implemented manually.
 
-- The kernel is wrapped in a single class called `SoarRunner`. The main
-responsibility is to create, start and maintain the Soar kernel and manage
-multiple agents in one kernel.
+- `SoarRunner` owns the `sml::Kernel` and the run thread, creates `sml::Agent`
+  instances and wraps them in `SoarAgent` objects. It also exposes ROS2 service
+  interfaces to start/stop the kernel and launch the Soar Java debugger.
 
-- Publisher, Subscribers, Service and Clients are added via a separate functions
-to the ROS2 node.
+- `SoarAgent` owns all ROS2 I/O wiring for a single agent. Publisher,
+  Subscriber, Service and Client objects are registered directly on the agent
+  via `agent->addPublisher()`, `agent->addSubscriber()`, `agent->addService()`
+  and `agent->addClient()`.
 
 ```{mermaid}
 :zoom: %% enable for rosdoc2 feature, requires sphinxcontrib.mermaid feature.
 sequenceDiagram
-box Soar
+box soar_ros
 participant SoarRunner
 participant SoarRunner-RunThread
+participant SoarAgent
 participant SoarKernel
 end
 
@@ -37,86 +41,97 @@ participant ClientOutputQueue
 end
 
 SoarRunner ->> SoarKernel: CreateKernelInNewThread()
-activate SoarKernel;
+activate SoarKernel
 activate SoarRunner
 
-%% INITIALIZE CLIENT
-SoarRunner ->> Client : AddClient(client)
+%% SETUP: addAgent + wire I/O on the returned SoarAgent
+SoarRunner ->> SoarAgent: addAgent(name, soar_file)
+activate SoarAgent
+note right of SoarAgent: SoarAgent wraps one sml::Agent and
+note right of SoarAgent: owns all its ROS2 I/O objects.
+SoarAgent ->> Client: addClient(client)
 activate Client
 Client ->> Client-RunThread: InitializeRun
 deactivate Client
 activate Client-RunThread
+deactivate SoarAgent
+
 par ClientRun
     note right of Client: Start client worker thread.
     loop Client run thread
         Client-RunThread ->>+ ClientInputQueue: try read
         ClientInputQueue ->>- Client-RunThread: Element
-        Client-RunThread ->> Client-RunThread: sent ROS2 request
+        Client-RunThread ->> Client-RunThread: send ROS2 request
         Client-RunThread ->> Client-RunThread: await ROS2 response
         Client-RunThread ->> Client-RunThread: future.get()
         Client-RunThread ->> ClientOutputQueue: push(response)
         deactivate Client-RunThread
     end
 and Agent run
-    note right of SoarRunner: Start agent worker thread.
-    SoarRunner ->> SoarRunner-RunThread: Run()
+    note right of SoarRunner: Start run thread — calls RunAllAgents(1) each step.
+    SoarRunner ->> SoarRunner-RunThread: startThread()
     deactivate SoarRunner
     activate SoarRunner-RunThread
-    loop continue == true
-        SoarRunner-RunThread ->> SoarRunner-RunThread: RunAllAgentsForever()
+    loop m_running == true
+        SoarRunner-RunThread ->> SoarKernel: RunAllAgents(1)
     end
     deactivate SoarRunner-RunThread
-and Kernel run
-    note right of SoarRunner: Callback for Event is called.
-    SoarKernel ->> SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES callback to UpdateWorld()
+and Kernel callback
+    note right of SoarKernel: Kernel fires callback after every output phase.
+    SoarKernel ->> SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES → updateWorld()
     deactivate SoarKernel
     activate SoarRunner
-    SoarRunner ->> SoarRunner: processOutputLinkChanges()
-    SoarRunner ->> SoarRunner: processInput()
-    SoarRunner ->> SoarKernel: UpdateWorld() complete
+    loop for each SoarAgent
+        SoarRunner ->> SoarAgent: updateWorld()
+        activate SoarAgent
+        SoarAgent ->> SoarAgent: processOutputLinkChanges()
+        SoarAgent ->> SoarAgent: processInput() + agent->Commit()
+        deactivate SoarAgent
+    end
+    SoarRunner ->> SoarKernel: updateWorld() complete
     activate SoarKernel
     deactivate SoarRunner
 end
 
-note right of SoarRunner: Example for Client call from Soar: Process output
-SoarKernel ->>+ SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES callback to UpdateWorld()
-deactivate SoarKernel;
+note right of SoarRunner: Example: Client call triggered from Soar output-link
+SoarKernel ->>+ SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES → updateWorld()
+deactivate SoarKernel
 activate SoarRunner
-SoarRunner ->> SoarRunner: outputs[output-link.command] = shared_ptr output
-SoarRunner ->>+ Client: process_s2r()
-    deactivate SoarRunner
-    Client ->> ClientInputQueue: queue.push(parse(sml:Identifier *))
+SoarRunner ->> SoarAgent: updateWorld()
+activate SoarAgent
+SoarAgent ->> SoarAgent: processOutputLinkChanges()
+SoarAgent ->>+ Client: process_s2r()
+    Client ->> ClientInputQueue: queue.push(parse(sml::Identifier *))
     note right of ClientInputQueue: Client run thread reads and processes queue.
-    Client ->>- SoarRunner: void
-    activate SoarRunner
-SoarRunner ->> SoarRunner: output-link.command.AddStatusComplete()
-SoarRunner ->> SoarRunner: processInput()
-SoarRunner ->>- SoarKernel: UpdateWorld() complete
-activate SoarKernel;
+    Client ->>- SoarAgent: void
+SoarAgent ->> SoarAgent: output-link.command.AddStatusComplete()
+SoarAgent ->> SoarAgent: processInput()
+deactivate SoarAgent
+SoarRunner ->>- SoarKernel: updateWorld() complete
+activate SoarKernel
 
 loop SoarKernel and SoarRunner not blocked
-SoarKernel ->>+ SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES callback to UpdateWorld()
-SoarRunner ->>- SoarKernel: UpdateWorld() complete
+SoarKernel ->>+ SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES → updateWorld()
+SoarRunner ->>- SoarKernel: updateWorld() complete
 end
 
-SoarKernel ->> SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES callback to UpdateWorld()
-activate SoarRunner;
-deactivate SoarKernel;
-SoarRunner ->> SoarRunner: processOutputLinkChanges()
+SoarKernel ->> SoarRunner: smlEVENT_AFTER_ALL_OUTPUT_PHASES → updateWorld()
+activate SoarRunner
+deactivate SoarKernel
+SoarRunner ->> SoarAgent: updateWorld()
+activate SoarAgent
+SoarAgent ->> SoarAgent: processOutputLinkChanges()
 note right of Client: Check if response is available.
-SoarRunner ->>+ Client: Process input
-deactivate SoarRunner;
+SoarAgent ->>+ Client: processInput()
     Client ->>+ ClientOutputQueue: Read Queue
     ClientOutputQueue ->>- Client: Element
     Client ->> Client: parse()
-    Client ->>- SoarRunner: void
-activate SoarRunner
-SoarRunner ->> SoarRunner: agent.commit()
-SoarRunner ->> SoarKernel: UpdateWorld() complete
-activate SoarKernel;
-
-deactivate SoarKernel;
-deactivate SoarRunner;
+    Client ->>- SoarAgent: void
+SoarAgent ->> SoarAgent: agent->Commit()
+deactivate SoarAgent
+SoarRunner ->> SoarKernel: updateWorld() complete
+activate SoarKernel
+deactivate SoarRunner
 ```
 
 [soar_manual]: https://soar.eecs.umich.edu/soar_manual/

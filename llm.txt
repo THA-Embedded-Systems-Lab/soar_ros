@@ -1,0 +1,161 @@
+# soar_ros — LLM context file
+
+This file must always be kept up to date!
+
+## What is soar_ros?
+
+soar_ros is a ROS 2 (Humble) C++ package that bridges the
+[Soar cognitive architecture](https://soar.eecs.umich.edu/) with ROS 2.
+It wraps the Soar SML (Soar Markup Language) C++ API so that Soar agents can
+publish and subscribe to ROS 2 topics, call ROS 2 services, and use ROS 2
+action clients — without blocking the ROS 2 executor.
+
+## Key classes
+
+### `soar_ros::SoarRunner` (`include/soar_ros/SoarRunner.hpp`)
+
+ROS 2 node (`rclcpp::Node`) that owns the Soar kernel and the run thread.
+
+Responsibilities:
+- Create and own the `sml::Kernel` (started with `CreateKernelInNewThread()`).
+- Create `sml::Agent` instances via `addAgent(name, soar_file)`, which returns
+  a `std::shared_ptr<SoarAgent>`.
+- Run the decision cycle in a background thread: the thread calls
+  `m_kernel->RunAllAgents(1)` in a loop — it does **not** call `updateWorld()`
+  directly.
+- Register `smlEVENT_AFTER_ALL_OUTPUT_PHASES` on the kernel; the callback
+  (`updateEventHandler`) calls `SoarRunner::updateWorld()`, which iterates over
+  all `SoarAgent` instances and calls `agent->updateWorld()` on each.
+- Expose ROS 2 `std_srvs/Trigger` services:
+  - `/soar_ros/kernel/status`  → `getSoarKernelStatus()`
+  - `/soar_ros/kernel/run`     → `runSoarKernel()`
+  - `/soar_ros/kernel/stop`    → `stopSoarKernel()`
+  - `/soar_ros/debugger/launch`→ `debuggerLaunch()`
+
+Public API summary:
+```cpp
+SoarRunner(const std::string &node_name);
+std::shared_ptr<SoarAgent> addAgent(const std::string &agent_name,
+                                    const std::string &source_file);
+void startThread();   // start run thread
+void stopThread();    // stop and join run thread
+void run();           // alias for startThread()
+void updateWorld();   // called by kernel callback — do not call manually
+```
+
+### `soar_ros::SoarAgent` (`include/soar_ros/SoarAgent.hpp`)
+
+Per-agent wrapper returned by `SoarRunner::addAgent()`.  Owns all ROS 2 I/O
+objects for one `sml::Agent`.
+
+I/O registration (call after `addAgent()`, before `startThread()`):
+```cpp
+agent->addPublisher(std::make_shared<soar_ros::Publisher<MsgT>>(raw, node, topic));
+agent->addSubscriber(std::make_shared<soar_ros::Subscriber<MsgT>>(raw, node, topic));
+agent->addService(std::make_shared<soar_ros::Service<SrvT>>(raw, node, topic));
+agent->addClient(std::make_shared<soar_ros::Client<SrvT>>(raw, node, topic));
+agent->addActionClient(std::make_shared<soar_ros::ActionClient<ActT>>(raw, node, topic));
+```
+
+`SoarAgent::updateWorld()` is called every decision cycle (via the kernel
+callback) and does:
+1. `processOutputLinkChanges()` — reads Soar output-link commands, looks up the
+   registered output handler by command name, calls `process_s2r()`, then marks
+   the command complete with `AddStatusComplete()`.
+2. `processInput()` — calls `process_r2s()` on every registered input handler,
+   then commits to the Soar input-link with `agent->Commit()`.
+
+Accessors:
+```cpp
+sml::Agent *getSmlAgent() const;
+rclcpp::Node::SharedPtr getNode() const;
+```
+
+### ROS 2 interface wrappers
+
+All wrappers live in `include/soar_ros/` and implement one or both of
+`soar_ros::InputBase` / `soar_ros::OutputBase` (see `Interface.hpp`).
+
+| Class | Direction | Registration |
+|---|---|---|
+| `Publisher<T>` | Soar → ROS 2 | `agent->addPublisher()` |
+| `Subscriber<T>` | ROS 2 → Soar | `agent->addSubscriber()` |
+| `Service<T>` | bidirectional | `agent->addService()` |
+| `Client<T>` | bidirectional | `agent->addClient()` |
+| `ActionClient<T>` | bidirectional | `agent->addActionClient()` |
+
+## Threading model
+
+```
+ROS 2 executor thread    ←→  rclcpp::spin(node)
+SoarRunner run thread    →   m_kernel->RunAllAgents(1)  [loop]
+Soar kernel thread       →   fires smlEVENT_AFTER_ALL_OUTPUT_PHASES
+                                → updateEventHandler()
+                                → SoarRunner::updateWorld()
+                                → SoarAgent::updateWorld()  [per agent]
+Client worker thread(s)  →   async ROS 2 service calls
+```
+
+`updateWorld()` is a **synchronous callback from within the Soar kernel** and
+must not be called from the run thread.
+
+## Typical usage pattern
+
+```cpp
+auto node = std::make_shared<soar_ros::SoarRunner>("my_node");
+
+// Create agents — one or more
+auto agent_a = node->addAgent("AgentA", "path/to/agent_a.soar");
+auto agent_b = node->addAgent("AgentB", "path/to/agent_b.soar");
+
+// Wire I/O on each agent
+agent_a->addSubscriber(std::make_shared<MySub>(agent_a->getSmlAgent(), node, "/topic"));
+agent_a->addPublisher(std::make_shared<MyPub>(agent_a->getSmlAgent(), node, "/cmd"));
+agent_b->addService(std::make_shared<MySvc>(agent_b->getSmlAgent(), node, "/svc"));
+
+// Start the kernel
+node->startThread();
+rclcpp::spin(node);
+node->stopThread();
+```
+
+## ROS 2 service interfaces (std_srvs/Trigger)
+
+| Topic | Effect |
+|---|---|
+| `/soar_ros/kernel/status` | Returns whether the run thread is active |
+| `/soar_ros/kernel/run` | Starts the run thread |
+| `/soar_ros/kernel/stop` | Stops the run thread |
+| `/soar_ros/debugger/launch` | Stops thread, spawns Soar Java debugger for all agents |
+
+## Source layout
+
+```
+include/soar_ros/
+  SoarRunner.hpp      — kernel node, run thread, kernel services
+  SoarAgent.hpp       — per-agent I/O wiring
+  Publisher.hpp
+  Subscriber.hpp
+  Service.hpp
+  Client.hpp
+  ActionClient.hpp
+  Interface.hpp       — InputBase / OutputBase abstract interfaces
+  SafeQueue.hpp       — thread-safe queue used by Client/ActionClient
+src/
+  SoarRunner.cpp      — SoarRunner + free functions: SoarPrintEventHandler,
+                        updateEventHandler, getSoarLogFilePath
+Soar/
+  *.soar              — example/test Soar production files
+test/
+  pubsub/             — publisher/subscriber integration tests
+  service/            — service integration tests
+  client/             — client integration tests
+  action_client/      — action client integration tests
+  multi_agent/        — multi-agent integration tests
+```
+
+## Known limitations
+
+- Action Server is not yet supported.
+- Soar does not exit cleanly after unit tests; the node must be terminated
+  manually.

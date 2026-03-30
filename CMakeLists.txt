@@ -72,13 +72,18 @@ if(BUILD_TESTING)
   ament_target_dependencies(test_multi_agent ${THIS_PACKAGE_INCLUDE_DEPENDS})
   target_link_libraries(test_multi_agent soar_ros)
 
+  add_executable(test_shared_input test/multi_agent/test_shared_input.cpp)
+  ament_target_dependencies(test_shared_input ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_link_libraries(test_shared_input soar_ros)
+
   add_launch_test(test/pubsub/test_launch_input_output.py)
   add_launch_test(test/service/test_launch_service.py)
   add_launch_test(test/client/test_launch_client.py)
   add_launch_test(test/action_client/test_launch_action_client.py)
   add_launch_test(test/multi_agent/test_launch_multi_agent.py)
+  add_launch_test(test/multi_agent/test_launch_shared_input.py)
 
-  install(TARGETS test_input_output test_service test_client test_action_client test_multi_agent
+  install(TARGETS test_input_output test_service test_client test_action_client test_multi_agent test_shared_input
       DESTINATION lib/${PROJECT_NAME})
 endif()
 
