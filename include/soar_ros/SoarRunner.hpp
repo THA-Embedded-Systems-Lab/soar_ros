@@ -172,9 +172,6 @@ namespace soar_ros
         /// @brief ROS2 service: launch Soar Java debugger.
         rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr m_debuggerLaunch;
 
-        /// @brief Compute a timestamped directory path for Soar log files.
-        std::string getSoarLogFilePath();
-
         /// @brief Thread function: calls m_kernel->RunAllAgents(1) in a loop.
         void soarRunLoop();
     };

@@ -61,9 +61,9 @@ namespace soar_ros
     std::string line;
     while (std::getline(ss, line, '\n'))
     {
-      std::string message = std::string(pAgent->GetAgentName()) + ": " + str;
+      std::string message = std::string(pAgent->GetAgentName()) + ": " + line;
       auto logger = pSoarRunner->get_logger();
-      if (str.find("System halted.") != std::string::npos)
+      if (line.find("System halted.") != std::string::npos)
       {
         RCLCPP_ERROR(logger, "%s", message.c_str());
         pSoarRunner->stopThread();
@@ -159,46 +159,6 @@ namespace soar_ros
     RCLCPP_INFO(get_logger(), "Soar kernel shut down");
   }
 
-  std::string SoarRunner::getSoarLogFilePath()
-  {
-    auto currentTime = std::chrono::system_clock::now();
-    std::time_t currentTime_t = std::chrono::system_clock::to_time_t(currentTime);
-    std::tm *currentTime_tm = std::gmtime(&currentTime_t);
-    std::stringstream ss;
-    ss << std::put_time(currentTime_tm, "%Y_%m_%d-%H_%M_%S");
-    std::string timestamp = ss.str();
-
-    std::string root_file_path;
-    const char *ros_log_dir = std::getenv("ROS_LOG_DIR");
-    const char *ros_home = std::getenv("ROS_HOME");
-    const char *home = std::getenv("HOME");
-
-    if (ros_log_dir != nullptr)
-    {
-      root_file_path = ros_log_dir;
-      RCLCPP_INFO_STREAM(get_logger(), "ROS_LOG_DIR defined: Log directory: " << root_file_path);
-    }
-    else if (ros_home != nullptr)
-    {
-      root_file_path = std::string(ros_home) + "/log/";
-      RCLCPP_INFO_STREAM(get_logger(), "ROS_HOME defined: Log directory: " << root_file_path);
-    }
-    else
-    {
-      if (home == nullptr)
-      {
-        RCLCPP_ERROR_STREAM(get_logger(),
-                            "HOME ENV not found/defined. Log file might be relative to Soar Java debugger.");
-      }
-      else
-      {
-        root_file_path = std::string(home) + "/.ros/log/";
-        RCLCPP_WARN_STREAM(get_logger(),
-                           "No logging directory via ENV defined; Defaulting to: " << root_file_path);
-      }
-    }
-    return root_file_path;
-  }
 
   std::shared_ptr<SoarAgent> SoarRunner::addAgent(
       const std::string &agent_name,
@@ -228,11 +188,6 @@ namespace soar_ros
     // Register the Soar print event so agent output is routed to ROS logger.
     raw_agent->RegisterForPrintEvent(
         sml::smlEVENT_PRINT, SoarPrintEventHandler, this);
-
-    // Start a Soar log file for this agent.
-    std::string filepath = getSoarLogFilePath();
-    std::string cmd = "output log " + filepath;
-    raw_agent->ExecuteCommandLine(cmd.c_str());
 
     if (m_debug)
     {
