@@ -70,7 +70,7 @@ public:
   /// @param soar_goal The goal message parsed from Soar
   void send_goal_from_soar(const pGoalMsg & soar_goal)
   {
-    RCLCPP_INFO(m_node->get_logger(), "Sending goal to action server: %s", m_topic.c_str());
+    RCLCPP_DEBUG(m_node->get_logger(), "Sending goal to action server: %s", m_topic.c_str());
 
     auto options = typename rclcpp_action::Client<ActionT>::SendGoalOptions();
 

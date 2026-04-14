@@ -105,14 +105,14 @@ namespace soar_ros
         {
             if (!m_running.load())
             {
-                RCLCPP_INFO(get_logger(), "Run thread already stopped!");
+                RCLCPP_DEBUG(get_logger(), "Run thread already stopped!");
                 return;
             }
             m_running.store(false);
             RCLCPP_WARN(get_logger(), "Stopping runThread");
             if (m_soar_thread.joinable())
             {
-                RCLCPP_INFO(get_logger(), "Waiting for run thread to join");
+                RCLCPP_DEBUG(get_logger(), "Waiting for run thread to join");
                 m_soar_thread.join();
             }
         }

@@ -66,7 +66,7 @@ public:
     while (isRunning.load())
     {
       auto msg = this->m_s2rQueue.pop();
-      RCLCPP_INFO(m_node->get_logger(), "Sending on %s", m_topic.c_str());
+      RCLCPP_DEBUG(m_node->get_logger(), "Sending on %s", m_topic.c_str());
       pub->publish(msg);
     }
   }

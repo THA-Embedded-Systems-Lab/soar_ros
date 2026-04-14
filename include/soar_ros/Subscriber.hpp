@@ -64,7 +64,7 @@ public:
 
   void callback(const T& msg)
   {
-    RCLCPP_INFO(m_node->get_logger(), "Received subscription msg on %s", m_topic.c_str());
+    RCLCPP_DEBUG(m_node->get_logger(), "Received subscription msg on %s", m_topic.c_str());
     this->m_r2sQueue.push(msg);
   }
 
