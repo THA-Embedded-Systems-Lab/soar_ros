@@ -30,35 +30,27 @@ Includes
 --------
 
 
-- ``Client.hpp`` (:ref:`file_include_soar_ros_Client.hpp`)
+- ``SoarAgent.hpp`` (:ref:`file_include_soar_ros_SoarAgent.hpp`)
 
-- ``Interface.hpp`` (:ref:`file_include_soar_ros_Interface.hpp`)
+- ``atomic``
 
-- ``Publisher.hpp`` (:ref:`file_include_soar_ros_Publisher.hpp`)
-
-- ``Service.hpp`` (:ref:`file_include_soar_ros_Service.hpp`)
-
-- ``Subscriber.hpp`` (:ref:`file_include_soar_ros_Subscriber.hpp`)
+- ``chrono``
 
 - ``cstdlib``
 
-- ``iostream``
+- ``ctime``
 
 - ``map``
 
 - ``memory``
 
-- ``queue``
-
 - ``rclcpp/rclcpp.hpp``
 
 - ``sml_Client.h``
 
-- ``std_msgs/msg/string.hpp``
+- ``sstream``
 
 - ``std_srvs/srv/trigger.hpp``
-
-- ``stdexcept``
 
 - ``string``
 
@@ -95,7 +87,7 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92`
+- :ref:`exhale_function_SoarRunner_8hpp_1a640bcfc158f45120fa09397dec621d77`
 
 - :ref:`exhale_function_SoarRunner_8hpp_1ac1b2f4700bd2aa2de462bcf23acb9caf`
 

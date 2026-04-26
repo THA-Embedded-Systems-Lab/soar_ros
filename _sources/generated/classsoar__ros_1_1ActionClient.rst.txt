@@ -1,0 +1,30 @@
+.. _exhale_class_classsoar__ros_1_1ActionClient:
+
+Template Class ActionClient
+===========================
+
+- Defined in :ref:`file_include_soar_ros_ActionClient.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Types
+**********
+
+- ``public soar_ros::Output< typename ActionT::Goal::SharedPtr >`` (:ref:`exhale_class_classsoar__ros_1_1Output`)
+- ``public soar_ros::Input< bool >`` (:ref:`exhale_class_classsoar__ros_1_1Input`)
+- ``public soar_ros::Input< typename ActionT::Feedback::SharedPtr >`` (:ref:`exhale_class_classsoar__ros_1_1Input`)
+- ``public soar_ros::Input< typename rclcpp_action::ClientGoalHandle< ActionT >::WrappedResult >`` (:ref:`exhale_class_classsoar__ros_1_1Input`)
+- ``public soar_ros::Interface`` (:ref:`exhale_class_classsoar__ros_1_1Interface`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::ActionClient
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

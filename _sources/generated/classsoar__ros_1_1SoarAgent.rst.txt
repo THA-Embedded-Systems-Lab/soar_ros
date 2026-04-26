@@ -1,0 +1,17 @@
+.. _exhale_class_classsoar__ros_1_1SoarAgent:
+
+Class SoarAgent
+===============
+
+- Defined in :ref:`file_include_soar_ros_SoarAgent.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: soar_ros::SoarAgent
+   :project: soar_ros Doxygen Project
+   :members:
+   :protected-members:
+   :undoc-members:

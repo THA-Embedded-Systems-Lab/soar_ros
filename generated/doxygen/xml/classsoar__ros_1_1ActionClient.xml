@@ -1,0 +1,524 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1ActionClient" kind="class" language="C++" prot="public" abstract="yes">
+    <compoundname>soar_ros::ActionClient</compoundname>
+    <basecompoundref refid="classsoar__ros_1_1Output" prot="public" virt="non-virtual">soar_ros::Output&lt; typename ActionT::Goal::SharedPtr &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1Input" prot="public" virt="non-virtual">soar_ros::Input&lt; bool &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1Input" prot="public" virt="non-virtual">soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1Input" prot="public" virt="non-virtual">soar_ros::Input&lt; typename rclcpp_action::ClientGoalHandle&lt; ActionT &gt;::WrappedResult &gt;</basecompoundref>
+    <basecompoundref refid="classsoar__ros_1_1Interface" prot="public" virt="non-virtual">soar_ros::Interface</basecompoundref>
+    <templateparamlist>
+      <param>
+        <type>typename ActionT</type>
+      </param>
+      <param>
+        <type>typename pGoalMsg</type>
+        <defval>typename ActionT::Goal::SharedPtr</defval>
+      </param>
+      <param>
+        <type>typename pFeedbackMsg</type>
+        <defval>typename ActionT::Feedback::SharedPtr</defval>
+      </param>
+      <param>
+        <type>typename wrappedResultMsg</type>
+        <defval>typename rclcpp_action::ClientGoalHandle&lt;ActionT&gt;::WrappedResult</defval>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="classsoar__ros_1_1ActionClient_1a0adfbe516b36b12dbcc4b6fd59fa4ce7" prot="public" static="no">
+        <type>rclcpp_action::ClientGoalHandle&lt; ActionT &gt;</type>
+        <definition>using soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::GoalHandle =  rclcpp_action::ClientGoalHandle&lt;ActionT&gt;</definition>
+        <argsstring></argsstring>
+        <name>GoalHandle</name>
+        <qualifiedname>soar_ros::ActionClient::GoalHandle</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="46" column="3" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="46" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classsoar__ros_1_1ActionClient_1a8b77e77bd8f9914b76e058ff687fa461" prot="private" static="no" mutable="no">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent* soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::m_pAgent</definition>
+        <argsstring></argsstring>
+        <name>m_pAgent</name>
+        <qualifiedname>soar_ros::ActionClient::m_pAgent</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="123" column="15" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="123" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1ActionClient_1aa35474c2f060663c0989d5c16a1b2930" prot="private" static="no" mutable="no">
+        <type>rclcpp::Node::SharedPtr</type>
+        <definition>rclcpp::Node::SharedPtr soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::m_node</definition>
+        <argsstring></argsstring>
+        <name>m_node</name>
+        <qualifiedname>soar_ros::ActionClient::m_node</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="124" column="27" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="124" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1ActionClient_1a23d102d7adb2c85642e44d0f2bf7d76f" prot="private" static="no" mutable="no">
+        <type>std::string</type>
+        <definition>std::string soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::m_topic</definition>
+        <argsstring></argsstring>
+        <name>m_topic</name>
+        <qualifiedname>soar_ros::ActionClient::m_topic</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="125" column="15" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="125" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1ActionClient_1aeb406f65d0ca6f4012973856ab7e0eee" prot="private" static="no" mutable="no">
+        <type>rclcpp_action::Client&lt; ActionT &gt;::SharedPtr</type>
+        <definition>rclcpp_action::Client&lt;ActionT&gt;::SharedPtr soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::client_ptr_</definition>
+        <argsstring></argsstring>
+        <name>client_ptr_</name>
+        <qualifiedname>soar_ros::ActionClient::client_ptr_</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="126" column="46" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="126" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1ActionClient_1a05628a375324b708b4f8245bd41e7def" prot="private" static="no" mutable="no">
+        <type>std::thread</type>
+        <definition>std::thread soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::m_action_thread</definition>
+        <argsstring></argsstring>
+        <name>m_action_thread</name>
+        <qualifiedname>soar_ros::ActionClient::m_action_thread</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="128" column="15" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="128" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1ActionClient_1aad7486a730129f20abba442566c6a65b" prot="private" static="no" mutable="no">
+        <type>std::atomic&lt; bool &gt;</type>
+        <definition>std::atomic&lt;bool&gt; soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::isRunning</definition>
+        <argsstring></argsstring>
+        <name>isRunning</name>
+        <qualifiedname>soar_ros::ActionClient::isRunning</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="129" column="15" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="129" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a257fd00359b29f1289095da45ca081af" prot="public" static="no" const="no" explicit="yes" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::ActionClient</definition>
+        <argsstring>(sml::Agent *agent, rclcpp::Node::SharedPtr node, const std::string &amp;action_name)</argsstring>
+        <name>ActionClient</name>
+        <qualifiedname>soar_ros::ActionClient::ActionClient</qualifiedname>
+        <param>
+          <type>sml::Agent *</type>
+          <declname>agent</declname>
+        </param>
+        <param>
+          <type>rclcpp::Node::SharedPtr</type>
+          <declname>node</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>action_name</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="48" column="12" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="48" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a1d598ff292c3255aeedf6b3d43a134ad" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type></type>
+        <definition>virtual soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::~ActionClient</definition>
+        <argsstring>()</argsstring>
+        <name>~ActionClient</name>
+        <qualifiedname>soar_ros::ActionClient::~ActionClient</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="58" column="11" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="58" bodyend="64"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a7bce21809ddf9399002a60aaf86c268c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::send_goal_from_soar</definition>
+        <argsstring>(const pGoalMsg &amp;soar_goal)</argsstring>
+        <name>send_goal_from_soar</name>
+        <qualifiedname>soar_ros::ActionClient::send_goal_from_soar</qualifiedname>
+        <param>
+          <type>const pGoalMsg &amp;</type>
+          <declname>soar_goal</declname>
+        </param>
+        <briefdescription>
+<para>Send a goal to the action server from a parsed Soar goal. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>All future inputs for Soar must be inserted to queues to match the Soar processing cycle. <parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>soar_goal</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The goal message parsed from Soar </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="71" column="8" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="71" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1aa76e3e400fa7e9c2012bd3203f20a4d8" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>std::string</type>
+        <definition>std::string soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::getTopic</definition>
+        <argsstring>() override</argsstring>
+        <name>getTopic</name>
+        <qualifiedname>soar_ros::ActionClient::getTopic</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1Interface_1a294fefd3992c72bf1c227928716e938b">getTopic</reimplements>
+        <briefdescription>
+<para>Get the topic of the subscriber. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="103" column="15" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="103" bodyend="103"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a69f666414032ca53b387c8483598aeba" prot="public" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent * soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::getAgent</definition>
+        <argsstring>() override</argsstring>
+        <name>getAgent</name>
+        <qualifiedname>soar_ros::ActionClient::getAgent</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1Interface_1a8e52e3b61ef77a59afa7178b681819a8">getAgent</reimplements>
+        <briefdescription>
+<para>Get the agent of the current interface. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="104" column="15" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="104" bodyend="104"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="protected-func">
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a48b46f50fcbc1e60037820e0d16757bf" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>pGoalMsg</type>
+        <definition>virtual pGoalMsg soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::parse</definition>
+        <argsstring>(sml::Identifier *id)=0</argsstring>
+        <name>parse</name>
+        <qualifiedname>soar_ros::ActionClient::parse</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1Output_1af01db0104f6bd68b61ac9baff164926f">parse</reimplements>
+        <param>
+          <type>sml::Identifier *</type>
+          <declname>id</declname>
+        </param>
+        <briefdescription>
+<para>Parse Soar working memory structure to a ROS message. </para>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para></para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para></para>
+</simplesect>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="111" column="20"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1ab883539e8e344c4d25aa2a199c2d133a" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::parse</definition>
+        <argsstring>(pFeedbackMsg msg)=0</argsstring>
+        <name>parse</name>
+        <qualifiedname>soar_ros::ActionClient::parse</qualifiedname>
+        <param>
+          <type>pFeedbackMsg</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="112" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a418d8fed3a2bb763710b2b3a8a5a1450" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>void</type>
+        <definition>virtual void soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::parse</definition>
+        <argsstring>(wrappedResultMsg msg)=0</argsstring>
+        <name>parse</name>
+        <qualifiedname>soar_ros::ActionClient::parse</qualifiedname>
+        <param>
+          <type>wrappedResultMsg</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="113" column="16"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a1b509261bfd724290f814a0300bc5f9d" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="virtual">
+        <type>void</type>
+        <definition>void soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::parse</definition>
+        <argsstring>(bool msg) override</argsstring>
+        <name>parse</name>
+        <qualifiedname>soar_ros::ActionClient::parse</qualifiedname>
+        <reimplements refid="classsoar__ros_1_1Input_1a09a0e5766d8c852f3da30c6bb7723ecf">parse</reimplements>
+        <param>
+          <type>bool</type>
+          <declname>msg</declname>
+        </param>
+        <briefdescription>
+<para>This function must attach the ROS message T from m_r2sQueue to the Soar input link. </para>
+        </briefdescription>
+        <detaileddescription>
+<para>Soar usually requires a <computeroutput>pAgent-&gt;Commit()</computeroutput> to send the changes, but this is handled inside the SoarRunner::processInput() call.</para>
+<para>The function is called inside the Interface::Input::process_r2s() function.</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>msg</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>The ROS2 message. </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="115" column="8" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="115" bodyend="120"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classsoar__ros_1_1ActionClient_1a0d46ec998f654adc3534e9999bcc9a89" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;::run</definition>
+        <argsstring>()</argsstring>
+        <name>run</name>
+        <qualifiedname>soar_ros::ActionClient::run</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/ActionClient.hpp" line="132" column="8" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="132" bodyend="153"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="1">
+        <label>soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;</label>
+        <link refid="classsoar__ros_1_1ActionClient"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="public-inheritance">
+        </childnode>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+        <childnode refid="8" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="4">
+        <label>soar_ros::Input&lt; bool &gt;</label>
+        <link refid="classsoar__ros_1_1Input"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1Input"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="7">
+        <label>soar_ros::Input&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Input"/>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1InputBase"/>
+      </node>
+      <node id="8">
+        <label>soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1Interface"/>
+      </node>
+      <node id="2">
+        <label>soar_ros::Output&lt; typename ActionT::Goal::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1Output"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1OutputBase"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="1">
+        <label>soar_ros::ActionClient&lt; ActionT, pGoalMsg, pFeedbackMsg, wrappedResultMsg &gt;</label>
+        <link refid="classsoar__ros_1_1ActionClient"/>
+        <childnode refid="2" relation="public-inheritance">
+        </childnode>
+        <childnode refid="5" relation="public-inheritance">
+        </childnode>
+        <childnode refid="8" relation="public-inheritance">
+        </childnode>
+        <childnode refid="10" relation="public-inheritance">
+        </childnode>
+        <childnode refid="11" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>soar_ros::Input&lt; bool &gt;</label>
+        <link refid="classsoar__ros_1_1Input"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+        <childnode refid="7" relation="usage">
+          <edgelabel>m_r2sQueue</edgelabel>
+        </childnode>
+      </node>
+      <node id="8">
+        <label>soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1Input"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+        <childnode refid="9" relation="usage">
+          <edgelabel>m_r2sQueue</edgelabel>
+        </childnode>
+      </node>
+      <node id="10">
+        <label>soar_ros::Input&lt; T &gt;</label>
+        <link refid="classsoar__ros_1_1Input"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="6">
+        <label>soar_ros::InputBase</label>
+        <link refid="classsoar__ros_1_1InputBase"/>
+      </node>
+      <node id="11">
+        <label>soar_ros::Interface</label>
+        <link refid="classsoar__ros_1_1Interface"/>
+      </node>
+      <node id="2">
+        <label>soar_ros::Output&lt; typename ActionT::Goal::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1Output"/>
+        <childnode refid="3" relation="public-inheritance">
+        </childnode>
+        <childnode refid="4" relation="usage">
+          <edgelabel>m_s2rQueue</edgelabel>
+        </childnode>
+      </node>
+      <node id="3">
+        <label>soar_ros::OutputBase</label>
+        <link refid="classsoar__ros_1_1OutputBase"/>
+      </node>
+      <node id="7">
+        <label>soar_ros::SafeQueue&lt; bool &gt;</label>
+        <link refid="classsoar__ros_1_1SafeQueue"/>
+      </node>
+      <node id="9">
+        <label>soar_ros::SafeQueue&lt; typename ActionT::Feedback::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1SafeQueue"/>
+      </node>
+      <node id="4">
+        <label>soar_ros::SafeQueue&lt; typename ActionT::Goal::SharedPtr &gt;</label>
+        <link refid="classsoar__ros_1_1SafeQueue"/>
+      </node>
+    </collaborationgraph>
+    <location file="include/soar_ros/ActionClient.hpp" line="38" column="1" bodyfile="include/soar_ros/ActionClient.hpp" bodystart="44" bodyend="154"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1ActionClient_1a257fd00359b29f1289095da45ca081af" prot="public" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>ActionClient</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1aeb406f65d0ca6f4012973856ab7e0eee" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>client_ptr_</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a69f666414032ca53b387c8483598aeba" prot="public" virt="virtual"><scope>soar_ros::ActionClient</scope><name>getAgent</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1aa76e3e400fa7e9c2012bd3203f20a4d8" prot="public" virt="virtual"><scope>soar_ros::ActionClient</scope><name>getTopic</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a0adfbe516b36b12dbcc4b6fd59fa4ce7" prot="public" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>GoalHandle</name></member>
+      <member refid="classsoar__ros_1_1Input_1a3220b2318518edab5a5be521a962c25b" prot="public" virt="non-virtual" ambiguityscope="soar_ros::"><scope>soar_ros::ActionClient</scope><name>Input</name></member>
+      <member refid="classsoar__ros_1_1Input_1a3220b2318518edab5a5be521a962c25b" prot="public" virt="non-virtual" ambiguityscope="soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;::"><scope>soar_ros::ActionClient</scope><name>Input</name></member>
+      <member refid="classsoar__ros_1_1Input_1a3220b2318518edab5a5be521a962c25b" prot="public" virt="non-virtual" ambiguityscope="soar_ros::Input::"><scope>soar_ros::ActionClient</scope><name>Input</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1aad7486a730129f20abba442566c6a65b" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>isRunning</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a05628a375324b708b4f8245bd41e7def" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>m_action_thread</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1aa35474c2f060663c0989d5c16a1b2930" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>m_node</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a8b77e77bd8f9914b76e058ff687fa461" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>m_pAgent</name></member>
+      <member refid="classsoar__ros_1_1Input_1abf3de829e83b44139a4b2baae2e5a16a" prot="protected" virt="non-virtual" ambiguityscope="soar_ros::"><scope>soar_ros::ActionClient</scope><name>m_r2sQueue</name></member>
+      <member refid="classsoar__ros_1_1Input_1abf3de829e83b44139a4b2baae2e5a16a" prot="protected" virt="non-virtual" ambiguityscope="soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;::"><scope>soar_ros::ActionClient</scope><name>m_r2sQueue</name></member>
+      <member refid="classsoar__ros_1_1Input_1abf3de829e83b44139a4b2baae2e5a16a" prot="protected" virt="non-virtual" ambiguityscope="soar_ros::Input::"><scope>soar_ros::ActionClient</scope><name>m_r2sQueue</name></member>
+      <member refid="classsoar__ros_1_1Output_1a4bfed14fee4ff1088d961087e5025344" prot="protected" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>m_s2rQueue</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a23d102d7adb2c85642e44d0f2bf7d76f" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>m_topic</name></member>
+      <member refid="classsoar__ros_1_1Output_1aac8f8818e59a7c6391d684e2d32d2784" prot="public" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>Output</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a48b46f50fcbc1e60037820e0d16757bf" prot="protected" virt="pure-virtual"><scope>soar_ros::ActionClient</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1ab883539e8e344c4d25aa2a199c2d133a" prot="protected" virt="pure-virtual"><scope>soar_ros::ActionClient</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a418d8fed3a2bb763710b2b3a8a5a1450" prot="protected" virt="pure-virtual"><scope>soar_ros::ActionClient</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a1b509261bfd724290f814a0300bc5f9d" prot="protected" virt="virtual"><scope>soar_ros::ActionClient</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1Input_1a09a0e5766d8c852f3da30c6bb7723ecf" prot="public" virt="pure-virtual" ambiguityscope="soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;::"><scope>soar_ros::ActionClient</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1Input_1a09a0e5766d8c852f3da30c6bb7723ecf" prot="public" virt="pure-virtual" ambiguityscope="soar_ros::Input::"><scope>soar_ros::ActionClient</scope><name>parse</name></member>
+      <member refid="classsoar__ros_1_1Input_1a24f54e499689f3751bc5ba2c37096a93" prot="public" virt="virtual" ambiguityscope="soar_ros::"><scope>soar_ros::ActionClient</scope><name>process_r2s</name></member>
+      <member refid="classsoar__ros_1_1Input_1a24f54e499689f3751bc5ba2c37096a93" prot="public" virt="virtual" ambiguityscope="soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;::"><scope>soar_ros::ActionClient</scope><name>process_r2s</name></member>
+      <member refid="classsoar__ros_1_1Input_1a24f54e499689f3751bc5ba2c37096a93" prot="public" virt="virtual" ambiguityscope="soar_ros::Input::"><scope>soar_ros::ActionClient</scope><name>process_r2s</name></member>
+      <member refid="classsoar__ros_1_1Output_1ac38d1e23a7093e233209f8ff8f8c9046" prot="public" virt="virtual"><scope>soar_ros::ActionClient</scope><name>process_s2r</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a0d46ec998f654adc3534e9999bcc9a89" prot="private" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>run</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a7bce21809ddf9399002a60aaf86c268c" prot="public" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>send_goal_from_soar</name></member>
+      <member refid="classsoar__ros_1_1ActionClient_1a1d598ff292c3255aeedf6b3d43a134ad" prot="public" virt="virtual"><scope>soar_ros::ActionClient</scope><name>~ActionClient</name></member>
+      <member refid="classsoar__ros_1_1Input_1a603986902be248718541df48e1dbfe9d" prot="public" virt="non-virtual" ambiguityscope="soar_ros::"><scope>soar_ros::ActionClient</scope><name>~Input</name></member>
+      <member refid="classsoar__ros_1_1Input_1a603986902be248718541df48e1dbfe9d" prot="public" virt="non-virtual" ambiguityscope="soar_ros::Input&lt; typename ActionT::Feedback::SharedPtr &gt;::"><scope>soar_ros::ActionClient</scope><name>~Input</name></member>
+      <member refid="classsoar__ros_1_1Input_1a603986902be248718541df48e1dbfe9d" prot="public" virt="non-virtual" ambiguityscope="soar_ros::Input::"><scope>soar_ros::ActionClient</scope><name>~Input</name></member>
+      <member refid="classsoar__ros_1_1Output_1a9660a99c83ff6be1923165a88b426c73" prot="public" virt="non-virtual"><scope>soar_ros::ActionClient</scope><name>~Output</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

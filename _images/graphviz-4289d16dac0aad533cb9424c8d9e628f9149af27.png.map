@@ -1,0 +1,5 @@
+<map id="%3" name="%3">
+<area shape="rect" id="node1" title="rclcpp::Node" alt="" coords="48,101,191,149"/>
+<area shape="rect" id="node2" title="soar_ros::SoarRunner" alt="" coords="5,5,233,53"/>
+<area shape="poly" id="edge1" title="public&#45;inheritance" alt="" coords="122,54,122,88,117,88,117,54"/>
+</map>

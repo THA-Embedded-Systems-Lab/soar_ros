@@ -16,12 +16,14 @@ Directory soar_ros
 Files
 -----
 
+- :ref:`file_include_soar_ros_ActionClient.hpp`
 - :ref:`file_include_soar_ros_Client.hpp`
 - :ref:`file_include_soar_ros_Interface.hpp`
 - :ref:`file_include_soar_ros_Publisher.hpp`
 - :ref:`file_include_soar_ros_SafeQueue.hpp`
 - :ref:`file_include_soar_ros_Service.hpp`
 - :ref:`file_include_soar_ros_soar_ros.hpp`
+- :ref:`file_include_soar_ros_SoarAgent.hpp`
 - :ref:`file_include_soar_ros_SoarRunner.hpp`
 - :ref:`file_include_soar_ros_Subscriber.hpp`
 

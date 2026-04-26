@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">soar_ros<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">soar_ros<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">An interface library to connect ROS2 with the Soar cognitive architecture.</div>
   </td>
@@ -96,7 +96,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 
-<p>Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to attach interfaces via a builder pattern, e.g. <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher()</a>, <a class="el" href="classsoar__ros_1_1Subscriber.html">soar_ros::Subscriber()</a>, <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service()</a> and <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client()</a>.  
+<p>ROS2 node that manages a Soar kernel and its agents.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="SoarRunner_8hpp_source.html">SoarRunner.hpp</a>&gt;</code></p>
@@ -109,626 +109,82 @@ Inheritance diagram for soar_ros::SoarRunner:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7f582f9e83635a872f0b08f6c8046088" id="r_a7f582f9e83635a872f0b08f6c8046088"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f582f9e83635a872f0b08f6c8046088">SoarRunner</a> (const std::string &amp;agent_name, const std::string &amp;path_productions)</td></tr>
-<tr class="memdesc:a7f582f9e83635a872f0b08f6c8046088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Instantiates the Soar kernel and generates ROS2 interfaces. Further setup in <a class="el" href="#a25a39e1fe1dbb815a7781caa9d63895b" title="Add a new Soar agent and register callbacks related to ROS.">SoarRunner::addAgent()</a> for first agent.  <br /></td></tr>
-<tr class="separator:a7f582f9e83635a872f0b08f6c8046088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a85184219cdedb2e9826481e4be5f49" id="r_a5a85184219cdedb2e9826481e4be5f49"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a85184219cdedb2e9826481e4be5f49">debuggerLaunch</a> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
-<tr class="memdesc:a5a85184219cdedb2e9826481e4be5f49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable external control to start the debugger and stop the run thread via.  <br /></td></tr>
-<tr class="separator:a5a85184219cdedb2e9826481e4be5f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7c28fc3d7ba9f4d9b2178fca86c230c" id="r_af7c28fc3d7ba9f4d9b2178fca86c230c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7c28fc3d7ba9f4d9b2178fca86c230c">getSoarKernelStatus</a> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
-<tr class="memdesc:af7c28fc3d7ba9f4d9b2178fca86c230c"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROS2 interface to get current Soar kernel status (run/ stop) via.  <br /></td></tr>
-<tr class="separator:af7c28fc3d7ba9f4d9b2178fca86c230c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b579438380e18582d68c66b7a1ab170" id="r_a9b579438380e18582d68c66b7a1ab170"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b579438380e18582d68c66b7a1ab170">runSoarKernel</a> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
-<tr class="memdesc:a9b579438380e18582d68c66b7a1ab170"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> interface to stop Soar kernel if it is currently running via.  <br /></td></tr>
-<tr class="separator:a9b579438380e18582d68c66b7a1ab170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70560c29a2d317f96d29462ac6d44d2a" id="r_a70560c29a2d317f96d29462ac6d44d2a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70560c29a2d317f96d29462ac6d44d2a">stopSoarKernel</a> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
-<tr class="memdesc:a70560c29a2d317f96d29462ac6d44d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> interface to start (run) Soar kernel if it is currenlty stopped.  <br /></td></tr>
-<tr class="separator:a70560c29a2d317f96d29462ac6d44d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25a39e1fe1dbb815a7781caa9d63895b" id="r_a25a39e1fe1dbb815a7781caa9d63895b"><td class="memItemLeft" align="right" valign="top">sml::Agent *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25a39e1fe1dbb815a7781caa9d63895b">addAgent</a> (const std::string &amp;agent_name, const std::string &amp;path_productions)</td></tr>
-<tr class="memdesc:a25a39e1fe1dbb815a7781caa9d63895b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new Soar agent and register callbacks related to ROS.  <br /></td></tr>
-<tr class="separator:a25a39e1fe1dbb815a7781caa9d63895b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99a8e825b46bdf372ca99c1632c9d8ce" id="r_a99a8e825b46bdf372ca99c1632c9d8ce"><td class="memItemLeft" align="right" valign="top"><a id="a99a8e825b46bdf372ca99c1632c9d8ce" name="a99a8e825b46bdf372ca99c1632c9d8ce"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>~SoarRunner</b> ()</td></tr>
-<tr class="memdesc:a99a8e825b46bdf372ca99c1632c9d8ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the Kernel thread and wait until joined, closes Soar Debugger in debug mode. <br /></td></tr>
-<tr class="separator:a99a8e825b46bdf372ca99c1632c9d8ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75b7996e6d560ecd2e13316b954ecc63" id="r_a75b7996e6d560ecd2e13316b954ecc63"><td class="memItemLeft" align="right" valign="top"><a id="a75b7996e6d560ecd2e13316b954ecc63" name="a75b7996e6d560ecd2e13316b954ecc63"></a>
-sml::Agent *&#160;</td><td class="memItemRight" valign="bottom"><b>getAgent</b> ()</td></tr>
-<tr class="separator:a75b7996e6d560ecd2e13316b954ecc63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c03ccf5186a8386b73ed23f933ce492" id="r_a5c03ccf5186a8386b73ed23f933ce492"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a5c03ccf5186a8386b73ed23f933ce492"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5c03ccf5186a8386b73ed23f933ce492">addPublisher</a> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher</a>&lt; T &gt; &gt; output)</td></tr>
-<tr class="memdesc:a5c03ccf5186a8386b73ed23f933ce492"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher()</a> to the <a class="el" href="classsoar__ros_1_1SoarRunner.html" title="Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to a...">SoarRunner</a>.  <br /></td></tr>
-<tr class="separator:a5c03ccf5186a8386b73ed23f933ce492"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d62f1328da585cbb7c55010a31352a4" id="r_a3d62f1328da585cbb7c55010a31352a4"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3d62f1328da585cbb7c55010a31352a4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3d62f1328da585cbb7c55010a31352a4">addPublisher</a> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher</a>&lt; T &gt; &gt; output, const std::string &amp;commandName)</td></tr>
-<tr class="memdesc:a3d62f1328da585cbb7c55010a31352a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher()</a> to the <a class="el" href="classsoar__ros_1_1SoarRunner.html" title="Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to a...">SoarRunner</a>.  <br /></td></tr>
-<tr class="separator:a3d62f1328da585cbb7c55010a31352a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26065aa9a75a05c20bd712fa6696b44b" id="r_a26065aa9a75a05c20bd712fa6696b44b"><td class="memTemplParams" colspan="2"><a id="a26065aa9a75a05c20bd712fa6696b44b" name="a26065aa9a75a05c20bd712fa6696b44b"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a26065aa9a75a05c20bd712fa6696b44b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>addSubscriber</b> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Subscriber.html">soar_ros::Subscriber</a>&lt; T &gt; &gt; input)</td></tr>
-<tr class="separator:a26065aa9a75a05c20bd712fa6696b44b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbadbd6a39c3dbb7e4490cac11965a29" id="r_abbadbd6a39c3dbb7e4490cac11965a29"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:abbadbd6a39c3dbb7e4490cac11965a29"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abbadbd6a39c3dbb7e4490cac11965a29">addService</a> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service</a>&lt; T &gt; &gt; service)</td></tr>
-<tr class="memdesc:abbadbd6a39c3dbb7e4490cac11965a29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service</a>. The callback on the output link is the service's topic name.  <br /></td></tr>
-<tr class="separator:abbadbd6a39c3dbb7e4490cac11965a29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0edd9b8aadb1440f363a316eee091dd6" id="r_a0edd9b8aadb1440f363a316eee091dd6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a0edd9b8aadb1440f363a316eee091dd6"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a0edd9b8aadb1440f363a316eee091dd6">addService</a> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service</a>&lt; T &gt; &gt; service, const std::string &amp;commandName)</td></tr>
-<tr class="memdesc:a0edd9b8aadb1440f363a316eee091dd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> with a custom callback command.  <br /></td></tr>
-<tr class="separator:a0edd9b8aadb1440f363a316eee091dd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac47e59d8073947e53a213bb12b130e67" id="r_ac47e59d8073947e53a213bb12b130e67"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ac47e59d8073947e53a213bb12b130e67"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac47e59d8073947e53a213bb12b130e67">addClient</a> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a>&lt; T &gt; &gt; client)</td></tr>
-<tr class="memdesc:ac47e59d8073947e53a213bb12b130e67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a>. The callback on the output link is the service's topic name.  <br /></td></tr>
-<tr class="separator:ac47e59d8073947e53a213bb12b130e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12ee7e8dceadb4ca8aaa55262839d3e3" id="r_a12ee7e8dceadb4ca8aaa55262839d3e3"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a12ee7e8dceadb4ca8aaa55262839d3e3"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a12ee7e8dceadb4ca8aaa55262839d3e3">addClient</a> (std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a>&lt; T &gt; &gt; client, const std::string &amp;commandName)</td></tr>
-<tr class="memdesc:a12ee7e8dceadb4ca8aaa55262839d3e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a new <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a> with a custom callback command.  <br /></td></tr>
-<tr class="separator:a12ee7e8dceadb4ca8aaa55262839d3e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d3e6cdb7b55a1f8fba1f22328bd45d4" id="r_a5d3e6cdb7b55a1f8fba1f22328bd45d4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d3e6cdb7b55a1f8fba1f22328bd45d4">startThread</a> ()</td></tr>
-<tr class="memdesc:a5d3e6cdb7b55a1f8fba1f22328bd45d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new thread based on the SoarRunner::run() function that executes the Soar kernel.  <br /></td></tr>
+<tr class="memitem:a4753ff33edb8630bb959d15cd3041a91" id="r_a4753ff33edb8630bb959d15cd3041a91"><td class="memItemLeft" align="right" valign="top"><a id="a4753ff33edb8630bb959d15cd3041a91" name="a4753ff33edb8630bb959d15cd3041a91"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SoarRunner</b> (const std::string &amp;node_name)</td></tr>
+<tr class="separator:a4753ff33edb8630bb959d15cd3041a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc859374ab38dd9cf0245cedb94f1fed" id="r_abc859374ab38dd9cf0245cedb94f1fed"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1SoarAgent.html">SoarAgent</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc859374ab38dd9cf0245cedb94f1fed">addAgent</a> (const std::string &amp;agent_name, const std::string &amp;source_file)</td></tr>
+<tr class="memdesc:abc859374ab38dd9cf0245cedb94f1fed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new Soar agent and return a handle for I/O wiring.  <br /></td></tr>
+<tr class="separator:abc859374ab38dd9cf0245cedb94f1fed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adde11fa7c0683e1d29c747f5ffe09866" id="r_adde11fa7c0683e1d29c747f5ffe09866"><td class="memItemLeft" align="right" valign="top"><a id="adde11fa7c0683e1d29c747f5ffe09866" name="adde11fa7c0683e1d29c747f5ffe09866"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> ()</td></tr>
+<tr class="memdesc:adde11fa7c0683e1d29c747f5ffe09866"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the Soar decision-cycle thread. <br /></td></tr>
+<tr class="separator:adde11fa7c0683e1d29c747f5ffe09866"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d3e6cdb7b55a1f8fba1f22328bd45d4" id="r_a5d3e6cdb7b55a1f8fba1f22328bd45d4"><td class="memItemLeft" align="right" valign="top"><a id="a5d3e6cdb7b55a1f8fba1f22328bd45d4" name="a5d3e6cdb7b55a1f8fba1f22328bd45d4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>startThread</b> ()</td></tr>
+<tr class="memdesc:a5d3e6cdb7b55a1f8fba1f22328bd45d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the Soar decision-cycle thread (alias for <a class="el" href="#adde11fa7c0683e1d29c747f5ffe09866" title="Start the Soar decision-cycle thread.">run()</a>). <br /></td></tr>
 <tr class="separator:a5d3e6cdb7b55a1f8fba1f22328bd45d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3344394558c39786279952ad381268bb" id="r_a3344394558c39786279952ad381268bb"><td class="memItemLeft" align="right" valign="top"><a id="a3344394558c39786279952ad381268bb" name="a3344394558c39786279952ad381268bb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>stopThread</b> ()</td></tr>
-<tr class="memdesc:a3344394558c39786279952ad381268bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops and joins SoarRunner::run() thread of Soar kernel via the SoarRunner::isRunning flag. <br /></td></tr>
+<tr class="memdesc:a3344394558c39786279952ad381268bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop and join the Soar decision-cycle thread. <br /></td></tr>
 <tr class="separator:a3344394558c39786279952ad381268bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a631775299b9c20f86840e93c05620987" id="r_a631775299b9c20f86840e93c05620987"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a631775299b9c20f86840e93c05620987">updateWorld</a> ()</td></tr>
-<tr class="memdesc:a631775299b9c20f86840e93c05620987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Soar update World function executed every step in the Soar execution cycle in SoarRunner::run()  <br /></td></tr>
+<tr class="memitem:a631775299b9c20f86840e93c05620987" id="r_a631775299b9c20f86840e93c05620987"><td class="memItemLeft" align="right" valign="top"><a id="a631775299b9c20f86840e93c05620987" name="a631775299b9c20f86840e93c05620987"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>updateWorld</b> ()</td></tr>
+<tr class="memdesc:a631775299b9c20f86840e93c05620987"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process all agents' I/O. Called via updateEventHandler every decision cycle (smlEVENT_AFTER_ALL_OUTPUT_PHASES). <br /></td></tr>
 <tr class="separator:a631775299b9c20f86840e93c05620987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a85184219cdedb2e9826481e4be5f49" id="r_a5a85184219cdedb2e9826481e4be5f49"><td class="memItemLeft" align="right" valign="top"><a id="a5a85184219cdedb2e9826481e4be5f49" name="a5a85184219cdedb2e9826481e4be5f49"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>debuggerLaunch</b> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
+<tr class="memdesc:a5a85184219cdedb2e9826481e4be5f49"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>/soar_ros/debugger/launch</code> — stop the kernel thread and spawn the Soar Java debugger for all agents. <br /></td></tr>
+<tr class="separator:a5a85184219cdedb2e9826481e4be5f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7c28fc3d7ba9f4d9b2178fca86c230c" id="r_af7c28fc3d7ba9f4d9b2178fca86c230c"><td class="memItemLeft" align="right" valign="top"><a id="af7c28fc3d7ba9f4d9b2178fca86c230c" name="af7c28fc3d7ba9f4d9b2178fca86c230c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>getSoarKernelStatus</b> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
+<tr class="memdesc:af7c28fc3d7ba9f4d9b2178fca86c230c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>/soar_ros/kernel/status</code> — report whether the kernel thread is currently running. <br /></td></tr>
+<tr class="separator:af7c28fc3d7ba9f4d9b2178fca86c230c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b579438380e18582d68c66b7a1ab170" id="r_a9b579438380e18582d68c66b7a1ab170"><td class="memItemLeft" align="right" valign="top"><a id="a9b579438380e18582d68c66b7a1ab170" name="a9b579438380e18582d68c66b7a1ab170"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>runSoarKernel</b> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
+<tr class="memdesc:a9b579438380e18582d68c66b7a1ab170"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>/soar_ros/kernel/run</code> — start the kernel thread via ROS. <br /></td></tr>
+<tr class="separator:a9b579438380e18582d68c66b7a1ab170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70560c29a2d317f96d29462ac6d44d2a" id="r_a70560c29a2d317f96d29462ac6d44d2a"><td class="memItemLeft" align="right" valign="top"><a id="a70560c29a2d317f96d29462ac6d44d2a" name="a70560c29a2d317f96d29462ac6d44d2a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>stopSoarKernel</b> (const std::shared_ptr&lt; rmw_request_id_t &gt; request_header, std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt; request, std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt; response)</td></tr>
+<tr class="memdesc:a70560c29a2d317f96d29462ac6d44d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>/soar_ros/kernel/stop</code> — stop the kernel thread via ROS. <br /></td></tr>
+<tr class="separator:a70560c29a2d317f96d29462ac6d44d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to attach interfaces via a builder pattern, e.g. <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher()</a>, <a class="el" href="classsoar__ros_1_1Subscriber.html">soar_ros::Subscriber()</a>, <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service()</a> and <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client()</a>. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7f582f9e83635a872f0b08f6c8046088" name="a7f582f9e83635a872f0b08f6c8046088"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f582f9e83635a872f0b08f6c8046088">&#9670;&#160;</a></span>SoarRunner()</h2>
+<div class="textblock"><p>ROS2 node that manages a Soar kernel and its agents. </p>
+<p>Responsibilities:</p><ul>
+<li>Own the sml::Kernel and the spin thread.</li>
+<li>Create sml::Agent instances on request and wrap them in <a class="el" href="classsoar__ros_1_1SoarAgent.html" title="Per-agent wrapper that owns all ROS I/O wiring for one Soar agent.">SoarAgent</a>.</li>
+<li>Expose ROS2 service interfaces to start/stop the kernel and launch the Soar Java debugger.</li>
+</ul>
+<p>I/O wiring is done on each <a class="el" href="classsoar__ros_1_1SoarAgent.html" title="Per-agent wrapper that owns all ROS I/O wiring for one Soar agent.">SoarAgent</a> returned from <a class="el" href="#abc859374ab38dd9cf0245cedb94f1fed" title="Create a new Soar agent and return a handle for I/O wiring.">addAgent()</a>, not here. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="abc859374ab38dd9cf0245cedb94f1fed" name="abc859374ab38dd9cf0245cedb94f1fed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc859374ab38dd9cf0245cedb94f1fed">&#9670;&#160;</a></span>addAgent()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">soar_ros::SoarRunner::SoarRunner </td>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1SoarAgent.html">SoarAgent</a> &gt; soar_ros::SoarRunner::addAgent </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>agent_name</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path_productions</em></span>&#160;)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>source_file</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Instantiates the Soar kernel and generates ROS2 interfaces. Further setup in <a class="el" href="#a25a39e1fe1dbb815a7781caa9d63895b" title="Add a new Soar agent and register callbacks related to ROS.">SoarRunner::addAgent()</a> for first agent. </p>
+<p>Create a new Soar agent and return a handle for I/O wiring. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">agent_name</td><td>The agents name. </td></tr>
-    <tr><td class="paramname">path_productions</td><td>Filepath to main *.soar file relative to the package root. </td></tr>
+    <tr><td class="paramname">agent_name</td><td>Name passed to sml::Kernel::CreateAgent(). </td></tr>
+    <tr><td class="paramname">source_file</td><td>Path to the .soar file to load. Empty = no load. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>on sml::Kernel setup error. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a25a39e1fe1dbb815a7781caa9d63895b" name="a25a39e1fe1dbb815a7781caa9d63895b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25a39e1fe1dbb815a7781caa9d63895b">&#9670;&#160;</a></span>addAgent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">sml::Agent * soar_ros::SoarRunner::addAgent </td>
-          <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>agent_name</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>path_productions</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Add a new Soar agent and register callbacks related to ROS. </p>
-<dl class="section warning"><dt>Warning</dt><dd>Handling multiple agents in one <a class="el" href="classsoar__ros_1_1SoarRunner.html" title="Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to a...">SoarRunner</a> instance is not implemented yet! </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">agent_name</td><td>The agents name </td></tr>
-    <tr><td class="paramname">path_productions</td><td>Path to the Soar source files. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>The path might depend on the install location specified in cmake sctipts </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">std::runtime_error</td><td>on sml::Agent::loadProductions() error. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="ac47e59d8073947e53a213bb12b130e67" name="ac47e59d8073947e53a213bb12b130e67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac47e59d8073947e53a213bb12b130e67">&#9670;&#160;</a></span>addClient() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool soar_ros::SoarRunner::addClient </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a>&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>client</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add a new <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a>. The callback on the output link is the service's topic name. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> Message type definition </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">service</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a12ee7e8dceadb4ca8aaa55262839d3e3" name="a12ee7e8dceadb4ca8aaa55262839d3e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12ee7e8dceadb4ca8aaa55262839d3e3">&#9670;&#160;</a></span>addClient() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool soar_ros::SoarRunner::addClient </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a>&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>client</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>commandName</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add a new <a class="el" href="classsoar__ros_1_1Client.html">soar_ros::Client</a> with a custom callback command. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">service</td><td></td></tr>
-    <tr><td class="paramname">commandName</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a5c03ccf5186a8386b73ed23f933ce492" name="a5c03ccf5186a8386b73ed23f933ce492"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c03ccf5186a8386b73ed23f933ce492">&#9670;&#160;</a></span>addPublisher() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool soar_ros::SoarRunner::addPublisher </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher</a>&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>output</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Adds a <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher()</a> to the <a class="el" href="classsoar__ros_1_1SoarRunner.html" title="Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to a...">SoarRunner</a>. </p>
-<p>The output command is assumed to be the topic name of the <a class="el" href="classsoar__ros_1_1Publisher.html">Publisher</a>.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>ROS2 message type </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">output</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a3d62f1328da585cbb7c55010a31352a4" name="a3d62f1328da585cbb7c55010a31352a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d62f1328da585cbb7c55010a31352a4">&#9670;&#160;</a></span>addPublisher() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool soar_ros::SoarRunner::addPublisher </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher</a>&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>output</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>commandName</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Adds a <a class="el" href="classsoar__ros_1_1Publisher.html">soar_ros::Publisher()</a> to the <a class="el" href="classsoar__ros_1_1SoarRunner.html" title="Singelton class to manage the Soar kernel thread, main ROS interface to run/ stop the kernel and to a...">SoarRunner</a>. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">output</td><td></td></tr>
-    <tr><td class="paramname">commandName</td><td>Matching of the Soar output-link command name, e.g. io.output-link.move matches to commandName "move". </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="abbadbd6a39c3dbb7e4490cac11965a29" name="abbadbd6a39c3dbb7e4490cac11965a29"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbadbd6a39c3dbb7e4490cac11965a29">&#9670;&#160;</a></span>addService() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool soar_ros::SoarRunner::addService </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service</a>&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>service</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add a new <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service</a>. The callback on the output link is the service's topic name. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>ROS2 service message type definition </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">service</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a0edd9b8aadb1440f363a316eee091dd6" name="a0edd9b8aadb1440f363a316eee091dd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0edd9b8aadb1440f363a316eee091dd6">&#9670;&#160;</a></span>addService() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool soar_ros::SoarRunner::addService </td>
-          <td>(</td>
-          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classsoar__ros_1_1Service.html">soar_ros::Service</a>&lt; T &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>service</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>commandName</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Add a new ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> with a custom callback command. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">service</td><td></td></tr>
-    <tr><td class="paramname">commandName</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a5a85184219cdedb2e9826481e4be5f49" name="a5a85184219cdedb2e9826481e4be5f49"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a85184219cdedb2e9826481e4be5f49">&#9670;&#160;</a></span>debuggerLaunch()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void soar_ros::SoarRunner::debuggerLaunch </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; rmw_request_id_t &gt;</td>          <td class="paramname"><span class="paramname"><em>request_header</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</td>          <td class="paramname"><span class="paramname"><em>response</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Enable external control to start the debugger and stop the run thread via. </p>
-<pre class="fragment">embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
-/// </pre><p> via <code>/soar_ros/debugger/launch</code></p>
-<p>The run thread is stopped automatically since the debugger is not responsive if the thread is running. Reason to be investigated.</p>
-<p>The thread running the Soar kernel is not automatically restarted once the debugger was closed. Manually restart the thread via the provided <a class="el" href="#a9b579438380e18582d68c66b7a1ab170" title="ROS2 Service interface to stop Soar kernel if it is currently running via.">SoarRunner::runSoarKernel()</a> interface.</p>
-<dl class="section note"><dt>Note</dt><dd>Launching the Soar debugger without the command requires stopping the kernel via <a class="el" href="#a70560c29a2d317f96d29462ac6d44d2a" title="ROS2 Service interface to start (run) Soar kernel if it is currenlty stopped.">SoarRunner::stopSoarKernel()</a> related topic. Otherwise, the debugger will remain frozen/ unresponsive.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request_header</td><td></td></tr>
-    <tr><td class="paramname">request</td><td></td></tr>
-    <tr><td class="paramname">response</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="af7c28fc3d7ba9f4d9b2178fca86c230c" name="af7c28fc3d7ba9f4d9b2178fca86c230c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7c28fc3d7ba9f4d9b2178fca86c230c">&#9670;&#160;</a></span>getSoarKernelStatus()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void soar_ros::SoarRunner::getSoarKernelStatus </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; rmw_request_id_t &gt;</td>          <td class="paramname"><span class="paramname"><em>request_header</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</td>          <td class="paramname"><span class="paramname"><em>response</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ROS2 interface to get current Soar kernel status (run/ stop) via. </p>
-<pre class="fragment">embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
-/// </pre><p> via <code>/soar_ros/kernel/status</code></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request_header</td><td>Unused. </td></tr>
-    <tr><td class="paramname">request</td><td>Empty. </td></tr>
-    <tr><td class="paramname">response</td><td>"Soar Kernel isRunning: true" if running, otherwise "Soarkernel isRunning: false".</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section warning"><dt>Warning</dt><dd>This does not catch the state of the Soar kernel correctly, once the kernel is started/ stopped via the Soar debugger! </dd></dl>
-
-</div>
-</div>
-<a id="a9b579438380e18582d68c66b7a1ab170" name="a9b579438380e18582d68c66b7a1ab170"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b579438380e18582d68c66b7a1ab170">&#9670;&#160;</a></span>runSoarKernel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void soar_ros::SoarRunner::runSoarKernel </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; rmw_request_id_t &gt;</td>          <td class="paramname"><span class="paramname"><em>request_header</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</td>          <td class="paramname"><span class="paramname"><em>response</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> interface to stop Soar kernel if it is currently running via. </p>
-<pre class="fragment">embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
-/// </pre><p> via <code>/soar_ros/kernel/run</code></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request_header</td><td>Unused. </td></tr>
-    <tr><td class="paramname">request</td><td>Empty. </td></tr>
-    <tr><td class="paramname">response</td><td>"Soar kernel isRunning: true" if started succesfully, otherwise "Soar kernel isRunning: false". </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a5d3e6cdb7b55a1f8fba1f22328bd45d4" name="a5d3e6cdb7b55a1f8fba1f22328bd45d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d3e6cdb7b55a1f8fba1f22328bd45d4">&#9670;&#160;</a></span>startThread()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void soar_ros::SoarRunner::startThread </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a new thread based on the SoarRunner::run() function that executes the Soar kernel. </p>
-<p>Soar has a synchronous threading model, cf. <a href="https://soar.eecs.umich.edu/development/soar/ThreadsInSML/">https://soar.eecs.umich.edu/development/soar/ThreadsInSML/</a> </p>
-
-</div>
-</div>
-<a id="a70560c29a2d317f96d29462ac6d44d2a" name="a70560c29a2d317f96d29462ac6d44d2a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70560c29a2d317f96d29462ac6d44d2a">&#9670;&#160;</a></span>stopSoarKernel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void soar_ros::SoarRunner::stopSoarKernel </td>
-          <td>(</td>
-          <td class="paramtype">const std::shared_ptr&lt; rmw_request_id_t &gt;</td>          <td class="paramname"><span class="paramname"><em>request_header</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Request &gt;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::shared_ptr&lt; std_srvs::srv::Trigger::Response &gt;</td>          <td class="paramname"><span class="paramname"><em>response</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ROS2 <a class="el" href="classsoar__ros_1_1Service.html">Service</a> interface to start (run) Soar kernel if it is currenlty stopped. </p>
-<pre class="fragment">embed:rst:inline :doc:`std_srvs:interfaces/srv/Trigger`
-/// </pre><p> via <code>/soar_ros/kernel/stop</code></p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">request_header</td><td></td></tr>
-    <tr><td class="paramname">request</td><td>Empty. </td></tr>
-    <tr><td class="paramname">response</td><td>"Soar Kernel isRunning: false" if stopped succesfully, otherwise "Soarkernel isRunning: true". </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a631775299b9c20f86840e93c05620987" name="a631775299b9c20f86840e93c05620987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a631775299b9c20f86840e93c05620987">&#9670;&#160;</a></span>updateWorld()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void soar_ros::SoarRunner::updateWorld </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Soar update World function executed every step in the Soar execution cycle in SoarRunner::run() </p>
-<p>Processes all outputs via SoarRunner::processOutputLinkChanges() and attaches new elements to the Soar input-link via SoarRunner::processInput(). </p>
+<dl class="section return"><dt>Returns</dt><dd>Per-agent handle; call add*() methods on it. </dd></dl>
 
 </div>
 </div>

@@ -1,0 +1,82 @@
+
+.. _file_include_soar_ros_SoarAgent.hpp:
+
+File SoarAgent.hpp
+==================
+
+|exhale_lsh| :ref:`Parent directory <dir_include_soar_ros>` (``include/soar_ros``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/soar_ros/SoarAgent.hpp``)
+-----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_soar_ros_SoarAgent.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``ActionClient.hpp`` (:ref:`file_include_soar_ros_ActionClient.hpp`)
+
+- ``Client.hpp`` (:ref:`file_include_soar_ros_ActionClient.hpp`)
+
+- ``Interface.hpp`` (:ref:`file_include_soar_ros_Interface.hpp`)
+
+- ``Publisher.hpp`` (:ref:`file_include_soar_ros_Publisher.hpp`)
+
+- ``Service.hpp`` (:ref:`file_include_soar_ros_Service.hpp`)
+
+- ``Subscriber.hpp`` (:ref:`file_include_soar_ros_Subscriber.hpp`)
+
+- ``map``
+
+- ``memory``
+
+- ``rclcpp/rclcpp.hpp``
+
+- ``sml_Client.h``
+
+- ``string``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_soar_ros_SoarRunner.hpp`
+
+- :ref:`file_include_soar_ros_soar_ros.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_soar_ros`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classsoar__ros_1_1SoarAgent`
+

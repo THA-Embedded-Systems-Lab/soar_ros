@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['client_0',['Client',['../classsoar__ros_1_1Client.html',1,'soar_ros']]]
+  ['actionclient_0',['ActionClient',['../classsoar__ros_1_1ActionClient.html',1,'soar_ros']]]
 ];

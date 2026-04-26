@@ -13,22 +13,31 @@ Namespace soar_ros
 
 
 
-Namespaces
-----------
-
-
-- :ref:`namespace_soar_ros__soar_ros`
-
-
 Classes
 -------
 
 
+- :ref:`exhale_class_classsoar__ros_1_1ActionClient`
+
 - :ref:`exhale_class_classsoar__ros_1_1Client`
+
+- :ref:`exhale_class_classsoar__ros_1_1Input`
+
+- :ref:`exhale_class_classsoar__ros_1_1InputBase`
+
+- :ref:`exhale_class_classsoar__ros_1_1Interface`
+
+- :ref:`exhale_class_classsoar__ros_1_1Output`
+
+- :ref:`exhale_class_classsoar__ros_1_1OutputBase`
 
 - :ref:`exhale_class_classsoar__ros_1_1Publisher`
 
+- :ref:`exhale_class_classsoar__ros_1_1SafeQueue`
+
 - :ref:`exhale_class_classsoar__ros_1_1Service`
+
+- :ref:`exhale_class_classsoar__ros_1_1SoarAgent`
 
 - :ref:`exhale_class_classsoar__ros_1_1SoarRunner`
 
@@ -39,6 +48,6 @@ Functions
 ---------
 
 
-- :ref:`exhale_function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92`
+- :ref:`exhale_function_SoarRunner_8hpp_1a640bcfc158f45120fa09397dec621d77`
 
 - :ref:`exhale_function_SoarRunner_8hpp_1ac1b2f4700bd2aa2de462bcf23acb9caf`

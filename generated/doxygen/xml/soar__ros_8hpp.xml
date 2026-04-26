@@ -4,16 +4,40 @@
     <compoundname>soar_ros.hpp</compoundname>
     <includes refid="Interface_8hpp" local="yes">Interface.hpp</includes>
     <includes refid="SafeQueue_8hpp" local="yes">SafeQueue.hpp</includes>
+    <includes refid="SoarAgent_8hpp" local="yes">SoarAgent.hpp</includes>
     <includes refid="SoarRunner_8hpp" local="yes">SoarRunner.hpp</includes>
     <includes refid="Publisher_8hpp" local="yes">Publisher.hpp</includes>
     <includes refid="Subscriber_8hpp" local="yes">Subscriber.hpp</includes>
     <includes refid="Service_8hpp" local="yes">Service.hpp</includes>
     <includes refid="Client_8hpp" local="yes">Client.hpp</includes>
+    <includes refid="ActionClient_8hpp" local="yes">ActionClient.hpp</includes>
     <incdepgraph>
-      <node id="21">
+      <node id="16">
+        <label>ActionClient.hpp</label>
+        <link refid="ActionClient_8hpp_source"/>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+      </node>
+      <node id="20">
         <label>Client.hpp</label>
         <link refid="Client_8hpp_source"/>
-        <childnode refid="18" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
         <childnode refid="3" relation="include">
         </childnode>
@@ -34,12 +58,12 @@
         <childnode refid="10" relation="include">
         </childnode>
       </node>
-      <node id="22">
+      <node id="21">
         <label>Publisher.hpp</label>
         <link refid="Publisher_8hpp_source"/>
         <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="18" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
         <childnode refid="2" relation="include">
         </childnode>
@@ -62,14 +86,14 @@
         <childnode refid="9" relation="include">
         </childnode>
       </node>
-      <node id="23">
+      <node id="22">
         <label>Service.hpp</label>
         <link refid="Service_8hpp_source"/>
-        <childnode refid="14" relation="include">
+        <childnode refid="13" relation="include">
         </childnode>
         <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="18" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
         <childnode refid="2" relation="include">
         </childnode>
@@ -79,51 +103,71 @@
         </childnode>
       </node>
       <node id="11">
-        <label>SoarRunner.hpp</label>
-        <link refid="SoarRunner_8hpp_source"/>
+        <label>SoarAgent.hpp</label>
+        <link refid="SoarAgent_8hpp_source"/>
         <childnode refid="12" relation="include">
-        </childnode>
-        <childnode refid="6" relation="include">
         </childnode>
         <childnode refid="13" relation="include">
         </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
         <childnode refid="14" relation="include">
-        </childnode>
-        <childnode refid="9" relation="include">
-        </childnode>
-        <childnode refid="10" relation="include">
         </childnode>
         <childnode refid="15" relation="include">
         </childnode>
-        <childnode refid="3" relation="include">
+        <childnode refid="10" relation="include">
         </childnode>
         <childnode refid="16" relation="include">
         </childnode>
-        <childnode refid="17" relation="include">
-        </childnode>
-        <childnode refid="18" relation="include">
-        </childnode>
-        <childnode refid="19" relation="include">
-        </childnode>
         <childnode refid="20" relation="include">
         </childnode>
-        <childnode refid="21" relation="include">
-        </childnode>
         <childnode refid="2" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
         </childnode>
         <childnode refid="22" relation="include">
         </childnode>
         <childnode refid="23" relation="include">
         </childnode>
-        <childnode refid="24" relation="include">
-        </childnode>
       </node>
       <node id="24">
+        <label>SoarRunner.hpp</label>
+        <link refid="SoarRunner_8hpp_source"/>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="25" relation="include">
+        </childnode>
+        <childnode refid="26" relation="include">
+        </childnode>
+        <childnode refid="27" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="28" relation="include">
+        </childnode>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="29" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+      </node>
+      <node id="23">
         <label>Subscriber.hpp</label>
         <link refid="Subscriber_8hpp_source"/>
         <childnode refid="3" relation="include">
         </childnode>
-        <childnode refid="18" relation="include">
+        <childnode refid="15" relation="include">
         </childnode>
         <childnode refid="2" relation="include">
         </childnode>
@@ -141,28 +185,41 @@
         </childnode>
         <childnode refid="11" relation="include">
         </childnode>
-        <childnode refid="22" relation="include">
-        </childnode>
         <childnode refid="24" relation="include">
-        </childnode>
-        <childnode refid="23" relation="include">
         </childnode>
         <childnode refid="21" relation="include">
         </childnode>
+        <childnode refid="23" relation="include">
+        </childnode>
+        <childnode refid="22" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+      </node>
+      <node id="18">
+        <label>atomic</label>
+      </node>
+      <node id="25">
+        <label>chrono</label>
       </node>
       <node id="5">
         <label>condition_variable</label>
       </node>
-      <node id="12">
+      <node id="26">
         <label>cstdlib</label>
+      </node>
+      <node id="27">
+        <label>ctime</label>
       </node>
       <node id="6">
         <label>iostream</label>
       </node>
-      <node id="13">
+      <node id="12">
         <label>map</label>
       </node>
-      <node id="14">
+      <node id="13">
         <label>memory</label>
       </node>
       <node id="7">
@@ -174,28 +231,28 @@
       <node id="9">
         <label>queue</label>
       </node>
-      <node id="18">
+      <node id="15">
         <label>rclcpp/rclcpp.hpp</label>
+      </node>
+      <node id="19">
+        <label>rclcpp_action/rclcpp_action.hpp</label>
       </node>
       <node id="10">
         <label>sml_Client.h</label>
       </node>
-      <node id="19">
-        <label>std_msgs/msg/string.hpp</label>
+      <node id="28">
+        <label>sstream</label>
       </node>
-      <node id="20">
+      <node id="29">
         <label>std_srvs/srv/trigger.hpp</label>
-      </node>
-      <node id="15">
-        <label>stdexcept</label>
       </node>
       <node id="3">
         <label>string</label>
       </node>
-      <node id="16">
+      <node id="17">
         <label>thread</label>
       </node>
-      <node id="17">
+      <node id="14">
         <label>vector</label>
       </node>
     </incdepgraph>
@@ -223,14 +280,15 @@
 <codeline lineno="17"><highlight class="normal"></highlight></codeline>
 <codeline lineno="18"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Interface.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
 <codeline lineno="19"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;<ref refid="SafeQueue_8hpp" kindref="compound">SafeQueue.hpp</ref>&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;SoarRunner.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Publisher.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Subscriber.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Service.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Client.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
-<codeline lineno="25"><highlight class="normal"></highlight></codeline>
-<codeline lineno="26"><highlight class="normal"></highlight></codeline>
-<codeline lineno="27"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/><sp/></highlight><highlight class="comment">//<sp/>SOAR_ROS__SOAR_ROS_HPP_</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;SoarAgent.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;SoarRunner.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Publisher.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Subscriber.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Service.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;Client.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="26"><highlight class="normal"></highlight><highlight class="preprocessor">#include<sp/>&quot;ActionClient.hpp&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="preprocessor">#endif<sp/></highlight><highlight class="comment">//<sp/>SOAR_ROS__SOAR_ROS_HPP_</highlight><highlight class="normal"></highlight></codeline>
     </programlisting>
     <location file="include/soar_ros/soar_ros.hpp"/>
   </compounddef>

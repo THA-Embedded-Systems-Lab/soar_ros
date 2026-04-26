@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1SafeQueue" kind="class" language="C++" prot="public">
+    <compoundname>soar_ros::SafeQueue</compoundname>
+    <templateparamlist>
+      <param>
+        <type>typename T</type>
+      </param>
+    </templateparamlist>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classsoar__ros_1_1SafeQueue_1a4848ed716d5114c802276205e4522df8" prot="private" static="no" mutable="no">
+        <type>std::queue&lt; T &gt;</type>
+        <definition>std::queue&lt;T&gt; soar_ros::SafeQueue&lt; T &gt;::m_queue</definition>
+        <argsstring></argsstring>
+        <name>m_queue</name>
+        <qualifiedname>soar_ros::SafeQueue::m_queue</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SafeQueue.hpp" line="41" column="14" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SafeQueue_1a947a73a1f5f3176325db4c9f9bd04a0a" prot="private" static="no" mutable="no">
+        <type>std::mutex</type>
+        <definition>std::mutex soar_ros::SafeQueue&lt; T &gt;::m_mutex</definition>
+        <argsstring></argsstring>
+        <name>m_mutex</name>
+        <qualifiedname>soar_ros::SafeQueue::m_mutex</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SafeQueue.hpp" line="44" column="14" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="44" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SafeQueue_1a5557de784402e3056e198d518dd139bb" prot="private" static="no" mutable="no">
+        <type>std::condition_variable</type>
+        <definition>std::condition_variable soar_ros::SafeQueue&lt; T &gt;::m_cond</definition>
+        <argsstring></argsstring>
+        <name>m_cond</name>
+        <qualifiedname>soar_ros::SafeQueue::m_cond</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SafeQueue.hpp" line="47" column="27" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="47" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1SafeQueue_1a6aed3d5e415a9858e8aae80315e2c77c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SafeQueue&lt; T &gt;::push</definition>
+        <argsstring>(T item)</argsstring>
+        <name>push</name>
+        <qualifiedname>soar_ros::SafeQueue::push</qualifiedname>
+        <param>
+          <type>T</type>
+          <declname>item</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SafeQueue.hpp" line="51" column="8" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="51" bodyend="62"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SafeQueue_1ac0165f47263727d6fc39bdd197e04c71" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>T</type>
+        <definition>T soar_ros::SafeQueue&lt; T &gt;::pop</definition>
+        <argsstring>()</argsstring>
+        <name>pop</name>
+        <qualifiedname>soar_ros::SafeQueue::pop</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SafeQueue.hpp" line="64" column="5" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="64" bodyend="78"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SafeQueue_1a98d5a7cb1bec79b1dfaa9d983829acb6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>std::optional&lt; T &gt;</type>
+        <definition>std::optional&lt; T &gt; soar_ros::SafeQueue&lt; T &gt;::tryPop</definition>
+        <argsstring>()</argsstring>
+        <name>tryPop</name>
+        <qualifiedname>soar_ros::SafeQueue::tryPop</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SafeQueue.hpp" line="80" column="17" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="80" bodyend="97"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="include/soar_ros/SafeQueue.hpp" line="37" column="1" bodyfile="include/soar_ros/SafeQueue.hpp" bodystart="38" bodyend="98"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1SafeQueue_1a5557de784402e3056e198d518dd139bb" prot="private" virt="non-virtual"><scope>soar_ros::SafeQueue</scope><name>m_cond</name></member>
+      <member refid="classsoar__ros_1_1SafeQueue_1a947a73a1f5f3176325db4c9f9bd04a0a" prot="private" virt="non-virtual"><scope>soar_ros::SafeQueue</scope><name>m_mutex</name></member>
+      <member refid="classsoar__ros_1_1SafeQueue_1a4848ed716d5114c802276205e4522df8" prot="private" virt="non-virtual"><scope>soar_ros::SafeQueue</scope><name>m_queue</name></member>
+      <member refid="classsoar__ros_1_1SafeQueue_1ac0165f47263727d6fc39bdd197e04c71" prot="public" virt="non-virtual"><scope>soar_ros::SafeQueue</scope><name>pop</name></member>
+      <member refid="classsoar__ros_1_1SafeQueue_1a6aed3d5e415a9858e8aae80315e2c77c" prot="public" virt="non-virtual"><scope>soar_ros::SafeQueue</scope><name>push</name></member>
+      <member refid="classsoar__ros_1_1SafeQueue_1a98d5a7cb1bec79b1dfaa9d983829acb6" prot="public" virt="non-virtual"><scope>soar_ros::SafeQueue</scope><name>tryPop</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

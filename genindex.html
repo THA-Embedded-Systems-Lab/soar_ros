@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Index &mdash; soar_ros 0.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="_static/custom.css?v=92668241" />
       <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css?v=a885cde7" />
@@ -17,18 +17,446 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=7026087e"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js?v=73120307"></script>
       <script src="_static/collapsible-lists/js/apply-collapsible-lists.js?v=660e4f45"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
       <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-      <script type="module">
-import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
-window.addEventListener("load", () => mermaid.run());
-</script>
+      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}`;
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -62,38 +490,139 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l3"><a class="reference internal" href="generated/index.html#namespaces">Namespaces</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="generated/namespace_rclcpp.html">Namespace rclcpp</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/namespace_soar_ros.html">Namespace soar_ros</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/namespace_soar_ros.html#namespaces">Namespaces</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/namespace_soar_ros.html#classes">Classes</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/namespace_soar_ros.html#functions">Functions</a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/namespace_soar_ros__soar_ros.html">Namespace soar_ros::soar_ros</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/namespace_soar_ros__soar_ros.html#classes">Classes</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="generated/index.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html">Template Class ActionClient</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#base-types">Base Types</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4I0000EN8soar_ros12ActionClientE"><code class="docutils literal notranslate"><span class="pre">soar_ros::ActionClient</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient10GoalHandleE"><code class="docutils literal notranslate"><span class="pre">GoalHandle</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient12ActionClientEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">ActionClient()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClientD0Ev"><code class="docutils literal notranslate"><span class="pre">~ActionClient()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient19send_goal_from_soarERK8pGoalMsg"><code class="docutils literal notranslate"><span class="pre">send_goal_from_soar()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient8getTopicEv"><code class="docutils literal notranslate"><span class="pre">getTopic()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient8getAgentEv"><code class="docutils literal notranslate"><span class="pre">getAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseE12pFeedbackMsg"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseE16wrappedResultMsg"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseEb"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html">Template Class Client</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#inheritance-relationships">Inheritance Relationships</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#base-types">Base Types</a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4I000EN8soar_ros6ClientE"><code class="docutils literal notranslate"><span class="pre">Client</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6ClientEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Client::Client()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6ClientD0Ev"><code class="docutils literal notranslate"><span class="pre">Client::~Client()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client5parseE13pResponseType"><code class="docutils literal notranslate"><span class="pre">Client::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">Client::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8getTopicEv"><code class="docutils literal notranslate"><span class="pre">Client::getTopic()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8getAgentEv"><code class="docutils literal notranslate"><span class="pre">Client::getAgent()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client3runEv"><code class="docutils literal notranslate"><span class="pre">Client::run()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8m_clientE"><code class="docutils literal notranslate"><span class="pre">Client::m_client</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client7m_topicE"><code class="docutils literal notranslate"><span class="pre">Client::m_topic</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6m_nodeE"><code class="docutils literal notranslate"><span class="pre">Client::m_node</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">Client::m_pAgent</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client22m_send_client_requestsE"><code class="docutils literal notranslate"><span class="pre">Client::m_send_client_requests</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client9isRunningE"><code class="docutils literal notranslate"><span class="pre">Client::isRunning</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4I000EN8soar_ros6ClientE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Client</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6ClientEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE"><code class="docutils literal notranslate"><span class="pre">Client()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6ClientD0Ev"><code class="docutils literal notranslate"><span class="pre">~Client()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client5parseE13pResponseType"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8getTopicEv"><code class="docutils literal notranslate"><span class="pre">getTopic()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8getAgentEv"><code class="docutils literal notranslate"><span class="pre">getAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client3runEv"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8m_clientE"><code class="docutils literal notranslate"><span class="pre">m_client</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client7m_topicE"><code class="docutils literal notranslate"><span class="pre">m_topic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6m_nodeE"><code class="docutils literal notranslate"><span class="pre">m_node</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">m_pAgent</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client22m_send_client_requestsE"><code class="docutils literal notranslate"><span class="pre">m_send_client_requests</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client9isRunningE"><code class="docutils literal notranslate"><span class="pre">isRunning</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client16m_callback_groupE"><code class="docutils literal notranslate"><span class="pre">m_callback_group</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client5m_qosE"><code class="docutils literal notranslate"><span class="pre">m_qos</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html">Template Class Input</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#base-type">Base Type</a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#_CPPv4I0EN8soar_ros5InputE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Input</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input5InputEv"><code class="docutils literal notranslate"><span class="pre">Input()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5InputD0Ev"><code class="docutils literal notranslate"><span class="pre">~Input()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input5parseE1T"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input11process_r2sEv"><code class="docutils literal notranslate"><span class="pre">process_r2s()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input10m_r2sQueueE"><code class="docutils literal notranslate"><span class="pre">m_r2sQueue</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1InputBase.html">Class InputBase</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1InputBase.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1InputBase.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1InputBase.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1InputBase.html#_CPPv4N8soar_ros9InputBaseE"><code class="docutils literal notranslate"><span class="pre">soar_ros::InputBase</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1InputBase.html#_CPPv4N8soar_ros9InputBase11process_r2sEv"><code class="docutils literal notranslate"><span class="pre">process_r2s()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html">Class Interface</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html#_CPPv4N8soar_ros9InterfaceE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Interface</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html#_CPPv4N8soar_ros9Interface8getTopicEv"><code class="docutils literal notranslate"><span class="pre">getTopic()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Interface.html#_CPPv4N8soar_ros9Interface8getAgentEv"><code class="docutils literal notranslate"><span class="pre">getAgent()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html">Template Class Output</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#base-type">Base Type</a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#derived-type">Derived Type</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#_CPPv4I0EN8soar_ros6OutputE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Output</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output6OutputEv"><code class="docutils literal notranslate"><span class="pre">Output()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6OutputD0Ev"><code class="docutils literal notranslate"><span class="pre">~Output()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output11process_s2rEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">process_s2r()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output10m_s2rQueueE"><code class="docutils literal notranslate"><span class="pre">m_s2rQueue</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1OutputBase.html">Class OutputBase</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1OutputBase.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1OutputBase.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1OutputBase.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1OutputBase.html#_CPPv4N8soar_ros10OutputBaseE"><code class="docutils literal notranslate"><span class="pre">soar_ros::OutputBase</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1OutputBase.html#_CPPv4N8soar_ros10OutputBase11process_s2rEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">process_s2r()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -106,14 +635,32 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4I0EN8soar_ros9PublisherE"><code class="docutils literal notranslate"><span class="pre">Publisher</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9PublisherEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Publisher::Publisher()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9PublisherD0Ev"><code class="docutils literal notranslate"><span class="pre">Publisher::~Publisher()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher3runEv"><code class="docutils literal notranslate"><span class="pre">Publisher::run()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">Publisher::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8getTopicEv"><code class="docutils literal notranslate"><span class="pre">Publisher::getTopic()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8getAgentEv"><code class="docutils literal notranslate"><span class="pre">Publisher::getAgent()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher3pubE"><code class="docutils literal notranslate"><span class="pre">Publisher::pub</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4I0EN8soar_ros9PublisherE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Publisher</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9PublisherEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE"><code class="docutils literal notranslate"><span class="pre">Publisher()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9PublisherD0Ev"><code class="docutils literal notranslate"><span class="pre">~Publisher()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher3runEv"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8getTopicEv"><code class="docutils literal notranslate"><span class="pre">getTopic()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8getAgentEv"><code class="docutils literal notranslate"><span class="pre">getAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher3pubE"><code class="docutils literal notranslate"><span class="pre">pub</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9isRunningE"><code class="docutils literal notranslate"><span class="pre">isRunning</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9publisherE"><code class="docutils literal notranslate"><span class="pre">publisher</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher7m_topicE"><code class="docutils literal notranslate"><span class="pre">m_topic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher6m_nodeE"><code class="docutils literal notranslate"><span class="pre">m_node</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">m_pAgent</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher16m_callback_groupE"><code class="docutils literal notranslate"><span class="pre">m_callback_group</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1SafeQueue.html">Template Class SafeQueue</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1SafeQueue.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4I0EN8soar_ros9SafeQueueE"><code class="docutils literal notranslate"><span class="pre">soar_ros::SafeQueue</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros9SafeQueue4pushE1T"><code class="docutils literal notranslate"><span class="pre">push()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros9SafeQueue3popEv"><code class="docutils literal notranslate"><span class="pre">pop()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros9SafeQueue6tryPopEv"><code class="docutils literal notranslate"><span class="pre">tryPop()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -126,111 +673,44 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4I000EN8soar_ros7ServiceE"><code class="docutils literal notranslate"><span class="pre">Service</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service7ServiceEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Service::Service()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7ServiceD0Ev"><code class="docutils literal notranslate"><span class="pre">Service::~Service()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5parseE12pRequestType"><code class="docutils literal notranslate"><span class="pre">Service::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">Service::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8getTopicEv"><code class="docutils literal notranslate"><span class="pre">Service::getTopic()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8getAgentEv"><code class="docutils literal notranslate"><span class="pre">Service::getAgent()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8callbackEKNSt10shared_ptrI16rmw_request_id_tEE12pRequestType13pResponseType"><code class="docutils literal notranslate"><span class="pre">Service::callback()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service9m_serviceE"><code class="docutils literal notranslate"><span class="pre">Service::m_service</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service7m_topicE"><code class="docutils literal notranslate"><span class="pre">Service::m_topic</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service6m_nodeE"><code class="docutils literal notranslate"><span class="pre">Service::m_node</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">Service::m_pAgent</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4I000EN8soar_ros7ServiceE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Service</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service7ServiceEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE"><code class="docutils literal notranslate"><span class="pre">Service()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7ServiceD0Ev"><code class="docutils literal notranslate"><span class="pre">~Service()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5parseE12pRequestType"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8getTopicEv"><code class="docutils literal notranslate"><span class="pre">getTopic()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8getAgentEv"><code class="docutils literal notranslate"><span class="pre">getAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8callbackEKNSt10shared_ptrI16rmw_request_id_tEE12pRequestType13pResponseType"><code class="docutils literal notranslate"><span class="pre">callback()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service9m_serviceE"><code class="docutils literal notranslate"><span class="pre">m_service</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service7m_topicE"><code class="docutils literal notranslate"><span class="pre">m_topic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service6m_nodeE"><code class="docutils literal notranslate"><span class="pre">m_node</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">m_pAgent</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service16m_callback_groupE"><code class="docutils literal notranslate"><span class="pre">m_callback_group</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5m_qosE"><code class="docutils literal notranslate"><span class="pre">m_qos</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html">Template Class Input</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#inheritance-relationships">Inheritance Relationships</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#base-type">Base Type</a></li>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#derived-type">Derived Type</a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4I0EN8soar_ros8soar_ros5InputE"><code class="docutils literal notranslate"><span class="pre">Input</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input5InputEv"><code class="docutils literal notranslate"><span class="pre">Input::Input()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5InputD0Ev"><code class="docutils literal notranslate"><span class="pre">Input::~Input()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input5parseE1T"><code class="docutils literal notranslate"><span class="pre">Input::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input11process_r2sEv"><code class="docutils literal notranslate"><span class="pre">Input::process_r2s()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input10m_r2sQueueE"><code class="docutils literal notranslate"><span class="pre">Input::m_r2sQueue</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html">Class InputBase</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#inheritance-relationships">Inheritance Relationships</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#derived-types">Derived Types</a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#_CPPv4N8soar_ros8soar_ros9InputBaseE"><code class="docutils literal notranslate"><span class="pre">InputBase</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#_CPPv4N8soar_ros8soar_ros9InputBase11process_r2sEv"><code class="docutils literal notranslate"><span class="pre">InputBase::process_r2s()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html">Class Interface</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#inheritance-relationships">Inheritance Relationships</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#derived-types">Derived Types</a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#_CPPv4N8soar_ros8soar_ros9InterfaceE"><code class="docutils literal notranslate"><span class="pre">Interface</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#_CPPv4N8soar_ros8soar_ros9Interface8getTopicEv"><code class="docutils literal notranslate"><span class="pre">Interface::getTopic()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#_CPPv4N8soar_ros8soar_ros9Interface8getAgentEv"><code class="docutils literal notranslate"><span class="pre">Interface::getAgent()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html">Template Class Output</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#inheritance-relationships">Inheritance Relationships</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#base-type">Base Type</a></li>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#derived-type">Derived Type</a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4I0EN8soar_ros8soar_ros6OutputE"><code class="docutils literal notranslate"><span class="pre">Output</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output6OutputEv"><code class="docutils literal notranslate"><span class="pre">Output::Output()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6OutputD0Ev"><code class="docutils literal notranslate"><span class="pre">Output::~Output()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output11process_s2rEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">Output::process_s2r()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output5parseEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">Output::parse()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output10m_s2rQueueE"><code class="docutils literal notranslate"><span class="pre">Output::m_s2rQueue</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html">Class OutputBase</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#inheritance-relationships">Inheritance Relationships</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#derived-types">Derived Types</a></li>
-</ul>
-</li>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#_CPPv4N8soar_ros8soar_ros10OutputBaseE"><code class="docutils literal notranslate"><span class="pre">OutputBase</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#_CPPv4N8soar_ros8soar_ros10OutputBase11process_s2rEPN3sml10IdentifierE"><code class="docutils literal notranslate"><span class="pre">OutputBase::process_s2r()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html">Template Class SafeQueue</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4I0EN8soar_ros8soar_ros9SafeQueueE"><code class="docutils literal notranslate"><span class="pre">SafeQueue</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros8soar_ros9SafeQueue4pushE1T"><code class="docutils literal notranslate"><span class="pre">SafeQueue::push()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros8soar_ros9SafeQueue3popEv"><code class="docutils literal notranslate"><span class="pre">SafeQueue::pop()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros8soar_ros9SafeQueue6tryPopEv"><code class="docutils literal notranslate"><span class="pre">SafeQueue::tryPop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html">Class SoarAgent</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#class-documentation">Class Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgentE"><code class="docutils literal notranslate"><span class="pre">soar_ros::SoarAgent</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgent9SoarAgentEPN3sml5AgentEN6rclcpp4Node9SharedPtrE"><code class="docutils literal notranslate"><span class="pre">SoarAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgent9SoarAgentERK9SoarAgent"><code class="docutils literal notranslate"><span class="pre">SoarAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgentaSERK9SoarAgent"><code class="docutils literal notranslate"><span class="pre">operator=()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4NK8soar_ros9SoarAgent11getSmlAgentEv"><code class="docutils literal notranslate"><span class="pre">getSmlAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4NK8soar_ros9SoarAgent7getNodeEv"><code class="docutils literal notranslate"><span class="pre">getNode()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent12addPublisherEbNSt10shared_ptrI9PublisherI1TEEE"><code class="docutils literal notranslate"><span class="pre">addPublisher()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent12addPublisherEbNSt10shared_ptrI9PublisherI1TEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">addPublisher()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent13addSubscriberEbNSt10shared_ptrI10SubscriberI1TEEE"><code class="docutils literal notranslate"><span class="pre">addSubscriber()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent10addServiceEbNSt10shared_ptrI7ServiceI1TEEE"><code class="docutils literal notranslate"><span class="pre">addService()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent10addServiceEbNSt10shared_ptrI7ServiceI1TEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">addService()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent9addClientEbNSt10shared_ptrI6ClientI1TEEE"><code class="docutils literal notranslate"><span class="pre">addClient()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent9addClientEbNSt10shared_ptrI6ClientI1TEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">addClient()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent15addActionClientEbNSt10shared_ptrI12ActionClientI1TEEE"><code class="docutils literal notranslate"><span class="pre">addActionClient()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent15addActionClientEbNSt10shared_ptrI12ActionClientI1TEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">addActionClient()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgent11updateWorldEv"><code class="docutils literal notranslate"><span class="pre">updateWorld()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -243,25 +723,18 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunnerE"><code class="docutils literal notranslate"><span class="pre">SoarRunner</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner10SoarRunnerERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::SoarRunner()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner14debuggerLaunchEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::debuggerLaunch()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner19getSoarKernelStatusEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::getSoarKernelStatus()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner13runSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::runSoarKernel()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner14stopSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::stopSoarKernel()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner8addAgentERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addAgent()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunnerD0Ev"><code class="docutils literal notranslate"><span class="pre">SoarRunner::~SoarRunner()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner8getAgentEv"><code class="docutils literal notranslate"><span class="pre">SoarRunner::getAgent()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner12addPublisherEbNSt10shared_ptrIN8soar_ros9PublisherI1TEEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addPublisher()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner12addPublisherEbNSt10shared_ptrIN8soar_ros9PublisherI1TEEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addPublisher()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner13addSubscriberEbNSt10shared_ptrIN8soar_ros10SubscriberI1TEEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addSubscriber()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner10addServiceEbNSt10shared_ptrIN8soar_ros7ServiceI1TEEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addService()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner10addServiceEbNSt10shared_ptrIN8soar_ros7ServiceI1TEEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addService()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner9addClientEbNSt10shared_ptrIN8soar_ros6ClientI1TEEEE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addClient()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner9addClientEbNSt10shared_ptrIN8soar_ros6ClientI1TEEEERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">SoarRunner::addClient()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner11startThreadEv"><code class="docutils literal notranslate"><span class="pre">SoarRunner::startThread()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner10stopThreadEv"><code class="docutils literal notranslate"><span class="pre">SoarRunner::stopThread()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner11updateWorldEv"><code class="docutils literal notranslate"><span class="pre">SoarRunner::updateWorld()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunnerE"><code class="docutils literal notranslate"><span class="pre">soar_ros::SoarRunner</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner10SoarRunnerERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">SoarRunner()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunnerD0Ev"><code class="docutils literal notranslate"><span class="pre">~SoarRunner()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner8addAgentERKNSt6stringERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">addAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner3runEv"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner11startThreadEv"><code class="docutils literal notranslate"><span class="pre">startThread()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner10stopThreadEv"><code class="docutils literal notranslate"><span class="pre">stopThread()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner11updateWorldEv"><code class="docutils literal notranslate"><span class="pre">updateWorld()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner14debuggerLaunchEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">debuggerLaunch()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner19getSoarKernelStatusEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">getSoarKernelStatus()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner13runSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">runSoarKernel()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner14stopSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE"><code class="docutils literal notranslate"><span class="pre">stopSoarKernel()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -274,16 +747,18 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#class-documentation">Class Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4I0EN8soar_ros10SubscriberE"><code class="docutils literal notranslate"><span class="pre">Subscriber</span></code></a><ul>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber10SubscriberEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE"><code class="docutils literal notranslate"><span class="pre">Subscriber::Subscriber()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10SubscriberD0Ev"><code class="docutils literal notranslate"><span class="pre">Subscriber::~Subscriber()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8callbackERK1T"><code class="docutils literal notranslate"><span class="pre">Subscriber::callback()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8getTopicEv"><code class="docutils literal notranslate"><span class="pre">Subscriber::getTopic()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8getAgentEv"><code class="docutils literal notranslate"><span class="pre">Subscriber::getAgent()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber3subE"><code class="docutils literal notranslate"><span class="pre">Subscriber::sub</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber7m_topicE"><code class="docutils literal notranslate"><span class="pre">Subscriber::m_topic</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber6m_nodeE"><code class="docutils literal notranslate"><span class="pre">Subscriber::m_node</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">Subscriber::m_pAgent</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4I0EN8soar_ros10SubscriberE"><code class="docutils literal notranslate"><span class="pre">soar_ros::Subscriber</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber10SubscriberEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE"><code class="docutils literal notranslate"><span class="pre">Subscriber()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10SubscriberD0Ev"><code class="docutils literal notranslate"><span class="pre">~Subscriber()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber9subscribeEN6rclcpp4Node9SharedPtrE"><code class="docutils literal notranslate"><span class="pre">subscribe()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8callbackERK1T"><code class="docutils literal notranslate"><span class="pre">callback()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8getTopicEv"><code class="docutils literal notranslate"><span class="pre">getTopic()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8getAgentEv"><code class="docutils literal notranslate"><span class="pre">getAgent()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber3subE"><code class="docutils literal notranslate"><span class="pre">sub</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber7m_topicE"><code class="docutils literal notranslate"><span class="pre">m_topic</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber6m_nodeE"><code class="docutils literal notranslate"><span class="pre">m_node</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8m_pAgentE"><code class="docutils literal notranslate"><span class="pre">m_pAgent</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber16m_callback_groupE"><code class="docutils literal notranslate"><span class="pre">m_callback_group</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -293,9 +768,9 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="generated/index.html#functions">Functions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92.html">Function soar_ros::SoarPrintEventHandler</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92.html#function-documentation">Function Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92.html#_CPPv4N8soar_ros21SoarPrintEventHandlerEN3sml15smlPrintEventIdEPvPN3sml5AgentEPKc"><code class="docutils literal notranslate"><span class="pre">SoarPrintEventHandler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1a640bcfc158f45120fa09397dec621d77.html">Function soar_ros::SoarPrintEventHandler</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1a640bcfc158f45120fa09397dec621d77.html#function-documentation">Function Documentation</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1a640bcfc158f45120fa09397dec621d77.html#_CPPv4N8soar_ros21SoarPrintEventHandlerEN3sml15smlPrintEventIdEPvPN3sml5AgentEPKc"><code class="docutils literal notranslate"><span class="pre">SoarPrintEventHandler()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -305,55 +780,6 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l6"><a class="reference internal" href="generated/function_SoarRunner_8hpp_1ac1b2f4700bd2aa2de462bcf23acb9caf.html#_CPPv4N8soar_ros18updateEventHandlerEN3sml16smlUpdateEventIdEPvPN3sml6KernelEN3sml11smlRunFlagsE"><code class="docutils literal notranslate"><span class="pre">updateEventHandler()</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="generated/index.html#variables">Variables</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a76964a5982cf430a1d7e7b4466dc11eb.html">Variable m_cond</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a76964a5982cf430a1d7e7b4466dc11eb.html#variable-documentation">Variable Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a76964a5982cf430a1d7e7b4466dc11eb.html#_CPPv4N8soar_ros8soar_ros9SafeQueue6m_condE"><code class="docutils literal notranslate"><span class="pre">m_cond</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a5c751dae9068bdb864af14129bbe0fa1.html">Variable m_mutex</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a5c751dae9068bdb864af14129bbe0fa1.html#variable-documentation">Variable Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a5c751dae9068bdb864af14129bbe0fa1.html#_CPPv4N8soar_ros8soar_ros9SafeQueue7m_mutexE"><code class="docutils literal notranslate"><span class="pre">m_mutex</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a964bef342cb06f269bf6a2e5c6790798.html">Variable m_queue</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a964bef342cb06f269bf6a2e5c6790798.html#variable-documentation">Variable Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/variable_SafeQueue_8hpp_1a964bef342cb06f269bf6a2e5c6790798.html#_CPPv4N8soar_ros8soar_ros9SafeQueue7m_queueE"><code class="docutils literal notranslate"><span class="pre">m_queue</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/variable_Interface_8hpp_1abf8edd1e315472b78351c428b1eb0fa3.html">Variable m_r2sQueue</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/variable_Interface_8hpp_1abf8edd1e315472b78351c428b1eb0fa3.html#variable-documentation">Variable Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/variable_Interface_8hpp_1abf8edd1e315472b78351c428b1eb0fa3.html#_CPPv4N8soar_ros8soar_ros5Input10m_r2sQueueE"><code class="docutils literal notranslate"><span class="pre">m_r2sQueue</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/variable_Interface_8hpp_1aeee60222f5f166555d6431db019286e0.html">Variable m_s2rQueue</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/variable_Interface_8hpp_1aeee60222f5f166555d6431db019286e0.html#variable-documentation">Variable Documentation</a><ul>
-<li class="toctree-l6"><a class="reference internal" href="generated/variable_Interface_8hpp_1aeee60222f5f166555d6431db019286e0.html#_CPPv4N8soar_ros8soar_ros6Output10m_s2rQueueE"><code class="docutils literal notranslate"><span class="pre">m_s2rQueue</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="generated/index.html#defines">Defines</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/define_Client_8hpp_1a59a2d969c5f7c021d0ad0ca7603e1d3b.html">Define SOAR_ROS__INTERFACE_HPP_</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/define_Client_8hpp_1a59a2d969c5f7c021d0ad0ca7603e1d3b.html#define-documentation">Define Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="generated/define_Client_8hpp_1a03a522c849c9e2cbd13ddd03521216b2.html">Define SOAR_ROS__SAFEQUEUE_HPP_</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="generated/define_Client_8hpp_1a03a522c849c9e2cbd13ddd03521216b2.html#define-documentation">Define Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -370,6 +796,17 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="generated/index.html#files">Files</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_ActionClient.hpp.html">File ActionClient.hpp</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_ActionClient.hpp.html#definition-include-soar-ros-actionclient-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/soar_ros/ActionClient.hpp</span></code>)</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/program_listing_file_include_soar_ros_ActionClient.hpp.html">Program Listing for File ActionClient.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_ActionClient.hpp.html#includes">Includes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_ActionClient.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_ActionClient.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_ActionClient.hpp.html#classes">Classes</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_Client.hpp.html">File Client.hpp</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Client.hpp.html#definition-include-soar-ros-client-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/soar_ros/Client.hpp</span></code>)</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="generated/program_listing_file_include_soar_ros_Client.hpp.html">Program Listing for File Client.hpp</a></li>
@@ -379,7 +816,6 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Client.hpp.html#included-by">Included By</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Client.hpp.html#namespaces">Namespaces</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Client.hpp.html#classes">Classes</a></li>
-<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Client.hpp.html#defines">Defines</a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_Interface.hpp.html">File Interface.hpp</a><ul>
@@ -391,7 +827,6 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Interface.hpp.html#included-by">Included By</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Interface.hpp.html#namespaces">Namespaces</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Interface.hpp.html#classes">Classes</a></li>
-<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_Interface.hpp.html#variables">Variables</a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_Publisher.hpp.html">File Publisher.hpp</a><ul>
@@ -415,7 +850,6 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SafeQueue.hpp.html#included-by">Included By</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SafeQueue.hpp.html#namespaces">Namespaces</a></li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SafeQueue.hpp.html#classes">Classes</a></li>
-<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SafeQueue.hpp.html#variables">Variables</a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_Service.hpp.html">File Service.hpp</a><ul>
@@ -435,6 +869,17 @@ window.addEventListener("load", () => mermaid.run());
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_soar_ros.hpp.html#includes">Includes</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_SoarAgent.hpp.html">File SoarAgent.hpp</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SoarAgent.hpp.html#definition-include-soar-ros-soaragent-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/soar_ros/SoarAgent.hpp</span></code>)</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="generated/program_listing_file_include_soar_ros_SoarAgent.hpp.html">Program Listing for File SoarAgent.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SoarAgent.hpp.html#includes">Includes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SoarAgent.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SoarAgent.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l5"><a class="reference internal" href="generated/file_include_soar_ros_SoarAgent.hpp.html#classes">Classes</a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="generated/file_include_soar_ros_SoarRunner.hpp.html">File SoarRunner.hpp</a><ul>
@@ -469,14 +914,15 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l1"><a class="reference internal" href="standards.html">Standard Documents</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="standard_docs/CHANGELOG.html">CHANGELOG</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="standard_docs/CHANGELOG.html#changelog-for-package-soar-ros">Changelog for package soar_ros</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="standard_docs/CHANGELOG.html#id1">0.0.2 (2024-12-17)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="standard_docs/CHANGELOG.html#id2">0.0.1 (2024-09-13)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="standard_docs/CHANGELOG.html#id1">0.1.0 (2026-04-26)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="standard_docs/CHANGELOG.html#id4">0.0.2 (2024-12-17)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="standard_docs/CHANGELOG.html#id5">0.0.1 (2024-09-13)</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="standard_docs/CONTRIBUTING.html">CONTRIBUTING</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="standard_docs/CONTRIBUTING.html#contributing">Contributing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="standard_docs/CONTRIBUTING.html#id1">Contributing</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/CONTRIBUTING.html#mandatory-checks">Mandatory Checks</a></li>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/CONTRIBUTING.html#code-style">Code Style</a></li>
 </ul>
@@ -497,7 +943,10 @@ window.addEventListener("load", () => mermaid.run());
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#how-to-build-and-install">How to build and install</a></li>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#how-to-build-and-run-tests">How to build and run tests</a></li>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#how-to-build-documentation">How to build documentation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#how-to-develop">How to develop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#how-to-develop">How to develop</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="standard_docs/README.html#dev-container">Dev Container</a></li>
+</ul>
+</li>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#usage">Usage</a></li>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#license">License</a></li>
 <li class="toctree-l4"><a class="reference internal" href="standard_docs/README.html#acknowledgements">Acknowledgements</a></li>
@@ -555,9 +1004,25 @@ window.addEventListener("load", () => mermaid.run());
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4I0000EN8soar_ros12ActionClientE">soar_ros::ActionClient (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient12ActionClientEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE">soar_ros::ActionClient::ActionClient (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient8getAgentEv">soar_ros::ActionClient::getAgent (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient8getTopicEv">soar_ros::ActionClient::getTopic (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient10GoalHandleE">soar_ros::ActionClient::GoalHandle (C++ type)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseE12pFeedbackMsg">soar_ros::ActionClient::parse (C++ function)</a>, <a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseE16wrappedResultMsg">[1]</a>, <a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseEPN3sml10IdentifierE">[2]</a>, <a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient5parseEb">[3]</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClient19send_goal_from_soarERK8pGoalMsg">soar_ros::ActionClient::send_goal_from_soar (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1ActionClient.html#_CPPv4N8soar_ros12ActionClientD0Ev">soar_ros::ActionClient::~ActionClient (C++ function)</a>
+</li>
       <li><a href="ClassDiagram.html#_CPPv4I000EN8soar_ros6ClientE">soar_ros::Client (C++ class)</a>, <a href="generated/classsoar__ros_1_1Client.html#_CPPv4I000EN8soar_ros6ClientE">[1]</a>, <a href="user_docs/ClassDiagram.html#_CPPv4I000EN8soar_ros6ClientE">[2]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6ClientEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE">soar_ros::Client::Client (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6ClientEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE">soar_ros::Client::Client (C++ function)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8getAgentEv">soar_ros::Client::getAgent (C++ function)</a>
 </li>
@@ -565,11 +1030,15 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client9isRunningE">soar_ros::Client::isRunning (C++ member)</a>
 </li>
+      <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client16m_callback_groupE">soar_ros::Client::m_callback_group (C++ member)</a>
+</li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8m_clientE">soar_ros::Client::m_client (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client6m_nodeE">soar_ros::Client::m_node (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client8m_pAgentE">soar_ros::Client::m_pAgent (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client5m_qosE">soar_ros::Client::m_qos (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6Client22m_send_client_requestsE">soar_ros::Client::m_send_client_requests (C++ member)</a>
 </li>
@@ -581,21 +1050,81 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="generated/classsoar__ros_1_1Client.html#_CPPv4N8soar_ros6ClientD0Ev">soar_ros::Client::~Client (C++ function)</a>
 </li>
+      <li><a href="generated/classsoar__ros_1_1Input.html#_CPPv4I0EN8soar_ros5InputE">soar_ros::Input (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input5InputEv">soar_ros::Input::Input (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input10m_r2sQueueE">soar_ros::Input::m_r2sQueue (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input5parseE1T">soar_ros::Input::parse (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5Input11process_r2sEv">soar_ros::Input::process_r2s (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Input.html#_CPPv4N8soar_ros5InputD0Ev">soar_ros::Input::~Input (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1InputBase.html#_CPPv4N8soar_ros9InputBaseE">soar_ros::InputBase (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1InputBase.html#_CPPv4N8soar_ros9InputBase11process_r2sEv">soar_ros::InputBase::process_r2s (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Interface.html#_CPPv4N8soar_ros9InterfaceE">soar_ros::Interface (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Interface.html#_CPPv4N8soar_ros9Interface8getAgentEv">soar_ros::Interface::getAgent (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Interface.html#_CPPv4N8soar_ros9Interface8getTopicEv">soar_ros::Interface::getTopic (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Output.html#_CPPv4I0EN8soar_ros6OutputE">soar_ros::Output (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output10m_s2rQueueE">soar_ros::Output::m_s2rQueue (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output6OutputEv">soar_ros::Output::Output (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output5parseEPN3sml10IdentifierE">soar_ros::Output::parse (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6Output11process_s2rEPN3sml10IdentifierE">soar_ros::Output::process_s2r (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Output.html#_CPPv4N8soar_ros6OutputD0Ev">soar_ros::Output::~Output (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1OutputBase.html#_CPPv4N8soar_ros10OutputBaseE">soar_ros::OutputBase (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1OutputBase.html#_CPPv4N8soar_ros10OutputBase11process_s2rEPN3sml10IdentifierE">soar_ros::OutputBase::process_s2r (C++ function)</a>
+</li>
       <li><a href="ClassDiagram.html#_CPPv4I0EN8soar_ros9PublisherE">soar_ros::Publisher (C++ class)</a>, <a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4I0EN8soar_ros9PublisherE">[1]</a>, <a href="user_docs/ClassDiagram.html#_CPPv4I0EN8soar_ros9PublisherE">[2]</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8getAgentEv">soar_ros::Publisher::getAgent (C++ function)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8getTopicEv">soar_ros::Publisher::getTopic (C++ function)</a>
 </li>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9isRunningE">soar_ros::Publisher::isRunning (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher16m_callback_groupE">soar_ros::Publisher::m_callback_group (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher6m_nodeE">soar_ros::Publisher::m_node (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher8m_pAgentE">soar_ros::Publisher::m_pAgent (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher7m_topicE">soar_ros::Publisher::m_topic (C++ member)</a>
+</li>
       <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher5parseEPN3sml10IdentifierE">soar_ros::Publisher::parse (C++ function)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher3pubE">soar_ros::Publisher::pub (C++ member)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9PublisherEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE">soar_ros::Publisher::Publisher (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9PublisherEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE">soar_ros::Publisher::Publisher (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher9publisherE">soar_ros::Publisher::publisher (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9Publisher3runEv">soar_ros::Publisher::run (C++ function)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/classsoar__ros_1_1Publisher.html#_CPPv4N8soar_ros9PublisherD0Ev">soar_ros::Publisher::~Publisher (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4I0EN8soar_ros9SafeQueueE">soar_ros::SafeQueue (C++ class)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros9SafeQueue3popEv">soar_ros::SafeQueue::pop (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros9SafeQueue4pushE1T">soar_ros::SafeQueue::push (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros9SafeQueue6tryPopEv">soar_ros::SafeQueue::tryPop (C++ function)</a>
 </li>
       <li><a href="ClassDiagram.html#_CPPv4I000EN8soar_ros7ServiceE">soar_ros::Service (C++ class)</a>, <a href="generated/classsoar__ros_1_1Service.html#_CPPv4I000EN8soar_ros7ServiceE">[1]</a>, <a href="user_docs/ClassDiagram.html#_CPPv4I000EN8soar_ros7ServiceE">[2]</a>
 </li>
@@ -605,9 +1134,13 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8getTopicEv">soar_ros::Service::getTopic (C++ function)</a>
 </li>
+      <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service16m_callback_groupE">soar_ros::Service::m_callback_group (C++ member)</a>
+</li>
       <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service6m_nodeE">soar_ros::Service::m_node (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service8m_pAgentE">soar_ros::Service::m_pAgent (C++ member)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5m_qosE">soar_ros::Service::m_qos (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service9m_serviceE">soar_ros::Service::m_service (C++ member)</a>
 </li>
@@ -615,87 +1148,47 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5parseE12pRequestType">soar_ros::Service::parse (C++ function)</a>, <a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service5parseEPN3sml10IdentifierE">[1]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service7ServiceEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE">soar_ros::Service::Service (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7Service7ServiceEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE">soar_ros::Service::Service (C++ function)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Service.html#_CPPv4N8soar_ros7ServiceD0Ev">soar_ros::Service::~Service (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4I0EN8soar_ros8soar_ros5InputE">soar_ros::soar_ros::Input (C++ class)</a>
+      <li><a href="ClassDiagram.html#_CPPv4N8soar_ros9SoarAgentE">soar_ros::SoarAgent (C++ class)</a>, <a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgentE">[1]</a>, <a href="user_docs/ClassDiagram.html#_CPPv4N8soar_ros9SoarAgentE">[2]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input5InputEv">soar_ros::soar_ros::Input::Input (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent15addActionClientEbNSt10shared_ptrI12ActionClientI1TEEE">soar_ros::SoarAgent::addActionClient (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent15addActionClientEbNSt10shared_ptrI12ActionClientI1TEEERKNSt6stringE">[1]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input10m_r2sQueueE">soar_ros::soar_ros::Input::m_r2sQueue (C++ member)</a>, <a href="generated/variable_Interface_8hpp_1abf8edd1e315472b78351c428b1eb0fa3.html#_CPPv4N8soar_ros8soar_ros5Input10m_r2sQueueE">[1]</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent9addClientEbNSt10shared_ptrI6ClientI1TEEE">soar_ros::SoarAgent::addClient (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent9addClientEbNSt10shared_ptrI6ClientI1TEEERKNSt6stringE">[1]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input5parseE1T">soar_ros::soar_ros::Input::parse (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent12addPublisherEbNSt10shared_ptrI9PublisherI1TEEE">soar_ros::SoarAgent::addPublisher (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent12addPublisherEbNSt10shared_ptrI9PublisherI1TEEERKNSt6stringE">[1]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5Input11process_r2sEv">soar_ros::soar_ros::Input::process_r2s (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent10addServiceEbNSt10shared_ptrI7ServiceI1TEEE">soar_ros::SoarAgent::addService (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent10addServiceEbNSt10shared_ptrI7ServiceI1TEEERKNSt6stringE">[1]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Input.html#_CPPv4N8soar_ros8soar_ros5InputD0Ev">soar_ros::soar_ros::Input::~Input (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4I0EN8soar_ros9SoarAgent13addSubscriberEbNSt10shared_ptrI10SubscriberI1TEEE">soar_ros::SoarAgent::addSubscriber (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#_CPPv4N8soar_ros8soar_ros9InputBaseE">soar_ros::soar_ros::InputBase (C++ class)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4NK8soar_ros9SoarAgent7getNodeEv">soar_ros::SoarAgent::getNode (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1InputBase.html#_CPPv4N8soar_ros8soar_ros9InputBase11process_r2sEv">soar_ros::soar_ros::InputBase::process_r2s (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4NK8soar_ros9SoarAgent11getSmlAgentEv">soar_ros::SoarAgent::getSmlAgent (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#_CPPv4N8soar_ros8soar_ros9InterfaceE">soar_ros::soar_ros::Interface (C++ class)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgentaSERK9SoarAgent">soar_ros::SoarAgent::operator= (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#_CPPv4N8soar_ros8soar_ros9Interface8getAgentEv">soar_ros::soar_ros::Interface::getAgent (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgent9SoarAgentEPN3sml5AgentEN6rclcpp4Node9SharedPtrE">soar_ros::SoarAgent::SoarAgent (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgent9SoarAgentERK9SoarAgent">[1]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Interface.html#_CPPv4N8soar_ros8soar_ros9Interface8getTopicEv">soar_ros::soar_ros::Interface::getTopic (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarAgent.html#_CPPv4N8soar_ros9SoarAgent11updateWorldEv">soar_ros::SoarAgent::updateWorld (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4I0EN8soar_ros8soar_ros6OutputE">soar_ros::soar_ros::Output (C++ class)</a>
+      <li><a href="generated/function_SoarRunner_8hpp_1a640bcfc158f45120fa09397dec621d77.html#_CPPv4N8soar_ros21SoarPrintEventHandlerEN3sml15smlPrintEventIdEPvPN3sml5AgentEPKc">soar_ros::SoarPrintEventHandler (C++ function)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output10m_s2rQueueE">soar_ros::soar_ros::Output::m_s2rQueue (C++ member)</a>, <a href="generated/variable_Interface_8hpp_1aeee60222f5f166555d6431db019286e0.html#_CPPv4N8soar_ros8soar_ros6Output10m_s2rQueueE">[1]</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output6OutputEv">soar_ros::soar_ros::Output::Output (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output5parseEPN3sml10IdentifierE">soar_ros::soar_ros::Output::parse (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6Output11process_s2rEPN3sml10IdentifierE">soar_ros::soar_ros::Output::process_s2r (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1Output.html#_CPPv4N8soar_ros8soar_ros6OutputD0Ev">soar_ros::soar_ros::Output::~Output (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#_CPPv4N8soar_ros8soar_ros10OutputBaseE">soar_ros::soar_ros::OutputBase (C++ class)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1OutputBase.html#_CPPv4N8soar_ros8soar_ros10OutputBase11process_s2rEPN3sml10IdentifierE">soar_ros::soar_ros::OutputBase::process_s2r (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4I0EN8soar_ros8soar_ros9SafeQueueE">soar_ros::soar_ros::SafeQueue (C++ class)</a>
-</li>
-      <li><a href="generated/variable_SafeQueue_8hpp_1a76964a5982cf430a1d7e7b4466dc11eb.html#_CPPv4N8soar_ros8soar_ros9SafeQueue6m_condE">soar_ros::soar_ros::SafeQueue::m_cond (C++ member)</a>
-</li>
-      <li><a href="generated/variable_SafeQueue_8hpp_1a5c751dae9068bdb864af14129bbe0fa1.html#_CPPv4N8soar_ros8soar_ros9SafeQueue7m_mutexE">soar_ros::soar_ros::SafeQueue::m_mutex (C++ member)</a>
-</li>
-      <li><a href="generated/variable_SafeQueue_8hpp_1a964bef342cb06f269bf6a2e5c6790798.html#_CPPv4N8soar_ros8soar_ros9SafeQueue7m_queueE">soar_ros::soar_ros::SafeQueue::m_queue (C++ member)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros8soar_ros9SafeQueue3popEv">soar_ros::soar_ros::SafeQueue::pop (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros8soar_ros9SafeQueue4pushE1T">soar_ros::soar_ros::SafeQueue::push (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1soar__ros_1_1SafeQueue.html#_CPPv4N8soar_ros8soar_ros9SafeQueue6tryPopEv">soar_ros::soar_ros::SafeQueue::tryPop (C++ function)</a>
-</li>
-      <li><a href="generated/function_SoarRunner_8hpp_1ae4d9aa87aefd5144d5876406f2122e92.html#_CPPv4N8soar_ros21SoarPrintEventHandlerEN3sml15smlPrintEventIdEPvPN3sml5AgentEPKc">soar_ros::SoarPrintEventHandler (C++ function)</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunnerE">soar_ros::SoarRunner (C++ class)</a>
+      <li><a href="ClassDiagram.html#_CPPv4N8soar_ros10SoarRunnerE">soar_ros::SoarRunner (C++ class)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunnerE">[1]</a>, <a href="user_docs/ClassDiagram.html#_CPPv4N8soar_ros10SoarRunnerE">[2]</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner8addAgentERKNSt6stringERKNSt6stringE">soar_ros::SoarRunner::addAgent (C++ function)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner9addClientEbNSt10shared_ptrIN8soar_ros6ClientI1TEEEE">soar_ros::SoarRunner::addClient (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner9addClientEbNSt10shared_ptrIN8soar_ros6ClientI1TEEEERKNSt6stringE">[1]</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner12addPublisherEbNSt10shared_ptrIN8soar_ros9PublisherI1TEEEE">soar_ros::SoarRunner::addPublisher (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner12addPublisherEbNSt10shared_ptrIN8soar_ros9PublisherI1TEEEERKNSt6stringE">[1]</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner10addServiceEbNSt10shared_ptrIN8soar_ros7ServiceI1TEEEE">soar_ros::SoarRunner::addService (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner10addServiceEbNSt10shared_ptrIN8soar_ros7ServiceI1TEEEERKNSt6stringE">[1]</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4I0EN8soar_ros10SoarRunner13addSubscriberEbNSt10shared_ptrIN8soar_ros10SubscriberI1TEEEE">soar_ros::SoarRunner::addSubscriber (C++ function)</a>
-</li>
       <li><a href="ROSInterface.html#_CPPv4N8soar_ros10SoarRunner14debuggerLaunchEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">soar_ros::SoarRunner::debuggerLaunch (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner14debuggerLaunchEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">[1]</a>, <a href="user_docs/ROSInterface.html#_CPPv4N8soar_ros10SoarRunner14debuggerLaunchEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">[2]</a>
-</li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner8getAgentEv">soar_ros::SoarRunner::getAgent (C++ function)</a>
 </li>
       <li><a href="ROSInterface.html#_CPPv4N8soar_ros10SoarRunner19getSoarKernelStatusEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">soar_ros::SoarRunner::getSoarKernelStatus (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner19getSoarKernelStatusEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">[1]</a>, <a href="user_docs/ROSInterface.html#_CPPv4N8soar_ros10SoarRunner19getSoarKernelStatusEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">[2]</a>
 </li>
+      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner3runEv">soar_ros::SoarRunner::run (C++ function)</a>
+</li>
       <li><a href="ROSInterface.html#_CPPv4N8soar_ros10SoarRunner13runSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">soar_ros::SoarRunner::runSoarKernel (C++ function)</a>, <a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner13runSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">[1]</a>, <a href="user_docs/ROSInterface.html#_CPPv4N8soar_ros10SoarRunner13runSoarKernelEKNSt10shared_ptrI16rmw_request_id_tEENSt10shared_ptrIN8std_srvs3srv7Trigger7RequestEEENSt10shared_ptrIN8std_srvs3srv7Trigger8ResponseEEE">[2]</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner10SoarRunnerERKNSt6stringERKNSt6stringE">soar_ros::SoarRunner::SoarRunner (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner10SoarRunnerERKNSt6stringE">soar_ros::SoarRunner::SoarRunner (C++ function)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1SoarRunner.html#_CPPv4N8soar_ros10SoarRunner11startThreadEv">soar_ros::SoarRunner::startThread (C++ function)</a>
 </li>
@@ -715,6 +1208,8 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8getTopicEv">soar_ros::Subscriber::getTopic (C++ function)</a>
 </li>
+      <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber16m_callback_groupE">soar_ros::Subscriber::m_callback_group (C++ member)</a>
+</li>
       <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber6m_nodeE">soar_ros::Subscriber::m_node (C++ member)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber8m_pAgentE">soar_ros::Subscriber::m_pAgent (C++ member)</a>
@@ -723,15 +1218,13 @@ window.addEventListener("load", () => mermaid.run());
 </li>
       <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber3subE">soar_ros::Subscriber::sub (C++ member)</a>
 </li>
-      <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber10SubscriberEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringE">soar_ros::Subscriber::Subscriber (C++ function)</a>
+      <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber9subscribeEN6rclcpp4Node9SharedPtrE">soar_ros::Subscriber::subscribe (C++ function)</a>
+</li>
+      <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10Subscriber10SubscriberEPN3sml5AgentEN6rclcpp4Node9SharedPtrERKNSt6stringEN6rclcpp3QoSEN6rclcpp13CallbackGroup9SharedPtrE">soar_ros::Subscriber::Subscriber (C++ function)</a>
 </li>
       <li><a href="generated/classsoar__ros_1_1Subscriber.html#_CPPv4N8soar_ros10SubscriberD0Ev">soar_ros::Subscriber::~Subscriber (C++ function)</a>
 </li>
       <li><a href="generated/function_SoarRunner_8hpp_1ac1b2f4700bd2aa2de462bcf23acb9caf.html#_CPPv4N8soar_ros18updateEventHandlerEN3sml16smlUpdateEventIdEPvPN3sml6KernelEN3sml11smlRunFlagsE">soar_ros::updateEventHandler (C++ function)</a>
-</li>
-      <li><a href="generated/define_Client_8hpp_1a59a2d969c5f7c021d0ad0ca7603e1d3b.html#c.SOAR_ROS__INTERFACE_HPP_">SOAR_ROS__INTERFACE_HPP_ (C macro)</a>
-</li>
-      <li><a href="generated/define_Client_8hpp_1a03a522c849c9e2cbd13ddd03521216b2.html#c.SOAR_ROS__SAFEQUEUE_HPP_">SOAR_ROS__SAFEQUEUE_HPP_ (C macro)</a>
 </li>
   </ul></td>
 </tr></table>

@@ -4,6 +4,10 @@ soar_ros: A ROS 2 Interface for Soar
 .. figure:: doc/Images/soar_ros_slogan_default.svg
    :alt: logo
 
+.. image:: https://github.com/THA-Embedded-Systems-Lab/soar_ros/actions/workflows/build_test.yml/badge.svg
+   :target: https://github.com/THA-Embedded-Systems-Lab/soar_ros/actions/workflows/build_test.yml
+   :alt: Build & Test
+
 This ROS2 package provides an interface for the Soar cognitive
 architecture by creating wrappers for ROS2 messages and handling the
 Soar kernel in a `continuos
@@ -11,13 +15,13 @@ mode <https://soar.eecs.umich.edu/development/soar/ThreadsInSML/>`__.
 
 `Soar <https://soar.eecs.umich.edu/>`__ is a cognitive architecture
 developed at the University of Michigan. It is used in the field of
-cognitive robotics in different projects, e.g. a
+cognitive robotics in different projects, e.g. a
 `drone <https://github.com/saikishor/soar-to-ros/tree/master>`__ or a
 `robot <https://github.com/pauloserrafh/ros_tiago_soar/tree/master>`__.
 However, the integration of Soar and `ROS 2 <https://www.ros.org/>`__ is
 currently difficult for complex projects, which include multiple
 publishers, subscribers, services or clients. The main limitation
-orginates from the synchronous callback model used by Soar which
+originates from the synchronous callback model used by Soar which
 inspired the creation of this wrapper. A detailed explanation about the
 reason for the development of the package can be read in the `software
 architecture <./doc/SoftwareArchitecture.md>`__.
@@ -38,11 +42,13 @@ configurations were not tested. It provides
 -  Subscriber
 -  Service
 -  Client
+-  Action Client
+-  Multiple Soar agents in one kernel
 
 The following features are **not supported**, yet.
 
--  Action Server and Client
--  Multiple Soar agents
+-  Action Server
+
 
 Definition and description of the public API
 --------------------------------------------
@@ -55,7 +61,8 @@ Examples
 --------
 
 The following examples are an extract of the test cases in
-`test/test_soar_ros.cpp <./test/test_soar_ros.cpp>`__.
+`test/pubsub/test_input_output.cpp <./test/pubsub/test_input_output.cpp>`__ and
+`test/service/test_service.cpp <./test/service/test_service.cpp>`__.
 
 Publisher
 ~~~~~~~~~
@@ -87,7 +94,7 @@ Service
 In the following example, the ROS2 example ``AddTwoInts`` is
 implemented. Soar adds two integers and sends the result as a ROS2
 Service, based on the ``soar_ros::Service`` class. The code is from
-`test/test_soar_ros.cpp <./test/test_soar_ros.cpp>`__.
+`test/service/test_service.cpp <./test/service/test_service.cpp>`__.
 
 .. code:: cpp
 
@@ -125,10 +132,11 @@ adding it to the node similar to a builder pattern, cf.
 
 .. code:: cpp
 
-   auto node = std::make_shared<soar_ros::SoarRunner>("Test Agent", soar_path);
+      auto node = std::make_shared<soar_ros::SoarRunner>();
+      auto agent = node->addAgent("Test Agent", soar_path);
 
-   std::shared_ptr<soar_ros::Service<example_interfaces::srv::AddTwoInts>> service =
-       std::make_shared<TestService>(node.get()->getAgent(), node, "AddTwoInts");
+      std::shared_ptr<soar_ros::Service<example_interfaces::srv::AddTwoInts>> service =
+         std::make_shared<TestService>(agent, node, "AddTwoInts");
    node->addService(service);
 
    node->startThread();
@@ -138,7 +146,7 @@ adding it to the node similar to a builder pattern, cf.
    executor.spin();
 
 These rules use an operator to add two integer numbers and provide the
-sum at the output link. The following rules are availabe in
+sum at the output link. The following rules are available in
 `main.soar <Soar/main.soar>`__.
 
 .. code:: soar
@@ -175,24 +183,23 @@ How to build and install
 
 3. Source the ROS workspace
 
-4. Run the test executable via ``ros2 run soar_ros test_example``. The
+4. Run the test executable via ``ros2 run soar_ros start``. The
    output should look similar to the following:
 
    .. code:: shell
 
-      $ ros2 run soar_ros test_example
+      $ ros2 run soar_ros start
       [INFO] [1721823668.516038530] [SoarRunner]: Starting runThread
       [INFO] [1721823668.516344554] [SoarRunner]: Test Agent:      1:    O: O1 (init-agent)
       [INFO] [1721823668.516466911] [SoarRunner]: Test Agent:      2:    ==>S: S2 (state no-change)
-      [WARN] [1721823669.516121281] [SoarRunner]: AddTwoIntsClient service not available, waiting again...
 
 .. Warning::
    If you would like to use the Java-based debugger, the
-   installation of the official Soar release is requried: Download and
+   installation of the official Soar release is required: Download and
    install the latest Soar release from their
    `repository <https://github.com/SoarGroup/Soar>`__. Setting the
    ``SOAR_HOME`` environment variable to the ``bin/`` directory of the
-   insalltion could help to open the debugger.
+   installation could help to open the debugger.
 
 How to build and run tests
 --------------------------
@@ -223,6 +230,14 @@ How to develop
 
 Clone the package in your ROS2 workspace.
 
+Dev Container
+~~~~~~~~~~~~~
+
+This repository includes a VS Code Dev Container configuration that provides
+a ready-to-use development environment with ROS 2 and the package
+dependencies. The soar_ros package is build on startup.
+
+
 Usage
 -----
 
@@ -232,7 +247,7 @@ it your ROS2 workspace.
 .. code:: cmake
 
    find_package(soar_ros REQUIRED)
-   ament_target_dependencies(<executable_name> soar_ros)
+   target_link_libraries(<executable_name> soar_ros)
 
 For code references have a look at the `examples <#examples>`__.
 

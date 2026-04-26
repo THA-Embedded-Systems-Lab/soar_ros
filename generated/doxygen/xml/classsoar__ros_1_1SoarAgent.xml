@@ -1,0 +1,485 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.12.0" xml:lang="en-US">
+  <compounddef id="classsoar__ros_1_1SoarAgent" kind="class" language="C++" prot="public">
+    <compoundname>soar_ros::SoarAgent</compoundname>
+    <includes refid="SoarAgent_8hpp" local="no">SoarAgent.hpp</includes>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarAgent_1aa031f3d9b5fd83151be17b5d200fb1a6" prot="private" static="no" mutable="no">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent* soar_ros::SoarAgent::m_pAgent</definition>
+        <argsstring></argsstring>
+        <name>m_pAgent</name>
+        <qualifiedname>soar_ros::SoarAgent::m_pAgent</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="209" column="16" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="209" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarAgent_1adf1a6e4e313f03bb576f7982914e48d8" prot="private" static="no" mutable="no">
+        <type>rclcpp::Node::SharedPtr</type>
+        <definition>rclcpp::Node::SharedPtr soar_ros::SoarAgent::m_node</definition>
+        <argsstring></argsstring>
+        <name>m_node</name>
+        <qualifiedname>soar_ros::SoarAgent::m_node</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="210" column="29" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="210" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarAgent_1a02837f74546de94ba0ee30534526a4e5" prot="private" static="no" mutable="no">
+        <type>std::map&lt; std::string, std::shared_ptr&lt; <ref refid="classsoar__ros_1_1OutputBase" kindref="compound">soar_ros::OutputBase</ref> &gt; &gt;</type>
+        <definition>std::map&lt;std::string, std::shared_ptr&lt;soar_ros::OutputBase&gt; &gt; soar_ros::SoarAgent::m_outputs</definition>
+        <argsstring></argsstring>
+        <name>m_outputs</name>
+        <qualifiedname>soar_ros::SoarAgent::m_outputs</qualifiedname>
+        <briefdescription>
+<para>Soar command name -&gt; output handler. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="213" column="14" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="213" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="classsoar__ros_1_1SoarAgent_1a8198d13d1abbb6915dda130d8a94ead2" prot="private" static="no" mutable="no">
+        <type>std::vector&lt; std::shared_ptr&lt; <ref refid="classsoar__ros_1_1InputBase" kindref="compound">soar_ros::InputBase</ref> &gt; &gt;</type>
+        <definition>std::vector&lt;std::shared_ptr&lt;soar_ros::InputBase&gt; &gt; soar_ros::SoarAgent::m_inputs</definition>
+        <argsstring></argsstring>
+        <name>m_inputs</name>
+        <qualifiedname>soar_ros::SoarAgent::m_inputs</qualifiedname>
+        <briefdescription>
+<para><ref refid="classsoar__ros_1_1Input" kindref="compound">Input</ref> handlers polled each cycle. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="215" column="17" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="215" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1afd1eb552ee082e4ab71e0c1d7701abb5" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::SoarAgent::SoarAgent</definition>
+        <argsstring>(sml::Agent *pAgent, rclcpp::Node::SharedPtr node)</argsstring>
+        <name>SoarAgent</name>
+        <qualifiedname>soar_ros::SoarAgent::SoarAgent</qualifiedname>
+        <param>
+          <type>sml::Agent *</type>
+          <declname>pAgent</declname>
+        </param>
+        <param>
+          <type>rclcpp::Node::SharedPtr</type>
+          <declname>node</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>pAgent</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Raw sml::Agent owned by the kernel (non-owning). </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>node</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>Shared ptr to <ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref> (creates ROS primitives). </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="54" column="5" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="54" bodyend="59"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a1e17af07ca0f8701dfd85a6c35602590" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>soar_ros::SoarAgent::SoarAgent</definition>
+        <argsstring>(const SoarAgent &amp;)=delete</argsstring>
+        <name>SoarAgent</name>
+        <qualifiedname>soar_ros::SoarAgent::SoarAgent</qualifiedname>
+        <param>
+          <type>const <ref refid="classsoar__ros_1_1SoarAgent" kindref="compound">SoarAgent</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="61" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a956313c211523c09d0651bdbb95a51e9" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="classsoar__ros_1_1SoarAgent" kindref="compound">SoarAgent</ref> &amp;</type>
+        <definition>SoarAgent &amp; soar_ros::SoarAgent::operator=</definition>
+        <argsstring>(const SoarAgent &amp;)=delete</argsstring>
+        <name>operator=</name>
+        <qualifiedname>soar_ros::SoarAgent::operator=</qualifiedname>
+        <param>
+          <type>const <ref refid="classsoar__ros_1_1SoarAgent" kindref="compound">SoarAgent</ref> &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="62" column="15"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a677fecc1ae2c7cdd3f1444f170a0d4dc" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>sml::Agent *</type>
+        <definition>sml::Agent * soar_ros::SoarAgent::getSmlAgent</definition>
+        <argsstring>() const</argsstring>
+        <name>getSmlAgent</name>
+        <qualifiedname>soar_ros::SoarAgent::getSmlAgent</qualifiedname>
+        <briefdescription>
+<para>Raw sml::Agent pointer (lifetime managed by the Soar kernel). </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="67" column="16" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="67" bodyend="67"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a7b581eba6838b7bfeccea204f08d544b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>rclcpp::Node::SharedPtr</type>
+        <definition>rclcpp::Node::SharedPtr soar_ros::SoarAgent::getNode</definition>
+        <argsstring>() const</argsstring>
+        <name>getNode</name>
+        <qualifiedname>soar_ros::SoarAgent::getNode</qualifiedname>
+        <briefdescription>
+<para>The ROS node this agent is attached to. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="70" column="29" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="70" bodyend="70"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1adfbd2784f6e5b1c817b603f0bc24f663" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addPublisher</definition>
+        <argsstring>(std::shared_ptr&lt; Publisher&lt; T &gt; &gt; output)</argsstring>
+        <name>addPublisher</name>
+        <qualifiedname>soar_ros::SoarAgent::addPublisher</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref>&lt; T &gt; &gt;</type>
+          <declname>output</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref>; topic name is used as the Soar command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="76" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="76" bodyend="80"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1aa40853cf6e642556c2d298ca78bc2fde" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addPublisher</definition>
+        <argsstring>(std::shared_ptr&lt; Publisher&lt; T &gt; &gt; output, const std::string &amp;commandName)</argsstring>
+        <name>addPublisher</name>
+        <qualifiedname>soar_ros::SoarAgent::addPublisher</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref>&lt; T &gt; &gt;</type>
+          <declname>output</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Publisher" kindref="compound">Publisher</ref> with an explicit Soar output-link command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="84" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="84" bodyend="88"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a879ba8f6b717de0d598c21e3c840910e" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addSubscriber</definition>
+        <argsstring>(std::shared_ptr&lt; Subscriber&lt; T &gt; &gt; input)</argsstring>
+        <name>addSubscriber</name>
+        <qualifiedname>soar_ros::SoarAgent::addSubscriber</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Subscriber" kindref="compound">Subscriber</ref>&lt; T &gt; &gt;</type>
+          <declname>input</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Subscriber" kindref="compound">Subscriber</ref>. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="92" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="92" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a5b3bcd17342c6d1454538371508cf2ab" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addService</definition>
+        <argsstring>(std::shared_ptr&lt; Service&lt; T &gt; &gt; service)</argsstring>
+        <name>addService</name>
+        <qualifiedname>soar_ros::SoarAgent::addService</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref>&lt; T &gt; &gt;</type>
+          <declname>service</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref>; service name is used as the Soar command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="101" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="101" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1adb2540175de2ebc689f523adc3897303" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addService</definition>
+        <argsstring>(std::shared_ptr&lt; Service&lt; T &gt; &gt; service, const std::string &amp;commandName)</argsstring>
+        <name>addService</name>
+        <qualifiedname>soar_ros::SoarAgent::addService</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref>&lt; T &gt; &gt;</type>
+          <declname>service</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Service" kindref="compound">Service</ref> with an explicit Soar command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="108" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="108" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a411f36b8ac196a6f761220b4826636ab" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addClient</definition>
+        <argsstring>(std::shared_ptr&lt; Client&lt; T &gt; &gt; client)</argsstring>
+        <name>addClient</name>
+        <qualifiedname>soar_ros::SoarAgent::addClient</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Client" kindref="compound">Client</ref>&lt; T &gt; &gt;</type>
+          <declname>client</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Client" kindref="compound">Client</ref>; client name is used as the Soar command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="117" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="117" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a18dc702163715326eafe437bcef514d1" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addClient</definition>
+        <argsstring>(std::shared_ptr&lt; Client&lt; T &gt; &gt; client, const std::string &amp;commandName)</argsstring>
+        <name>addClient</name>
+        <qualifiedname>soar_ros::SoarAgent::addClient</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1Client" kindref="compound">Client</ref>&lt; T &gt; &gt;</type>
+          <declname>client</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Register a <ref refid="classsoar__ros_1_1Client" kindref="compound">Client</ref> with an explicit Soar command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="124" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="124" bodyend="129"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a3c2d33a34e63890cea7f35bc2af11be0" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addActionClient</definition>
+        <argsstring>(std::shared_ptr&lt; ActionClient&lt; T &gt; &gt; action_client)</argsstring>
+        <name>addActionClient</name>
+        <qualifiedname>soar_ros::SoarAgent::addActionClient</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1ActionClient" kindref="compound">ActionClient</ref>&lt; T &gt; &gt;</type>
+          <declname>action_client</declname>
+        </param>
+        <briefdescription>
+<para>Register an <ref refid="classsoar__ros_1_1ActionClient" kindref="compound">ActionClient</ref>; action name is used as the command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="133" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="133" bodyend="136"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1aa49ac12f509e2cd275eb0e721edf7e39" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <templateparamlist>
+          <param>
+            <type>typename T</type>
+          </param>
+        </templateparamlist>
+        <type>bool</type>
+        <definition>bool soar_ros::SoarAgent::addActionClient</definition>
+        <argsstring>(std::shared_ptr&lt; ActionClient&lt; T &gt; &gt; action_client, const std::string &amp;commandName)</argsstring>
+        <name>addActionClient</name>
+        <qualifiedname>soar_ros::SoarAgent::addActionClient</qualifiedname>
+        <param>
+          <type>std::shared_ptr&lt; <ref refid="classsoar__ros_1_1ActionClient" kindref="compound">ActionClient</ref>&lt; T &gt; &gt;</type>
+          <declname>action_client</declname>
+        </param>
+        <param>
+          <type>const std::string &amp;</type>
+          <declname>commandName</declname>
+        </param>
+        <briefdescription>
+<para>Register an <ref refid="classsoar__ros_1_1ActionClient" kindref="compound">ActionClient</ref> with an explicit Soar command name. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="140" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="140" bodyend="156"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a310416dc5e0f18e41e376bbe3189058b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarAgent::updateWorld</definition>
+        <argsstring>()</argsstring>
+        <name>updateWorld</name>
+        <qualifiedname>soar_ros::SoarAgent::updateWorld</qualifiedname>
+        <briefdescription>
+<para>Process output-link commands then flush all input queues. Called by <ref refid="classsoar__ros_1_1SoarRunner_1a631775299b9c20f86840e93c05620987" kindref="member">SoarRunner::updateWorld()</ref> every decision cycle. </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="162" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="162" bodyend="166"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1a530aeea3b7a19a20fe63ab07aaa83fb9" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarAgent::processOutputLinkChanges</definition>
+        <argsstring>()</argsstring>
+        <name>processOutputLinkChanges</name>
+        <qualifiedname>soar_ros::SoarAgent::processOutputLinkChanges</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="169" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="169" bodyend="194"/>
+      </memberdef>
+      <memberdef kind="function" id="classsoar__ros_1_1SoarAgent_1ab3e0355f1bf6ea1d072e2381aa6cdb26" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void soar_ros::SoarAgent::processInput</definition>
+        <argsstring>()</argsstring>
+        <name>processInput</name>
+        <qualifiedname>soar_ros::SoarAgent::processInput</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="include/soar_ros/SoarAgent.hpp" line="196" column="10" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="196" bodyend="207"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+<para>Per-agent wrapper that owns all ROS I/O wiring for one Soar agent. </para>
+    </briefdescription>
+    <detaileddescription>
+<para>Returned by <ref refid="classsoar__ros_1_1SoarRunner_1abc859374ab38dd9cf0245cedb94f1fed" kindref="member">SoarRunner::addAgent()</ref> as a shared_ptr&lt;SoarAgent&gt;. User code registers interfaces directly on the agent:</para>
+<para><programlisting><codeline><highlight class="keyword">auto</highlight><highlight class="normal"><sp/>agent<sp/>=<sp/>node-&gt;addAgent(</highlight><highlight class="stringliteral">&quot;MyAgent&quot;</highlight><highlight class="normal">,<sp/>path);</highlight></codeline>
+<codeline><highlight class="normal">agent-&gt;addPublisher(std::make_shared&lt;MyPub&gt;(agent-&gt;getSmlAgent(),<sp/>node,<sp/></highlight><highlight class="stringliteral">&quot;cmd&quot;</highlight><highlight class="normal">));</highlight></codeline>
+<codeline><highlight class="normal">agent-&gt;addSubscriber(std::make_shared&lt;MySub&gt;(agent-&gt;getSmlAgent(),<sp/>node,<sp/></highlight><highlight class="stringliteral">&quot;topic&quot;</highlight><highlight class="normal">));</highlight></codeline>
+</programlisting></para>
+<para><ref refid="classsoar__ros_1_1SoarRunner" kindref="compound">SoarRunner</ref> calls <ref refid="classsoar__ros_1_1SoarAgent_1a310416dc5e0f18e41e376bbe3189058b" kindref="member">updateWorld()</ref> on every <ref refid="classsoar__ros_1_1SoarAgent" kindref="compound">SoarAgent</ref> each decision cycle via the smlEVENT_AFTER_ALL_OUTPUT_PHASES callback. </para>
+    </detaileddescription>
+    <location file="include/soar_ros/SoarAgent.hpp" line="49" column="3" bodyfile="include/soar_ros/SoarAgent.hpp" bodystart="50" bodyend="216"/>
+    <listofallmembers>
+      <member refid="classsoar__ros_1_1SoarAgent_1a3c2d33a34e63890cea7f35bc2af11be0" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addActionClient</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1aa49ac12f509e2cd275eb0e721edf7e39" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addActionClient</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a411f36b8ac196a6f761220b4826636ab" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addClient</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a18dc702163715326eafe437bcef514d1" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addClient</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1adfbd2784f6e5b1c817b603f0bc24f663" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addPublisher</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1aa40853cf6e642556c2d298ca78bc2fde" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addPublisher</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a5b3bcd17342c6d1454538371508cf2ab" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addService</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1adb2540175de2ebc689f523adc3897303" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addService</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a879ba8f6b717de0d598c21e3c840910e" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>addSubscriber</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a7b581eba6838b7bfeccea204f08d544b" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>getNode</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a677fecc1ae2c7cdd3f1444f170a0d4dc" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>getSmlAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a8198d13d1abbb6915dda130d8a94ead2" prot="private" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>m_inputs</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1adf1a6e4e313f03bb576f7982914e48d8" prot="private" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>m_node</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a02837f74546de94ba0ee30534526a4e5" prot="private" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>m_outputs</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1aa031f3d9b5fd83151be17b5d200fb1a6" prot="private" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>m_pAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a956313c211523c09d0651bdbb95a51e9" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>operator=</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1ab3e0355f1bf6ea1d072e2381aa6cdb26" prot="private" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>processInput</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a530aeea3b7a19a20fe63ab07aaa83fb9" prot="private" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>processOutputLinkChanges</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1afd1eb552ee082e4ab71e0c1d7701abb5" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>SoarAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a1e17af07ca0f8701dfd85a6c35602590" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>SoarAgent</name></member>
+      <member refid="classsoar__ros_1_1SoarAgent_1a310416dc5e0f18e41e376bbe3189058b" prot="public" virt="non-virtual"><scope>soar_ros::SoarAgent</scope><name>updateWorld</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

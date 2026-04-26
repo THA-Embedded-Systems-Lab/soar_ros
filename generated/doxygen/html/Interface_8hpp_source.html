@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">soar_ros<span id="projectnumber">&#160;0.0.2</span>
+   <div id="projectname">soar_ros<span id="projectnumber">&#160;0.1.0</span>
    </div>
    <div id="projectbrief">An interface library to connect ROS2 with the Soar cognitive architecture.</div>
   </td>
@@ -118,68 +118,96 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">namespace </span>soar_ros</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">class </span>Interface</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Interface.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classsoar__ros_1_1Interface.html">Interface</a></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keyword">virtual</span> std::string getTopic() = 0;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Interface.html#a294fefd3992c72bf1c227928716e938b">   32</a></span>  <span class="keyword">virtual</span> std::string <a class="code hl_function" href="classsoar__ros_1_1Interface.html#a294fefd3992c72bf1c227928716e938b">getTopic</a>() = 0;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keyword">virtual</span> sml::Agent * getAgent() = 0;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Interface.html#a8e52e3b61ef77a59afa7178b681819a8">   36</a></span>  <span class="keyword">virtual</span> sml::Agent * <a class="code hl_function" href="classsoar__ros_1_1Interface.html#a8e52e3b61ef77a59afa7178b681819a8">getAgent</a>() = 0;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>};</div>
+</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">class </span>OutputBase</div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="};">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1OutputBase.html">   39</a></span><span class="keyword">class </span><a class="code hl_class" href="classsoar__ros_1_1OutputBase.html">OutputBase</a></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>{</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> process_s2r(sml::Identifier * <span class="keywordtype">id</span>) = 0;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1OutputBase.html#a30c11674e784b63ef1cea8f3868e9e3d">   45</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classsoar__ros_1_1OutputBase.html#a30c11674e784b63ef1cea8f3868e9e3d">process_s2r</a>(sml::Identifier * <span class="keywordtype">id</span>) = 0;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="keyword">class </span>InputBase</div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="};">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1InputBase.html">   48</a></span><span class="keyword">class </span><a class="code hl_class" href="classsoar__ros_1_1InputBase.html">InputBase</a></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> process_r2s() = 0;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1InputBase.html#a54be74c01b756a1ebc1f927b5efb0f48">   53</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classsoar__ros_1_1InputBase.html#a54be74c01b756a1ebc1f927b5efb0f48">process_r2s</a>() = 0;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>};</div>
+</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">class </span>Output : <span class="keyword">public</span> OutputBase</div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="};">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Output.html">   57</a></span><span class="keyword">class </span><a class="code hl_class" href="classsoar__ros_1_1Output.html">Output</a> : <span class="keyword">public</span> <a class="code hl_class" href="classsoar__ros_1_1OutputBase.html">OutputBase</a></div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>{</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  SafeQueue&lt;T&gt; m_s2rQueue;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  <a class="code hl_class" href="classsoar__ros_1_1SafeQueue.html">SafeQueue&lt;T&gt;</a> m_s2rQueue;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  Output() {}</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  ~Output() {}</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>  <a class="code hl_class" href="classsoar__ros_1_1Output.html">Output</a>() {}</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <a class="code hl_class" href="classsoar__ros_1_1Output.html">~Output</a>() {}</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordtype">void</span> process_s2r(sml::Identifier * <span class="keywordtype">id</span>)<span class="keyword"> override</span></div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Output.html#ac38d1e23a7093e233209f8ff8f8c9046">   66</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classsoar__ros_1_1Output.html#ac38d1e23a7093e233209f8ff8f8c9046">process_s2r</a>(sml::Identifier * <span class="keywordtype">id</span>)<span class="keyword"> override</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    m_s2rQueue.push(parse(<span class="keywordtype">id</span>));</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    m_s2rQueue.push(<a class="code hl_function" href="classsoar__ros_1_1Output.html#af01db0104f6bd68b61ac9baff164926f">parse</a>(<span class="keywordtype">id</span>));</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  }</div>
+</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  <span class="keyword">virtual</span> T parse(sml::Identifier * <span class="keywordtype">id</span>) = 0;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Output.html#af01db0104f6bd68b61ac9baff164926f">   74</a></span>  <span class="keyword">virtual</span> T <a class="code hl_function" href="classsoar__ros_1_1Output.html#af01db0104f6bd68b61ac9baff164926f">parse</a>(sml::Identifier * <span class="keywordtype">id</span>) = 0;</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>};</div>
+</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">class </span>Input : <span class="keyword">public</span> InputBase</div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="};">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Input.html">   78</a></span><span class="keyword">class </span><a class="code hl_class" href="classsoar__ros_1_1Input.html">Input</a> : <span class="keyword">public</span> <a class="code hl_class" href="classsoar__ros_1_1InputBase.html">InputBase</a></div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>{</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  SafeQueue&lt;T&gt; m_r2sQueue;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <a class="code hl_class" href="classsoar__ros_1_1SafeQueue.html">SafeQueue&lt;T&gt;</a> m_r2sQueue;</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  Input() {}</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  ~Input() {}</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <a class="code hl_class" href="classsoar__ros_1_1Input.html">Input</a>() {}</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <a class="code hl_class" href="classsoar__ros_1_1Input.html">~Input</a>() {}</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> parse(T msg) = 0;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Input.html#a09a0e5766d8c852f3da30c6bb7723ecf">   97</a></span>  <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classsoar__ros_1_1Input.html#a09a0e5766d8c852f3da30c6bb7723ecf">parse</a>(T msg) = 0;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="keywordtype">void</span> process_r2s()<span class="keyword"> override</span></div>
+<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classsoar__ros_1_1Input.html#a24f54e499689f3751bc5ba2c37096a93">  100</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="classsoar__ros_1_1Input.html#a24f54e499689f3751bc5ba2c37096a93">process_r2s</a>()<span class="keyword"> override</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keyword">  </span>{</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keyword">auto</span> res = this-&gt;m_r2sQueue.tryPop();</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordflow">if</span> (res.has_value()) {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      this-&gt;parse(res.value());</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>      this-&gt;<a class="code hl_function" href="classsoar__ros_1_1Input.html#a09a0e5766d8c852f3da30c6bb7723ecf">parse</a>(res.value());</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    }</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  }</div>
+</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>};</div>
+</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>}  <span class="comment">// namespace soar_ros</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">#endif  </span><span class="comment">// SOAR_ROS__INTERFACE_HPP_</span></div>
 <div class="ttc" id="aSafeQueue_8hpp_html"><div class="ttname"><a href="SafeQueue_8hpp.html">SafeQueue.hpp</a></div><div class="ttdoc">Implementation of a thread safe queue.</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1InputBase_html"><div class="ttname"><a href="classsoar__ros_1_1InputBase.html">soar_ros::InputBase</a></div><div class="ttdef"><b>Definition</b> Interface.hpp:49</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1InputBase_html_a54be74c01b756a1ebc1f927b5efb0f48"><div class="ttname"><a href="classsoar__ros_1_1InputBase.html#a54be74c01b756a1ebc1f927b5efb0f48">soar_ros::InputBase::process_r2s</a></div><div class="ttdeci">virtual void process_r2s()=0</div><div class="ttdoc">This function reads the queue and calls the parse function of the input to create new WM elements via...</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Input_html"><div class="ttname"><a href="classsoar__ros_1_1Input.html">soar_ros::Input</a></div><div class="ttdef"><b>Definition</b> Interface.hpp:79</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Input_html_a09a0e5766d8c852f3da30c6bb7723ecf"><div class="ttname"><a href="classsoar__ros_1_1Input.html#a09a0e5766d8c852f3da30c6bb7723ecf">soar_ros::Input::parse</a></div><div class="ttdeci">virtual void parse(T msg)=0</div><div class="ttdoc">This function must attach the ROS message T from m_r2sQueue to the Soar input link.</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Input_html_a24f54e499689f3751bc5ba2c37096a93"><div class="ttname"><a href="classsoar__ros_1_1Input.html#a24f54e499689f3751bc5ba2c37096a93">soar_ros::Input::process_r2s</a></div><div class="ttdeci">void process_r2s() override</div><div class="ttdoc">This function reads the queue and calls the parse function of the input to create new WM elements via...</div><div class="ttdef"><b>Definition</b> Interface.hpp:100</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Interface_html"><div class="ttname"><a href="classsoar__ros_1_1Interface.html">soar_ros::Interface</a></div><div class="ttdef"><b>Definition</b> Interface.hpp:28</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Interface_html_a294fefd3992c72bf1c227928716e938b"><div class="ttname"><a href="classsoar__ros_1_1Interface.html#a294fefd3992c72bf1c227928716e938b">soar_ros::Interface::getTopic</a></div><div class="ttdeci">virtual std::string getTopic()=0</div><div class="ttdoc">Get the topic of the subscriber.</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Interface_html_a8e52e3b61ef77a59afa7178b681819a8"><div class="ttname"><a href="classsoar__ros_1_1Interface.html#a8e52e3b61ef77a59afa7178b681819a8">soar_ros::Interface::getAgent</a></div><div class="ttdeci">virtual sml::Agent * getAgent()=0</div><div class="ttdoc">Get the agent of the current interface.</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1OutputBase_html"><div class="ttname"><a href="classsoar__ros_1_1OutputBase.html">soar_ros::OutputBase</a></div><div class="ttdef"><b>Definition</b> Interface.hpp:40</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1OutputBase_html_a30c11674e784b63ef1cea8f3868e9e3d"><div class="ttname"><a href="classsoar__ros_1_1OutputBase.html#a30c11674e784b63ef1cea8f3868e9e3d">soar_ros::OutputBase::process_s2r</a></div><div class="ttdeci">virtual void process_s2r(sml::Identifier *id)=0</div><div class="ttdoc">This function is called to process an output link WME and push it to a queue.</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Output_html"><div class="ttname"><a href="classsoar__ros_1_1Output.html">soar_ros::Output</a></div><div class="ttdef"><b>Definition</b> Interface.hpp:58</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Output_html_ac38d1e23a7093e233209f8ff8f8c9046"><div class="ttname"><a href="classsoar__ros_1_1Output.html#ac38d1e23a7093e233209f8ff8f8c9046">soar_ros::Output::process_s2r</a></div><div class="ttdeci">void process_s2r(sml::Identifier *id) override</div><div class="ttdoc">This function is called to process an output link WME and push it to a queue.</div><div class="ttdef"><b>Definition</b> Interface.hpp:66</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1Output_html_af01db0104f6bd68b61ac9baff164926f"><div class="ttname"><a href="classsoar__ros_1_1Output.html#af01db0104f6bd68b61ac9baff164926f">soar_ros::Output::parse</a></div><div class="ttdeci">virtual T parse(sml::Identifier *id)=0</div><div class="ttdoc">Parse Soar working memory structure to a ROS message.</div></div>
+<div class="ttc" id="aclasssoar__ros_1_1SafeQueue_html"><div class="ttname"><a href="classsoar__ros_1_1SafeQueue.html">soar_ros::SafeQueue</a></div><div class="ttdef"><b>Definition</b> SafeQueue.hpp:38</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -37,41 +37,53 @@ Program Listing for File Subscriber.hpp
    
    namespace soar_ros
    {
-   template<typename T>
+   template <typename T>
    class Subscriber : public Input<T>, public Interface
    {
    protected:
      typename rclcpp::Subscription<T>::SharedPtr sub;
      std::string m_topic;
      rclcpp::Node::SharedPtr m_node;
-     sml::Agent * m_pAgent;
+     sml::Agent* m_pAgent;
+     rclcpp::CallbackGroup::SharedPtr m_callback_group;
    
    public:
-     Subscriber(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & topic)
-     : Input<T>(), m_topic(topic), m_node(node), m_pAgent(agent)
-     {
-       sub =
-         m_node->create_subscription<T>(
-         topic, 10,
-         std::bind(&Subscriber::callback, this, std::placeholders::_1));
-     }
+     Subscriber(
+       sml::Agent* agent,
+       rclcpp::Node::SharedPtr node,
+       const std::string& topic,
+       rclcpp::QoS qos = rclcpp::QoS(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default)),
+       rclcpp::CallbackGroup::SharedPtr callback_group = nullptr)
+       : Input<T>(), m_topic(topic), m_node(node), m_pAgent(agent),
+         m_callback_group(callback_group), m_qos(qos)
+     {}
+   
      ~Subscriber() {}
    
-     void callback(const T & msg)
+     void subscribe(rclcpp::Node::SharedPtr node)
      {
-       RCLCPP_INFO(m_node->get_logger(), "Received subscription msg on %s", m_topic.c_str());
+       if (!m_callback_group) {
+         m_callback_group = node->get_node_base_interface()->get_default_callback_group();
+       }
+       rclcpp::SubscriptionOptions options;
+       options.callback_group = m_callback_group;
+       sub = node->create_subscription<T>(
+         m_topic, m_qos,
+         std::bind(&Subscriber::callback, this, std::placeholders::_1),
+         options);
+     }
+   
+     void callback(const T& msg)
+     {
+       RCLCPP_DEBUG(m_node->get_logger(), "Received subscription msg on %s", m_topic.c_str());
        this->m_r2sQueue.push(msg);
      }
    
-     std::string getTopic() override
-     {
-       return m_topic;
-     }
+     std::string getTopic() override { return m_topic; }
+     sml::Agent* getAgent() override { return m_pAgent; }
    
-     sml::Agent * getAgent() override
-     {
-       return m_pAgent;
-     }
+   private:
+     rclcpp::QoS m_qos;
    };
    }  // namespace soar_ros
    
