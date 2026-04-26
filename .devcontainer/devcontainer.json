@@ -2,6 +2,7 @@
     "name": "ROS 2 Development Container",
     "privileged": true,
     "remoteUser": "developer",
+    "updateRemoteUserUID": true,
     "build": {
         "dockerfile": "Dockerfile",
         "args": {
@@ -31,6 +32,6 @@
         "-e",
         "DISPLAY=${env:DISPLAY}"
     ],
-    "postCreateCommand": "sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && sudo chown -R $(whoami) /home/ws/ || true",
-    "postAttachCommand": "colcon build --symlink-install"
+    "postCreateCommand": "sudo apt-get update && sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y",
+    "postAttachCommand": "colcon build --symlink-install --event-handlers console_cohesion+ --base-paths /home/ws --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo"
 }
