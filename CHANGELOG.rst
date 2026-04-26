@@ -2,8 +2,8 @@
 Changelog for package soar_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2026-04-26)
+------------------
 * doc: add ci status badge
 * build: add launch_testing to package.xml
 * ci: use docker based images for setup-ros
