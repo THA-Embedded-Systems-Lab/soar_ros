@@ -8,29 +8,56 @@ on:
         - cron: "0 0 * * 0" # every Sunday at midnight UTC
 
 jobs:
-    matrix:
-        runs-on: ${{ matrix.os}}
+    test_docker: # On Linux, iterates on all ROS 1 and ROS 2 distributions.
+        runs-on: ubuntu-latest
         strategy:
-            fail-fast: false
             matrix:
+                ros_distribution:
+                    - jazzy
+                    - kilted
+                    - rolling
+
+                # Define the Docker image(s) associated with each ROS distribution.
+                # The include syntax allows additional variables to be defined, like
+                # docker_image in this case. See documentation:
+                # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#example-including-configurations-in-a-matrix-build
+                #
+                # Platforms are defined in REP 3 and REP 2000:
+                # https://ros.org/reps/rep-0003.html
+                # https://ros.org/reps/rep-2000.html
                 include:
-                    - os: "ubuntu-24.04"
-                      target_ros2_distro: "jazzy"
-                    - os: "ubuntu-24.04"
-                      target_ros2_distro: "kilted"
-                    - os: "ubuntu-24.04"
-                      target_ros2_distro: "rolling"
+                    - docker_image: ubuntu:noble
+                      ros_distribution: jazzy
+                      ros_version: 2
+
+                    - docker_image: ubuntu:noble
+                      ros_distribution: kilted
+                      ros_version: 2
+
+                    - docker_image: ubuntu:noble
+                      ros_distribution: rolling
+                      ros_version: 2
+        container:
+            image: ${{ matrix.docker_image }}
         env:
             RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
-
         steps:
-            - uses: ros-tooling/setup-ros@v0.7
+            - name: setup ROS environment
+              uses: ros-tooling/setup-ros@v0.7
+              with:
+                  required-ros-distributions: ${{ matrix.ros_distribution }}
 
             - name: Use CycloneDDS
-              run: sudo apt-get update && sudo apt-get install ros-${{
-                  matrix.target_ros2_distro }}-rmw-cyclonedds-cpp -y
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y \
+                    ros-${{ matrix.ros_distribution }}-rmw-cyclonedds-cpp
 
-            - uses: ros-tooling/action-ros-ci@v0.4
+            - name: Check RMW env
+              run: echo "$RMW_IMPLEMENTATION"
+
+            - name: build and test ROS 2
+              uses: ros-tooling/action-ros-ci@v0.4
               with:
                   package-name: soar_ros
-                  target-ros2-distro: ${{ matrix.target_ros2_distro }}
+                  target-ros2-distro: ${{ matrix.ros_distribution }}
