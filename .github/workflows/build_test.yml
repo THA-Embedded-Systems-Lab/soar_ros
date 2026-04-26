@@ -20,8 +20,16 @@ jobs:
                       target_ros2_distro: "kilted"
                     - os: "ubuntu-24.04"
                       target_ros2_distro: "rolling"
+        env:
+            RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+
         steps:
             - uses: ros-tooling/setup-ros@v0.7
+
+            - name: Use CycloneDDS
+              run: sudo apt-get update && sudo apt-get install ros-${{
+                  matrix.target_ros2_distro }}-rmw-cyclonedds-cpp -y
+
             - uses: ros-tooling/action-ros-ci@v0.4
               with:
                   package-name: soar_ros
