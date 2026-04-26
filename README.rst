@@ -4,6 +4,10 @@ soar_ros: A ROS 2 Interface for Soar
 .. figure:: doc/Images/soar_ros_slogan_default.svg
    :alt: logo
 
+.. image:: https://github.com/THA-Embedded-Systems-Lab/soar_ros/actions/workflows/build_test.yml/badge.svg
+   :target: https://github.com/THA-Embedded-Systems-Lab/soar_ros/actions/workflows/build_test.yml
+   :alt: Build & Test
+
 This ROS2 package provides an interface for the Soar cognitive
 architecture by creating wrappers for ROS2 messages and handling the
 Soar kernel in a `continuos
@@ -11,13 +15,13 @@ mode <https://soar.eecs.umich.edu/development/soar/ThreadsInSML/>`__.
 
 `Soar <https://soar.eecs.umich.edu/>`__ is a cognitive architecture
 developed at the University of Michigan. It is used in the field of
-cognitive robotics in different projects, e.g. a
+cognitive robotics in different projects, e.g. a
 `drone <https://github.com/saikishor/soar-to-ros/tree/master>`__ or a
 `robot <https://github.com/pauloserrafh/ros_tiago_soar/tree/master>`__.
 However, the integration of Soar and `ROS 2 <https://www.ros.org/>`__ is
 currently difficult for complex projects, which include multiple
 publishers, subscribers, services or clients. The main limitation
-orginates from the synchronous callback model used by Soar which
+originates from the synchronous callback model used by Soar which
 inspired the creation of this wrapper. A detailed explanation about the
 reason for the development of the package can be read in the `software
 architecture <./doc/SoftwareArchitecture.md>`__.
@@ -142,7 +146,7 @@ adding it to the node similar to a builder pattern, cf.
    executor.spin();
 
 These rules use an operator to add two integer numbers and provide the
-sum at the output link. The following rules are availabe in
+sum at the output link. The following rules are available in
 `main.soar <Soar/main.soar>`__.
 
 .. code:: soar
@@ -191,11 +195,11 @@ How to build and install
 
 .. Warning::
    If you would like to use the Java-based debugger, the
-   installation of the official Soar release is requried: Download and
+   installation of the official Soar release is required: Download and
    install the latest Soar release from their
    `repository <https://github.com/SoarGroup/Soar>`__. Setting the
    ``SOAR_HOME`` environment variable to the ``bin/`` directory of the
-   insalltion could help to open the debugger.
+   installation could help to open the debugger.
 
 How to build and run tests
 --------------------------

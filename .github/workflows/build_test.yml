@@ -1,4 +1,4 @@
-name: Build and test run for the package
+name: Build & Test
 run-name: build_test
 
 on:
@@ -8,7 +8,8 @@ on:
         - cron: "0 0 * * 0" # every Sunday at midnight UTC
 
 jobs:
-    test_docker: # On Linux, iterates on all ROS 1 and ROS 2 distributions.
+    test_docker:
+        # On Linux, iterates on all ROS 1 and ROS 2 distributions.
         runs-on: ubuntu-latest
         strategy:
             matrix:

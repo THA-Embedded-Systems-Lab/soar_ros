@@ -1,0 +1,21 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions: []
+dictionaries: []
+words: []
+ignoreWords:
+    [
+        "colcon",
+        "ints",
+        "Ints",
+        "rclcpp",
+        "rosdoc",
+        "cout",
+        "endl",
+        "stoi",
+        "cyclonedds",
+        "scons",
+        "userdel",
+        "NOPASSWD",
+    ]
+import: []
