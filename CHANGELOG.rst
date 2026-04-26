@@ -9,14 +9,11 @@ Changelog for package soar_ros
 * ci: use docker based images for setup-ros
 * fix: add ament_cmake_test to package.xml
 * ci: use cyclcon DDS as default
-  Co-authored-by: Copilot <copilot@github.com>
 * build: update docker configuration
 * fix: replace ament_target_dependencies with target_link_libraries
 * fix: upgrade minium cmake version to jazzy spec
 * chore: reduce most logs from info to debug
 * fix: remove Soar output log (`#6 <https://github.com/THA-Embedded-Systems-Lab/soar_ros/issues/6>`_)
-  This is due to Soar output log command interference with xml socket communication
-  Fixes: `#6 <https://github.com/THA-Embedded-Systems-Lab/soar_ros/issues/6>`_
 * feat!: add multi agent support
 * Contributors: Moritz Schmidt
 

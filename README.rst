@@ -34,9 +34,6 @@ history of the `fork <https://github.com/moschmdt/soar>`__.
 Features
 --------
 
-The library is developed targeting ROS 2 Humble on Ubuntu 22.04. Other
-configurations were not tested. It provides
-
 -  Non blocking Soar kernel
 -  Publisher
 -  Subscriber
@@ -48,6 +45,9 @@ configurations were not tested. It provides
 The following features are **not supported**, yet.
 
 -  Action Server
+
+Check supported ROS 2 versions via the GitHub CI file `build_test.yml
+<./.github/workflows/build_test.yml>`__.
 
 
 Definition and description of the public API
