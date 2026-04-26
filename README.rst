@@ -243,7 +243,7 @@ it your ROS2 workspace.
 .. code:: cmake
 
    find_package(soar_ros REQUIRED)
-   ament_target_dependencies(<executable_name> soar_ros)
+   target_link_libraries(<executable_name> soar_ros)
 
 For code references have a look at the `examples <#examples>`__.
 

@@ -15,14 +15,22 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   std_msgs
   std_srvs
   ament_index_cpp
-  SQLite3
 )
 
+find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)
+find_package(std_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(ament_index_cpp REQUIRED)
+find_package(SQLite3 REQUIRED)
 
-foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
-  find_package(${Dependency} REQUIRED)
-endforeach()
-
+set(THIS_PACKAGE_LINK_DEPENDS
+  rclcpp::rclcpp
+  rclcpp_action::rclcpp_action
+  ${std_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  ament_index_cpp::ament_index_cpp
+)
 
 include(FetchContent)
 
@@ -39,42 +47,36 @@ target_include_directories(soar_ros
   PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
     "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>")
-ament_target_dependencies(soar_ros rclcpp rclcpp_action std_msgs std_srvs ament_index_cpp)
-target_link_libraries(soar_ros soar_lib)
+target_link_libraries(soar_ros
+    soar_lib
+    ${THIS_PACKAGE_LINK_DEPENDS})
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
 
 add_executable(start src/main.cpp)
-ament_target_dependencies(start ${THIS_PACKAGE_INCLUDE_DEPENDS})
-target_link_libraries(start soar_ros)
+target_link_libraries(start soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
 
 if(BUILD_TESTING)
   find_package(example_interfaces REQUIRED)
   find_package(launch_testing_ament_cmake)
 
   add_executable(test_input_output test/pubsub/test_input_output.cpp)
-  ament_target_dependencies(test_input_output ${THIS_PACKAGE_INCLUDE_DEPENDS})
-  target_link_libraries(test_input_output soar_ros)
+  target_link_libraries(test_input_output soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
 
   add_executable(test_service test/service/test_service.cpp)
-  ament_target_dependencies(test_service ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
-  target_link_libraries(test_service soar_ros)
+  target_link_libraries(test_service soar_ros ${THIS_PACKAGE_LINK_DEPENDS} ${example_interfaces_TARGETS})
 
   add_executable(test_client test/client/test_client.cpp)
-  ament_target_dependencies(test_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
-  target_link_libraries(test_client soar_ros)
+  target_link_libraries(test_client soar_ros ${THIS_PACKAGE_LINK_DEPENDS} ${example_interfaces_TARGETS})
 
   add_executable(test_action_client test/action_client/test_action_client.cpp)
-  ament_target_dependencies(test_action_client ${THIS_PACKAGE_INCLUDE_DEPENDS} example_interfaces)
-  target_link_libraries(test_action_client soar_ros)
+  target_link_libraries(test_action_client soar_ros ${THIS_PACKAGE_LINK_DEPENDS} ${example_interfaces_TARGETS})
 
   add_executable(test_multi_agent test/multi_agent/test_multi_agent.cpp)
-  ament_target_dependencies(test_multi_agent ${THIS_PACKAGE_INCLUDE_DEPENDS})
-  target_link_libraries(test_multi_agent soar_ros)
+  target_link_libraries(test_multi_agent soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
 
   add_executable(test_shared_input test/multi_agent/test_shared_input.cpp)
-  ament_target_dependencies(test_shared_input ${THIS_PACKAGE_INCLUDE_DEPENDS})
-  target_link_libraries(test_shared_input soar_ros)
+  target_link_libraries(test_shared_input soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
 
   add_launch_test(test/pubsub/test_launch_input_output.py)
   add_launch_test(test/service/test_launch_service.py)
