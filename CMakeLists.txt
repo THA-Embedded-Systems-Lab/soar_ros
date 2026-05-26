@@ -40,7 +40,7 @@ include(FetchContent)
 FetchContent_Declare(
     soar
     GIT_REPOSITORY https://github.com/SoarGroup/Soar.git
-    GIT_TAG releases/9.6.4
+    GIT_TAG releases/9.6.5
 )
 
 FetchContent_MakeAvailable(soar)
