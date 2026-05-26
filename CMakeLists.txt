@@ -13,6 +13,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
   rclcpp_action
   std_msgs
+  geometry_msgs
   std_srvs
   ament_index_cpp
 )
@@ -20,6 +21,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(SQLite3 REQUIRED)
@@ -28,6 +30,7 @@ set(THIS_PACKAGE_LINK_DEPENDS
   rclcpp::rclcpp
   rclcpp_action::rclcpp_action
   ${std_msgs_TARGETS}
+  ${geometry_msgs_TARGETS}
   ${std_srvs_TARGETS}
   ament_index_cpp::ament_index_cpp
 )
@@ -57,6 +60,7 @@ add_executable(start src/main.cpp)
 target_link_libraries(start soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
 
 if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
   find_package(example_interfaces REQUIRED)
   find_package(launch_testing_ament_cmake)
 
@@ -77,6 +81,101 @@ if(BUILD_TESTING)
 
   add_executable(test_shared_input test/multi_agent/test_shared_input.cpp)
   target_link_libraries(test_shared_input soar_ros ${THIS_PACKAGE_LINK_DEPENDS})
+
+  ament_add_gtest(test_std_msgs_converters
+    test/msg_converters/test_std_msgs_converters.cpp)
+  target_include_directories(test_std_msgs_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_std_msgs_converters
+    soar_lib
+    ${std_msgs_TARGETS})
+
+  ament_add_gtest(test_geometry_msgs_converters
+    test/msg_converters/test_geometry_msgs_converters.cpp)
+  target_include_directories(test_geometry_msgs_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_geometry_msgs_converters
+    soar_lib
+    ${std_msgs_TARGETS}
+    ${geometry_msgs_TARGETS})
+
+  find_package(builtin_interfaces REQUIRED)
+  find_package(sensor_msgs REQUIRED)
+  find_package(nav_msgs REQUIRED)
+  find_package(visualization_msgs REQUIRED)
+  find_package(tf2_msgs REQUIRED)
+  find_package(action_msgs REQUIRED)
+  find_package(unique_identifier_msgs REQUIRED)
+  find_package(diagnostic_msgs REQUIRED)
+  find_package(trajectory_msgs REQUIRED)
+
+  ament_add_gtest(test_builtin_interfaces_converters
+    test/msg_converters/test_builtin_interfaces_converters.cpp)
+  target_include_directories(test_builtin_interfaces_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_builtin_interfaces_converters
+    soar_lib
+    ${builtin_interfaces_TARGETS})
+
+  ament_add_gtest(test_sensor_msgs_converters
+    test/msg_converters/test_sensor_msgs_converters.cpp)
+  target_include_directories(test_sensor_msgs_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_sensor_msgs_converters
+    soar_lib
+    ${builtin_interfaces_TARGETS}
+    ${std_msgs_TARGETS}
+    ${geometry_msgs_TARGETS}
+    ${sensor_msgs_TARGETS})
+
+  ament_add_gtest(test_nav_msgs_converters
+    test/msg_converters/test_nav_msgs_converters.cpp)
+  target_include_directories(test_nav_msgs_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_nav_msgs_converters
+    soar_lib
+    ${builtin_interfaces_TARGETS}
+    ${std_msgs_TARGETS}
+    ${geometry_msgs_TARGETS}
+    ${nav_msgs_TARGETS})
+
+  ament_add_gtest(test_misc_msgs_converters
+    test/msg_converters/test_misc_msgs_converters.cpp)
+  target_include_directories(test_misc_msgs_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_misc_msgs_converters
+    soar_lib
+    ${builtin_interfaces_TARGETS}
+    ${std_msgs_TARGETS}
+    ${geometry_msgs_TARGETS}
+    ${visualization_msgs_TARGETS}
+    ${tf2_msgs_TARGETS}
+    ${unique_identifier_msgs_TARGETS}
+    ${action_msgs_TARGETS}
+    ${diagnostic_msgs_TARGETS}
+    ${trajectory_msgs_TARGETS})
+
+  ament_add_gtest(test_action_msgs_converters
+    test/msg_converters/test_action_msgs_converters.cpp)
+  target_include_directories(test_action_msgs_converters PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_action_msgs_converters
+    soar_lib
+    ${builtin_interfaces_TARGETS}
+    ${unique_identifier_msgs_TARGETS}
+    ${action_msgs_TARGETS})
+
+  ament_add_gtest(test_soar_roundtrip
+    test/msg_converters/test_soar_roundtrip.cpp)
+  target_include_directories(test_soar_roundtrip PRIVATE
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>")
+  target_link_libraries(test_soar_roundtrip
+    soar_lib
+    ${builtin_interfaces_TARGETS}
+    ${std_msgs_TARGETS}
+    ${geometry_msgs_TARGETS}
+    ${sensor_msgs_TARGETS}
+    ${nav_msgs_TARGETS})
 
   add_launch_test(test/pubsub/test_launch_input_output.py)
   add_launch_test(test/service/test_launch_service.py)

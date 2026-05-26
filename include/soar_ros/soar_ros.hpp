@@ -24,5 +24,6 @@
 #include "Service.hpp"
 #include "Client.hpp"
 #include "ActionClient.hpp"
+#include "msg/converters.hpp"
 
 #endif // SOAR_ROS__SOAR_ROS_HPP_

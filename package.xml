@@ -11,17 +11,31 @@
 
   <depend>rclcpp</depend>
   <depend>rclcpp_action</depend>
-  <depend>std_msgs</depend>
-  <depend>std_srvs</depend>
   <depend>launch_testing_ament_cmake</depend>
   <depend>ament_index_cpp</depend>
+
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>builtin_interfaces</depend>
+  <depend>sensor_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>tf2_msgs</depend>
+  <depend>action_msgs</depend>
+  <depend>unique_identifier_msgs</depend>
+  <depend>diagnostic_msgs</depend>
+  <depend>trajectory_msgs</depend>
+
   <!-- Required for Soar until available as rosdep key. Currently installed via fetchcontent-->
   <depend>libsqlite3-dev</depend>
 
   <test_depend>launch_testing</test_depend>
   <test_depend>launch_ros</test_depend>
   <test_depend>example_interfaces</test_depend>
+  <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_cmake_test</test_depend>
+
 
   <export>
     <build_type>ament_cmake</build_type>

@@ -73,18 +73,38 @@ Soar data types.
 
 .. code:: cpp
 
+   #include "soar_ros/soar_ros.hpp"
+
    class TestOutput : public soar_ros::Publisher<std_msgs::msg::String>
    {
    public:
-     TestOutput(sml::Agent * agent, rclcpp::Node::SharedPtr node, const std::string & topic)
-     : Publisher<std_msgs::msg::String>(agent, node, topic) {}
-     ~TestOutput() {}
+     using Publisher<std_msgs::msg::String>::Publisher;
+
      std_msgs::msg::String parse(sml::Identifier * id) override
      {
-       std_msgs::msg::String msg;
-       msg.data = id->GetParameterValue("data");
+       auto msg = soar_ros::msg::fromSoar<std_msgs::msg::String>(id);
        std::cout << id->GetCommandName() << " " << msg.data << std::endl;
        return msg;
+     }
+   };
+
+Subscriber
+~~~~~~~~~~
+
+The ``soar_ros::Subscriber`` extends the ROS ``Subscriber`` so the user
+only needs to define how incoming messages are written onto the Soar
+input link.
+
+.. code:: cpp
+
+   class TestInput : public soar_ros::Subscriber<std_msgs::msg::String>
+   {
+   public:
+     using Subscriber<std_msgs::msg::String>::Subscriber;
+
+     void parse(std_msgs::msg::String msg) override
+     {
+       soar_ros::msg::toSoar(m_pAgent->GetInputLink(), m_topic.c_str(), msg);
      }
    };
 
@@ -125,6 +145,19 @@ Service, based on the ``soar_ros::Service`` class. The code is from
        pId->CreateIntWME("b", msg.get()->b);
      }
    }
+
+Message Converters
+~~~~~~~~~~~~~~~~~~
+
+``soar_ros`` ships ready-made converters for the most common ROS 2 message
+types (``std_msgs``, ``geometry_msgs``). Including
+``soar_ros/msg/converters.hpp`` (or the umbrella ``soar_ros/soar_ros.hpp``)
+exposes ``soar_ros::msg::toSoar`` and ``soar_ros::msg::fromSoar<T>`` for
+converting between ROS 2 messages and Soar WME subtrees.
+
+For the full list of supported types, usage examples, WME naming conventions,
+and instructions on extending converters to additional message packages see
+`doc/MessageConverters.rst <./doc/MessageConverters.rst>`__.
 
 A second step is required to actually make this interface available -
 adding it to the node similar to a builder pattern, cf.

@@ -26,9 +26,7 @@ public:
 
   void parse(std_msgs::msg::String msg) override
   {
-    sml::Identifier *il = this->m_pAgent->GetInputLink();
-    sml::Identifier *pId = il->CreateIdWME(this->m_topic.c_str());
-    pId->CreateStringWME("data", msg.data.c_str());
+    soar_ros::msg::toSoar(this->m_pAgent->GetInputLink(), this->m_topic.c_str(), msg);
   }
 };
 
@@ -53,9 +51,7 @@ public:
 
   void parse(std_msgs::msg::String msg) override
   {
-    sml::Identifier *il = this->m_pAgent->GetInputLink();
-    sml::Identifier *pId = il->CreateIdWME(this->m_topic.c_str());
-    pId->CreateStringWME("data", msg.data.c_str());
+    soar_ros::msg::toSoar(this->m_pAgent->GetInputLink(), this->m_topic.c_str(), msg);
   }
 };
 
