@@ -21,7 +21,8 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && apt-get install -y \
     python3-pip \
     ros-${ROS2_DISTRO}-rmw-cyclonedds-cpp \
-    ros-${ROS2_DISTRO}-example-interfaces
+    ros-${ROS2_DISTRO}-example-interfaces \
+    pre-commit
 
 ENV SHELL=/bin/bash
 
