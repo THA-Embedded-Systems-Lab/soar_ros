@@ -13,28 +13,33 @@ def generate_launch_description():
             description='Frequency for Sender node (Hz)'
         ),
         DeclareLaunchArgument(
+            'preferences_based_sort',
+            default_value='False',
+            description='Enable preferences-based sorting in Soar System node'
+        ),
+        DeclareLaunchArgument(
             'debug',
             default_value='false',
             description='Debug mode for system node'
         ),
         DeclareLaunchArgument(
             'num_inputs',
-            default_value='2',
+            default_value='1',
             description='Number of input channels (for SISO/MIMO)'
         ),
         DeclareLaunchArgument(
             'num_outputs',
-            default_value='2',
+            default_value='1',
             description='Number of output channels (for SISO/MIMO)'
         ),
         DeclareLaunchArgument(
             'messages_to_send',
-            default_value='3000',
+            default_value='5',
             description='Number of messages to send from Sender node'
         ),
         DeclareLaunchArgument(
             'auto_delete_soar_io_on_complete',
-            default_value='false',
+            default_value='True',
             description='Enable automatic deletion of completed input/output messages'
         ),
         # Start sender with two second delay, so the receiver and system are ready
@@ -68,6 +73,7 @@ def generate_launch_description():
             parameters=[
                 {'debug': LaunchConfiguration('debug')},
                 {'auto_delete_soar_io_on_complete': LaunchConfiguration('auto_delete_soar_io_on_complete')},
+                {'preferences_based_sort': LaunchConfiguration('preferences_based_sort')},
                 {'num_inputs': LaunchConfiguration('num_inputs')},
                 {'num_outputs': LaunchConfiguration('num_outputs')},
            ]
