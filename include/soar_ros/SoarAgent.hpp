@@ -18,7 +18,9 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_set>
 #include <vector>
+#include <ament_index_cpp/get_package_share_directory.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 #include <sml_Client.h>
@@ -51,11 +53,18 @@ namespace soar_ros
   public:
     /// @param pAgent  Raw sml::Agent owned by the kernel (non-owning).
     /// @param node    Shared ptr to SoarRunner (creates ROS primitives).
+    /// @param auto_delete_soar_io_on_complete If true, automatically remove input
+    ///        messages from the input-link when marked complete by output-link.
     SoarAgent(
         sml::Agent *pAgent,
-        rclcpp::Node::SharedPtr node)
-        : m_pAgent(pAgent), m_node(node)
+        rclcpp::Node::SharedPtr node,
+        bool auto_delete_soar_io_on_complete = true)
+        : m_pAgent(pAgent), m_node(node), m_auto_delete_soar_io_on_complete(auto_delete_soar_io_on_complete)
     {
+      if (m_auto_delete_soar_io_on_complete)
+      {
+        loadProductionsFromShared("soar_ros", "Soar/input-output-deletion.soar");
+      }
     }
 
     SoarAgent(const SoarAgent &) = delete;
@@ -162,10 +171,113 @@ namespace soar_ros
     void updateWorld()
     {
       processOutputLinkChanges();
+
+      if (m_auto_delete_soar_io_on_complete)
+      {
+        removeCompletedInput();
+      }
+
       processInput();
     }
 
+    bool loadProductionsFromShared(const std::string share_name, const std::string filename)
+    {
+      const std::string share_directory = ament_index_cpp::get_package_share_directory(share_name);
+      std::string full_path = share_directory + "/" + filename;
+      m_pAgent->LoadProductions(full_path.c_str());
+
+      if (m_pAgent->HadError())
+      {
+        std::string err_msg = m_pAgent->GetLastErrorDescription();
+        RCLCPP_ERROR_STREAM(m_node->get_logger(), "Failed loading productions from: " << full_path << ", error: " << err_msg);
+        return false;
+      }
+
+      RCLCPP_INFO_STREAM(m_node->get_logger(), "Loaded productions from: " << full_path);
+      return true;
+    }
+
   private:
+    /// @brief Enable automatic deletion of completed input/output messages.
+    bool m_auto_delete_soar_io_on_complete;
+
+    /// @brief Pending input removal ids collected from output-link.
+    std::vector<long long> pending_input_removals;
+
+    /// @brief Per-agent counter for assigning soar-input-removal-id WMEs.
+    long long m_input_removal_counter{0};
+
+    /// @brief Remove completed input messages from the input-link.
+    void removeCompletedInput()
+    {
+      if (!m_auto_delete_soar_io_on_complete)
+      {
+        return;
+      }
+
+      sml::Identifier *input_link = m_pAgent->GetInputLink();
+      if (input_link == nullptr)
+      {
+        return;
+      }
+
+      if (pending_input_removals.empty())
+      {
+        return;
+      }
+
+      std::unordered_set<long long> pending_ids(pending_input_removals.begin(), pending_input_removals.end());
+      pending_input_removals.clear();
+
+      int child_count = input_link->GetNumberChildren();
+      for (int i = 0; i < child_count; ++i)
+      {
+        sml::WMElement *child = input_link->GetChild(i);
+        if (child == nullptr)
+        {
+          continue;
+        }
+
+        auto *message_id = dynamic_cast<sml::Identifier *>(child);
+        if (message_id == nullptr)
+        {
+          continue;
+        }
+
+        int message_child_count = message_id->GetNumberChildren();
+        for (int j = 0; j < message_child_count; ++j)
+        {
+          sml::WMElement *message_child = message_id->GetChild(j);
+          if (message_child == nullptr)
+          {
+            continue;
+          }
+
+          const char *attribute = message_child->GetAttribute();
+          if (attribute == nullptr || std::string(attribute) != "soar-input-removal-id")
+          {
+            continue;
+          }
+
+          std::string removal_id_value;
+          message_child->GetValueAsString(removal_id_value);
+          try
+          {
+            long long removal_id = std::stoll(removal_id_value);
+            if (pending_ids.find(removal_id) != pending_ids.end())
+            {
+              child->DestroyWME();
+              break;
+            }
+          }
+          catch (const std::exception &)
+          {
+            continue;
+          }
+        }
+      }
+    }
+
     void processOutputLinkChanges()
     {
       if (!m_pAgent)
@@ -178,6 +290,15 @@ namespace soar_ros
       {
         sml::Identifier *pId = m_pAgent->GetCommand(i);
         std::string name = pId->GetCommandName();
+
+        // Intercept internal removal-id commands when auto-delete is enabled
+        if (m_auto_delete_soar_io_on_complete && name == "soar-input-removal-id")
+        {
+          auto value = pId->GetParameterValue("value");
+          pending_input_removals.push_back(std::stoll(value));
+          pId->AddStatusComplete();
+          continue;
+        }
 
         auto it = m_outputs.find(name);
         if (it == m_outputs.end())
@@ -203,6 +324,53 @@ namespace soar_ros
       {
         input->process_r2s();
       }
+
+      if (m_auto_delete_soar_io_on_complete)
+      {
+        sml::Identifier *input_link = m_pAgent->GetInputLink();
+        if (input_link != nullptr)
+        {
+          int child_count = input_link->GetNumberChildren();
+          for (int i = 0; i < child_count; ++i)
+          {
+            sml::WMElement *child = input_link->GetChild(i);
+            if (child == nullptr)
+            {
+              continue;
+            }
+
+            auto *message_id = dynamic_cast<sml::Identifier *>(child);
+            if (message_id == nullptr)
+            {
+              continue;
+            }
+
+            bool has_removal_id = false;
+            int message_child_count = message_id->GetNumberChildren();
+            for (int j = 0; j < message_child_count; ++j)
+            {
+              sml::WMElement *message_child = message_id->GetChild(j);
+              if (message_child == nullptr)
+              {
+                continue;
+              }
+              const char *attribute = message_child->GetAttribute();
+              if (attribute != nullptr && std::string(attribute) == "soar-input-removal-id")
+              {
+                has_removal_id = true;
+                break;
+              }
+            }
+
+            if (!has_removal_id)
+            {
+              message_id->CreateIntWME("soar-input-removal-id", m_input_removal_counter);
+              ++m_input_removal_counter;
+            }
+          }
+        }
+      }
+
       m_pAgent->Commit();
     }
 
