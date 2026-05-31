@@ -159,10 +159,10 @@ namespace soar_ros
     RCLCPP_INFO(get_logger(), "Soar kernel shut down");
   }
 
-
   std::shared_ptr<SoarAgent> SoarRunner::addAgent(
       const std::string &agent_name,
-      const std::string &source_file)
+      const std::string &source_file,
+      bool auto_delete_soar_io_on_complete)
   {
     sml::Agent *raw_agent = m_kernel->CreateAgent(agent_name.c_str());
     if (!raw_agent || m_kernel->HadError())
@@ -199,7 +199,7 @@ namespace soar_ros
     }
 
     auto node_ptr = std::static_pointer_cast<rclcpp::Node>(shared_from_this());
-    auto soar_agent = std::make_shared<SoarAgent>(raw_agent, node_ptr);
+    auto soar_agent = std::make_shared<SoarAgent>(raw_agent, node_ptr, auto_delete_soar_io_on_complete);
 
     m_agents.push_back(soar_agent);
     RCLCPP_INFO(get_logger(), "Agent '%s' created", agent_name.c_str());
@@ -217,6 +217,9 @@ namespace soar_ros
     while (m_running.load() && rclcpp::ok())
     {
       m_kernel->RunAllAgents(1);
+#ifdef BUILD_BENCHMARK
+      RCLCPP_INFO(get_logger(), "Soar decision cycle executed");
+#endif
     }
     RCLCPP_INFO(get_logger(), "Soar run loop stopped");
   }
