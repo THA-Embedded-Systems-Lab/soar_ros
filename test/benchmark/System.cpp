@@ -9,15 +9,15 @@ using StringMsg = std_msgs::msg::String;
 class Output : public soar_ros::Publisher<StringMsg>
 {
 public:
-  Output(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& topic, int index)
-    : Publisher<StringMsg>(agent, node, topic), index_(index)
+  Output(sml::Agent *agent, rclcpp::Node::SharedPtr node, const std::string &topic, int index)
+      : Publisher<StringMsg>(agent, node, topic), index_(index)
   {
   }
   ~Output()
   {
   }
 
-  StringMsg parse(sml::Identifier* id) override
+  StringMsg parse(sml::Identifier *id) override
   {
     StringMsg msg;
     std::string frame_id = id->GetParameterValue("frame_id");
@@ -32,8 +32,8 @@ private:
 class Input : public soar_ros::Subscriber<StringMsg>
 {
 public:
-  Input(sml::Agent* agent, rclcpp::Node::SharedPtr node, const std::string& topic, int index)
-    : Subscriber<StringMsg>(agent, node, topic), index_(index)
+  Input(sml::Agent *agent, rclcpp::Node::SharedPtr node, const std::string &topic, int index)
+      : Subscriber<StringMsg>(agent, node, topic), index_(index)
   {
   }
   ~Input()
@@ -42,17 +42,18 @@ public:
 
   void parse(StringMsg msg) override
   {
-    sml::Identifier* il = this->m_pAgent->GetInputLink();
-    sml::Identifier* pId = il->CreateIdWME(this->m_topic.c_str());
+    sml::Identifier *il = this->m_pAgent->GetInputLink();
+    sml::Identifier *pId = il->CreateIdWME(this->m_topic.c_str());
     pId->CreateStringWME("frame_id", msg.data.c_str());
     pId->CreateIntWME("index", index_);
+    pId->CreateIntWME("timestamp", rclcpp::Clock().now().nanoseconds());
   }
 
 private:
   int index_;
 };
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
   rclcpp::init(argc, argv);
 
@@ -60,29 +61,41 @@ int main(int argc, char* argv[])
   const std::string share_directory = ament_index_cpp::get_package_share_directory(package_name);
   std::string soar_path = share_directory + "/Soar/benchmark.soar";
 
-  auto node = std::make_shared<soar_ros::SoarRunner>();
-  auto agent = node->addAgent("benchmark", soar_path);
+  auto node = std::make_shared<soar_ros::SoarRunner>("benchmark_node");
+
+  node->declare_parameter<bool>("auto_delete_soar_io_on_complete", true);
+  bool auto_delete_soar_io_on_complete = node->get_parameter("auto_delete_soar_io_on_complete").as_bool();
+
+  auto agent = node->addAgent("benchmark", soar_path, auto_delete_soar_io_on_complete);
 
   node->declare_parameter<int>("num_inputs", 3);
   node->declare_parameter<int>("num_outputs", 3);
   int num_inputs = node->get_parameter("num_inputs").as_int();
   int num_outputs = node->get_parameter("num_outputs").as_int();
 
+  node->declare_parameter<bool>("preferences_based_sort", false);
+  bool preferences_based_sort = node->get_parameter("preferences_based_sort").as_bool();
+  RCLCPP_INFO_STREAM(node->get_logger(), "Preferences-based sorting in Soar System: " << (preferences_based_sort ? "ENABLED" : "DISABLED"));
+  if (preferences_based_sort)
+  {
+    agent->loadProductionsFromShared("soar_ros", "Soar/preference-based-sort.soar");
+  }
+
   // Add multiple publishers for multiple outputs
   for (int i = 0; i < num_outputs; i++)
   {
     std::string topic_name = "output" + std::to_string(i);
     std::shared_ptr<soar_ros::Publisher<StringMsg>> p =
-        std::make_shared<Output>(agent, node, topic_name, i);
-    node->addPublisher(p);
+        std::make_shared<Output>(agent->getSmlAgent(), node, topic_name, i);
+    agent->addPublisher(p);
   }
 
   for (int i = 0; i < num_inputs; i++)
   {
     std::string topic_name = "input" + std::to_string(i);
     std::shared_ptr<soar_ros::Subscriber<StringMsg>> s =
-        std::make_shared<Input>(agent, node, topic_name, i);
-    node->addSubscriber(s);
+        std::make_shared<Input>(agent->getSmlAgent(), node, topic_name, i);
+    agent->addSubscriber(s);
   }
 
   if (!node->get_parameter("debug").as_bool())
