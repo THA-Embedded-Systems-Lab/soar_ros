@@ -51,7 +51,7 @@ run_benchmark() {
       auto_delete_soar_io_on_complete:="${AUTO_DELETE}" \
       preferences_based_sort:="${PREFERENCES_BASED_SORT}" || true
 
-    sleep 3
+    sleep 5
 
     cp ~/.ros/log/latest/launch.log "$LOG_DIR/logs/benchmark_f_${F}.log"
   done
@@ -67,7 +67,7 @@ run_benchmark() {
 run_benchmark 0 0 "1000" "True" "False"
 
 # 2. SISO: Single-channel throughput sweep with auto-delete
-run_benchmark 1 2000 "1000,1250,1500" "True" "False"
+run_benchmark 1 2000 "750,1000,1250,1500" "True" "False"
 
 # 3. Normal: Low-frequency, WME accumulation (no auto-delete)
 run_benchmark 1 8000 "200" "False" "False"
@@ -76,7 +76,7 @@ run_benchmark 1 8000 "200" "False" "False"
 run_benchmark 1 8000 "200" "True" "False"
 
 # 5. Preferences-Based Sort: Low-frequency with auto-delete and preferences-based sorting
-run_benchmark 1 200 "1000,1250" "True" "True"
+run_benchmark 1 200 "750,1000,1250" "True" "True"
 
 echo ""
 echo "All benchmarks complete. Update the directory names in evaluation.ipynb and run the notebook."
