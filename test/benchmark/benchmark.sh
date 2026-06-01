@@ -14,8 +14,8 @@ source ~/.bashrc
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-SAFETY_FACTOR=2.5
-OFFSET_S=10
+SAFETY_FACTOR=2
+OFFSET_S=30
 
 SESSION_ID="$(date -Iseconds | cut -d'+' -f1)"
 
@@ -67,7 +67,7 @@ run_benchmark() {
 run_benchmark 0 0 "1000" "True" "False"
 
 # 2. SISO: Single-channel throughput sweep with auto-delete
-run_benchmark 1 4000 "2000,2500,3000" "True" "False"
+run_benchmark 1 2000 "1000,1250,1500" "True" "False"
 
 # 3. Normal: Low-frequency, WME accumulation (no auto-delete)
 run_benchmark 1 8000 "200" "False" "False"
@@ -76,7 +76,7 @@ run_benchmark 1 8000 "200" "False" "False"
 run_benchmark 1 8000 "200" "True" "False"
 
 # 5. Preferences-Based Sort: Low-frequency with auto-delete and preferences-based sorting
-run_benchmark 1 200 "2000,2500" "True" "True"
+run_benchmark 1 200 "1000,1250" "True" "True"
 
 echo ""
 echo "All benchmarks complete. Update the directory names in evaluation.ipynb and run the notebook."
