@@ -14,7 +14,7 @@ source ~/.bashrc
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-SAFETY_FACTOR=2
+SAFETY_FACTOR=2.5
 OFFSET_S=10
 
 SESSION_ID="$(date -Iseconds | cut -d'+' -f1)"
@@ -38,8 +38,8 @@ run_benchmark() {
 
   for F in "${FREQS[@]}"; do
     local TIMEOUT
-    # TIMEOUT=$(awk "BEGIN { v = ${NUM_MESSAGES} / ${F} * ${SAFETY_FACTOR} + ${OFFSET_S}; printf \"%d\", (v == int(v)) ? v : int(v)+1 }")
-    TIMEOUT=5
+    TIMEOUT=$(awk "BEGIN { v = ${NUM_MESSAGES} / ${F} * ${SAFETY_FACTOR} + ${OFFSET_S}; printf \"%d\", (v == int(v)) ? v : int(v)+1 }")
+    # TIMEOUT=5
 
     echo ""
     echo "=== channels=${NUM_CHANNELS}, messages=${NUM_MESSAGES}, freq=${F} Hz, auto_delete=${AUTO_DELETE}, preferences_based_sort=${PREFERENCES_BASED_SORT}, timeout=${TIMEOUT}s  ==="
@@ -50,6 +50,8 @@ run_benchmark() {
       messages_to_send:="${NUM_MESSAGES}" \
       auto_delete_soar_io_on_complete:="${AUTO_DELETE}" \
       preferences_based_sort:="${PREFERENCES_BASED_SORT}" || true
+
+    sleep 3
 
     cp ~/.ros/log/latest/launch.log "$LOG_DIR/logs/benchmark_f_${F}.log"
   done
