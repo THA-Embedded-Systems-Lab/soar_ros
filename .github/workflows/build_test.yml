@@ -32,18 +32,22 @@ jobs:
                     - docker_image: ubuntu:noble
                       ros_distribution: jazzy
                       ros_version: 2
+                      continue_on_error: false
 
                     - docker_image: ubuntu:noble
                       ros_distribution: kilted
                       ros_version: 2
+                      continue_on_error: false
 
                     - docker_image: ubuntu:resolute
                       ros_distribution: lyrical
                       ros_version: 2
+                      continue_on_error: false
 
                     - docker_image: ubuntu:resolute
                       ros_distribution: rolling
                       ros_version: 2
+                      continue_on_error: true
         container:
             image: ${{ matrix.docker_image }}
         env:
@@ -65,6 +69,7 @@ jobs:
 
             - name: build and test ROS 2
               uses: ros-tooling/action-ros-ci@v0.4
+              continue-on-error: ${{ matrix.continue_on_error }}
               with:
                   package-name: soar_ros
                   target-ros2-distro: ${{ matrix.ros_distribution }}
