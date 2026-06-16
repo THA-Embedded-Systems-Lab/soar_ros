@@ -16,6 +16,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   geometry_msgs
   std_srvs
   ament_index_cpp
+  SQLite3
 )
 
 find_package(rclcpp REQUIRED)
