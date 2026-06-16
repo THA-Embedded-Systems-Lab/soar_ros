@@ -50,7 +50,7 @@ jobs:
             RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
         steps:
             - name: setup ROS environment
-              uses: ros-tooling/setup-ros@v0.7.19
+              uses: ros-tooling/setup-ros@v0.7
               with:
                   required-ros-distributions: ${{ matrix.ros_distribution }}
 
