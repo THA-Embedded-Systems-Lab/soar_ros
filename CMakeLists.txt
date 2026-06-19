@@ -46,6 +46,35 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(soar)
 
+# soar_lib's INSTALL_INTERFACE is include/soar, so install the public Soar headers there.
+# Soar's own install rule targets ${CMAKE_INSTALL_INCLUDEDIR} (= include/) which doesn't
+# match the exported path, causing downstream cmake to fail with a missing-directory error.
+install(
+  DIRECTORY
+    "${soar_SOURCE_DIR}/Core/ElementXML/src/"
+    "${soar_SOURCE_DIR}/Core/ConnectionSML/src/"
+    "${soar_SOURCE_DIR}/Core/ClientSML/src/"
+  DESTINATION "include/soar"
+  FILES_MATCHING PATTERN "*.h"
+)
+install(
+  DIRECTORY "${soar_SOURCE_DIR}/Core/shared/"
+  DESTINATION "include/soar"
+  FILES_MATCHING
+    PATTERN "*.h"
+    PATTERN "*.hpp"
+    PATTERN "msvc" EXCLUDE
+)
+install(
+  DIRECTORY "${soar_SOURCE_DIR}/Core/shared/msvc/"
+  DESTINATION "include/soar/msvc"
+  FILES_MATCHING PATTERN "*.h"
+)
+install(
+  FILES "${CMAKE_BINARY_DIR}/Core/shared/soarversion.h"
+  DESTINATION "include/soar"
+)
+
 add_library(soar_ros src/soar_ros.cpp src/SoarRunner.cpp)
 target_include_directories(soar_ros
   PUBLIC
