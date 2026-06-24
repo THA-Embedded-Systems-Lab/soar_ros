@@ -337,7 +337,7 @@ def load_benchmark_data(dir_name_logs, min_duration=0.0) -> tuple[pd.DataFrame, 
 def frequency_comparison_plot(df,title_prefix):
     plt.figure(figsize=(6.8, 2))
     plt.xlabel('Message Counter (1)')
-    plt.ylabel('Delay$_{msg}$ (s)')
+    plt.ylabel('Message delay (s)')
 
     stat_rows = []
     for frequencies in sorted(df['frequency'].unique()):
