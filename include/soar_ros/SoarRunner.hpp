@@ -82,7 +82,8 @@ namespace soar_ros
         /// @return            Per-agent handle; call add*() methods on it.
         std::shared_ptr<SoarAgent> addAgent(
             const std::string &agent_name,
-            const std::string &source_file);
+            const std::string &source_file,
+            bool auto_delete_soar_io_on_complete = true);
 
         /// @brief Start the Soar decision-cycle thread.
         void run();
