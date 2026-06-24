@@ -8,10 +8,10 @@ import matplotlib
 def build_paths(session_id: str) -> dict:
     return {
         "no_load":              f"{session_id}_ch0_msg0_f1000_delTrue_sortFalse",
-        "siso":                 f"{session_id}_ch1_msg4000_f2000-2500-3000_delTrue_sortFalse",
+        "siso":                 f"{session_id}_ch1_msg4000_f2500-3000_delTrue_sortFalse",
         "normal":               f"{session_id}_ch1_msg8000_f200_delFalse_sortFalse",
         "auto_delete_io":       f"{session_id}_ch1_msg8000_f200_delTrue_sortFalse",
-        "benchmark_preferences": f"{session_id}_ch1_msg200_f2000-2500_delTrue_sortTrue",
+        "benchmark_preferences": f"{session_id}_ch1_msg100_f2500-3000_delTrue_sortTrue",
     }
 
 def save_latex_table(df, filepath, caption="", label=""):
@@ -106,8 +106,7 @@ def compare_soar_kernel_frequencies(data_frame, scenario: str, legend = True):
             pd.DataFrame(stats_rows),
             f"out/images/{base_name}.tex",
             caption=f"Soar kernel decision cycle frequency statistics -- {scenario}",
-            label=f"tab:kernel_freq_{scenario}",
-            float_format="%.4g",
+            label=f"tab:kernel_freq_{scenario}"
         )
 
 
@@ -135,8 +134,7 @@ def analyze_sender_frequency(df, show_plots=False, scenario=""):
             pd.DataFrame(rows),
             f"out/images/sender_frequency_stats{tag}.tex",
             caption=f"Sender frequency statistics{' -- ' + scenario if scenario else ''}",
-            label=f"tab:sender_freq{'_' + scenario if scenario else ''}",
-            float_format="%.4g",
+            label=f"tab:sender_freq{'_' + scenario if scenario else ''}"
         )
     return pd.DataFrame(rows) if rows else pd.DataFrame()
 
@@ -262,8 +260,7 @@ def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.
             pd.DataFrame(dur_rows),
             f"out/images/duration_stats_{tag}.tex",
             caption=f"Message delay statistics -- {title_prefix}",
-            label=f"tab:duration_{tag.lower()}",
-            float_format="%.6g",
+            label=f"tab:duration_{tag.lower()}"
         )
 
     return max_duration
@@ -387,8 +384,7 @@ def frequency_comparison_plot(df,title_prefix):
             pd.DataFrame(stat_rows),
             f"out/images/{base_name}.tex",
             caption=f"Message delay statistics per frequency -- {title_prefix}",
-            label=f"tab:freq_comparison_{title_prefix.lower().replace(' ', '_')}",
-            float_format="%.6g",
+            label=f"tab:freq_comparison_{title_prefix.lower().replace(' ', '_')}"
         )
 
 
