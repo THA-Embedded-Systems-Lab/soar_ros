@@ -217,6 +217,9 @@ namespace soar_ros
     while (m_running.load() && rclcpp::ok())
     {
       m_kernel->RunAllAgents(1);
+#ifdef BUILD_BENCHMARK
+      RCLCPP_INFO(get_logger(), "Soar decision cycle executed");
+#endif
     }
     RCLCPP_INFO(get_logger(), "Soar run loop stopped");
   }

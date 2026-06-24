@@ -1,0 +1,19 @@
+[project]
+name = "soar-ros"
+version = "0.0.0"
+description = "This is just for data evaluation and doc generation."
+readme = "README.rst"
+requires-python = ">=3.14"
+dependencies = [
+    "argparse>=1.4.0",
+    "breathe>=4.36.0",
+    "matplotlib>=3.10.8",
+    "pandas>=3.0.1",
+    "pygments",
+    "rosdoc2==0.*",
+    "sphinx>=9.1.0",
+    "sphinxcontrib-mermaid>=2.0.1",
+]
+
+[tool.uv.sources]
+pygments = { git = "https://github.com/moschmdt/pygments", rev = "feature/soar" }
