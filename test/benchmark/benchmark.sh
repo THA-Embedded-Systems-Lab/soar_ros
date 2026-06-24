@@ -53,6 +53,9 @@ run_benchmark() {
       preferences_based_sort:="${PREFERENCES_BASED_SORT}" || true
 
     cp ~/.ros/log/latest/launch.log "$LOG_DIR/logs/benchmark_f_${F}.log"
+
+    # echo "Waiting for 5 seconds before next run..." 
+    sleep 5
   done
 
   echo "Parsing logs..."
@@ -75,8 +78,9 @@ run_benchmark 1 8000 "200" "False" "False"
 run_benchmark 1 8000 "200" "True" "False"
 
 # 5. Preferences-Based Sort: Low-frequency with auto-delete and preferences-based sorting
-run_benchmark 1 200 "2000,2500" "True" "True"
+run_benchmark 1 200 "2000,2500" "True" "True" 30
 
 echo ""
 echo "All benchmarks complete. SESSION_ID: ${SESSION_ID}"
+echo "executing..." python3 "$SCRIPT_DIR/evaluation.py" "$SESSION_ID"
 python3 "$SCRIPT_DIR/evaluation.py" "$SESSION_ID"
