@@ -8,7 +8,7 @@
         "args": {
             "USERNAME": "developer"
         }
-    },
+    }j,
     "workspaceFolder": "/home/ws",
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws/src/soar_ros/,type=bind",
     "customizations": {
@@ -19,7 +19,8 @@
                 "ranch-hand-robotics.rde-ros-2",
                 "ms-toolsai.jupyter",
                 "github.copilot-chat",
-                "zachflower.uncrustify"
+                "zachflower.uncrustify",
+                "tha-embedded-systems-lab.soar-tool"
             ]
         }
     },
@@ -35,6 +36,9 @@
         "-e",
         "DISPLAY=${env:DISPLAY}"
     ],
-    "postCreateCommand": "sudo apt-get update && sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y",
-    "postAttachCommand": "colcon build --symlink-install --event-handlers console_cohesion+ --base-paths /home/ws --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo"
+    "postCreateCommand": "sudo apt-get update && sudo rosdep update && sudo rosdep install --from-paths src --ignore-src -y && uv sync --project src/soar_ros",
+    "postAttachCommand": "colcon build --symlink-install --event-handlers console_cohesion+ --base-paths /home/ws --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo",
+    "remoteEnv": {
+        "UV_PROJECT_ENVIRONMENT": "/home/ws/.venv"
+    }
 }

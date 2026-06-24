@@ -61,6 +61,8 @@ RUN echo 'alias sbin="cd ${SOAR_DIR}/"' >> /home/${USERNAME}/.bashrc
 RUN echo 'alias sjd="${SOAR_DIR}/SoarJavaDebugger.sh"' >> /home/${USERNAME}/.bashrc
 RUN echo 'alias svis="${SOAR_DIR}/VisualSoar.sh"' >> /home/${USERNAME}/.bashrc
 
+
 # [Optional] Set the default user. Omit if you want to keep the default as root.
 USER $USERNAME
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 CMD ["/bin/bash"]
