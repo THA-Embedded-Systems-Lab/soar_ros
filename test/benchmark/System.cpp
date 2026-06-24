@@ -103,10 +103,9 @@ int main(int argc, char *argv[])
     node->startThread();
   }
 
-  while (rclcpp::ok())
-  {
-    rclcpp::spin_some(node);
-  }
+  rclcpp::executors::MultiThreadedExecutor executor;
+  executor.add_node(node);
+  executor.spin();
   node->~SoarRunner();
   rclcpp::shutdown();
   return 0;
