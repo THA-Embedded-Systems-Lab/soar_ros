@@ -14,12 +14,11 @@ def build_paths(session_id: str) -> dict:
         "benchmark_preferences": f"{session_id}_ch1_msg200_f2000-2500_delTrue_sortTrue",
     }
 
-def save_latex_table(df, filepath, caption="", label="", float_format="%.4f"):
+def save_latex_table(df, filepath, caption="", label=""):
     """Save a DataFrame as a LaTeX booktabs table file."""
     os.makedirs(os.path.dirname(filepath), exist_ok=True)
     latex = df.to_latex(
         index=False,
-        float_format=float_format,
         escape=False,
         column_format="l" + "r" * (len(df.columns) - 1),
         caption=caption,
@@ -49,7 +48,7 @@ def compare_soar_kernel_frequencies(data_frame, scenario: str, legend = True):
     unique_frequencies = sorted(data_frame["frequency"].unique())
 
     plt.figure(figsize=(3.3, 3))
-    plt.ylabel("Count (%)")
+    plt.ylabel("Relative Frequency (%)")
     plt.xlabel("Frequency (Hz)")
 
     ax = plt.gca()  # Get current axes
@@ -83,10 +82,10 @@ def compare_soar_kernel_frequencies(data_frame, scenario: str, legend = True):
         print(f"{scenario} {frequency} Hz: Mean = {mean_val:.2f} Hz, SD = {std_val:.2f} Hz")
 
         stats_rows.append({
-            "Frequency (Hz)": int(frequency),
-            "Mean (Hz)": round(mean_val, 2),
-            "Std Dev (Hz)": round(std_val, 2),
-            "N": len(freqs),
+            "Configured Input Freq. (Hz)": int(frequency),
+            "Mean Kernel Freq. (Hz)": round(mean_val, 2),
+            "Std Dev Kernel Freq. (Hz)": round(std_val, 2),
+            "Samples": len(freqs),
         })
 
     if legend:
@@ -108,7 +107,7 @@ def compare_soar_kernel_frequencies(data_frame, scenario: str, legend = True):
             f"out/images/{base_name}.tex",
             caption=f"Soar kernel decision cycle frequency statistics -- {scenario}",
             label=f"tab:kernel_freq_{scenario}",
-            float_format="%.2f",
+            float_format="%.4g",
         )
 
 
@@ -124,10 +123,10 @@ def analyze_sender_frequency(df, show_plots=False, scenario=""):
             sd = (1/df_channel["sender_time"].diff()).std()
             print(f"Sender: F {freq} Channel {channel} M: {mean:0.6} Hz, SD: {sd:0.6} Hz")
             rows.append({
-                "Frequency (Hz)": int(freq),
+                "Configured Input Freq. (Hz)": int(freq),
                 "Channel": int(channel),
-                "Mean (Hz)": round(mean, 4),
-                "Std Dev (Hz)": round(sd, 4),
+                "Mean Sender Freq. (Hz)": round(mean, 2),
+                "Std Dev Sender Freq. (Hz)": round(sd, 2),
             })
     if rows:
         os.makedirs("out/images", exist_ok=True)
@@ -137,7 +136,7 @@ def analyze_sender_frequency(df, show_plots=False, scenario=""):
             f"out/images/sender_frequency_stats{tag}.tex",
             caption=f"Sender frequency statistics{' -- ' + scenario if scenario else ''}",
             label=f"tab:sender_freq{'_' + scenario if scenario else ''}",
-            float_format="%.4f",
+            float_format="%.4g",
         )
     return pd.DataFrame(rows) if rows else pd.DataFrame()
 
@@ -205,19 +204,27 @@ def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.
         ax1.set_ylabel("Message delay (s)")
 
         for channel in df_test["channel"].unique():
-            df_channel = df_test[df_test["channel"] == channel]
+            df_channel = df_test[df_test["channel"] == channel].sort_values("receive_time")
             ax1.plot(rel_receive_time[df_channel.index], df_channel["duration"], marker='o', linestyle='', markersize=2, label=f"Duration Channel {channel}", zorder=2)
             dur = df_channel["duration"]
+            recv_freq = (1 / df_channel["receive_time"].diff()).dropna()
+            recv_freq = recv_freq[np.isfinite(recv_freq)]
+            pub_freq = (1 / df_channel["sender_time"].diff()).dropna()
+            pub_freq = pub_freq[np.isfinite(pub_freq)]
             dur_rows.append({
-                "Frequency (Hz)": int(frequency),
+                "Configured Input Freq. (Hz)": int(frequency),
                 "Channel": int(channel),
-                "Mean (s)": round(dur.mean(), 6),
-                "Std Dev (s)": round(dur.std(), 6),
-                "Median (s)": round(dur.median(), 6),
-                "Min (s)": round(dur.min(), 6),
-                "Max (s)": round(dur.max(), 6),
-                "P95 (s)": round(dur.quantile(0.95), 6),
-                "N": len(dur),
+                "Mean Published Freq. (Hz)": round(pub_freq.mean(), 2) if len(pub_freq) else float("nan"),
+                "Std Dev Published Freq. (Hz)": round(pub_freq.std(), 2) if len(pub_freq) else float("nan"),
+                "Mean Received Freq. (Hz)": round(recv_freq.mean(), 2) if len(recv_freq) else float("nan"),
+                "Std Dev Received Freq. (Hz)": round(recv_freq.std(), 2) if len(recv_freq) else float("nan"),
+                "Mean Delay (s)": round(dur.mean(), 4),
+                "Std Dev Delay (s)": round(dur.std(), 4),
+                "Median Delay (s)": round(dur.median(), 4),
+                "Min Delay (s)": round(dur.min(), 4),
+                "Max Delay (s)": round(dur.max(), 4),
+                "P95 Delay (s)": round(dur.quantile(0.95), 4),
+                "Samples": len(dur),
             })
 
         ax1.tick_params(axis='y')
@@ -228,7 +235,7 @@ def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.
         ax2 = ax1.twinx()
         ax2.set_zorder(1)
         color2 = 'tab:green'
-        ax2.set_ylabel("$f$ Kernel (Hz)", color=color2)
+        ax2.set_ylabel("$f_{Kernel}$ (Hz)", color=color2)
         ax2.set_yscale('log')
         ax2.fill_between(rel_timestamp[1:], freqs, 0, color=color2, alpha=0.2, zorder=0, linestyle="")
         ax2.tick_params(axis='y', labelcolor=color2)
@@ -256,7 +263,7 @@ def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.
             f"out/images/duration_stats_{tag}.tex",
             caption=f"Message delay statistics -- {title_prefix}",
             label=f"tab:duration_{tag.lower()}",
-            float_format="%.6f",
+            float_format="%.6g",
         )
 
     return max_duration
@@ -333,7 +340,7 @@ def load_benchmark_data(dir_name_logs, min_duration=0.0) -> tuple[pd.DataFrame, 
 def frequency_comparison_plot(df,title_prefix):
     plt.figure(figsize=(6.8, 2))
     plt.xlabel('Message Counter (1)')
-    plt.ylabel('Message delay (s)')
+    plt.ylabel('Delay$_{msg}$ (s)')
 
     stat_rows = []
     for frequencies in sorted(df['frequency'].unique()):
@@ -342,16 +349,24 @@ def frequency_comparison_plot(df,title_prefix):
             df_channel = freq_df[freq_df['channel'] == channel].sort_values(by='counter')
             plt.plot(df_channel['counter'], df_channel['duration'], marker='o', linestyle='', label=f'{frequencies} Hz',markersize=2)
             dur = df_channel['duration']
+            recv_freq = (1 / df_channel['receive_time'].diff()).dropna()
+            recv_freq = recv_freq[np.isfinite(recv_freq)]
+            pub_freq = (1 / df_channel['sender_time'].diff()).dropna()
+            pub_freq = pub_freq[np.isfinite(pub_freq)]
             stat_rows.append({
-                "Frequency (Hz)": int(frequencies),
+                "Configured Input Freq. (Hz)": int(frequencies),
                 "Channel": int(channel),
-                "Mean (s)": round(dur.mean(), 6),
-                "Std Dev (s)": round(dur.std(), 6),
-                "Median (s)": round(dur.median(), 6),
-                "Min (s)": round(dur.min(), 6),
-                "Max (s)": round(dur.max(), 6),
-                "P95 (s)": round(dur.quantile(0.95), 6),
-                "N": len(dur),
+                "Mean Published Freq. (Hz)": round(pub_freq.mean(), 2) if len(pub_freq) else float("nan"),
+                "Std Dev Published Freq. (Hz)": round(pub_freq.std(), 2) if len(pub_freq) else float("nan"),
+                "Mean Received Freq. (Hz)": round(recv_freq.mean(), 2) if len(recv_freq) else float("nan"),
+                "Std Dev Received Freq. (Hz)": round(recv_freq.std(), 2) if len(recv_freq) else float("nan"),
+                "Mean Delay (s)": round(dur.mean(), 4),
+                "Std Dev Delay (s)": round(dur.std(), 4),
+                "Median Delay (s)": round(dur.median(), 4),
+                "Min Delay (s)": round(dur.min(), 4),
+                "Max Delay (s)": round(dur.max(), 4),
+                "P95 Delay (s)": round(dur.quantile(0.95), 4),
+                "Samples": len(dur),
             })
 
     title = f"{title_prefix} Input Frequency Comparison"
@@ -373,7 +388,7 @@ def frequency_comparison_plot(df,title_prefix):
             f"out/images/{base_name}.tex",
             caption=f"Message delay statistics per frequency -- {title_prefix}",
             label=f"tab:freq_comparison_{title_prefix.lower().replace(' ', '_')}",
-            float_format="%.6f",
+            float_format="%.6g",
         )
 
 
