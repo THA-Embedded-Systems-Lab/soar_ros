@@ -54,6 +54,10 @@ run_benchmark() {
 
     cp ~/.ros/log/latest/launch.log "$LOG_DIR/logs/benchmark_f_${F}.log"
 
+    # Ensure all system nodes are down.
+    pkill -fe -9 soar_ros/System
+    pkill -fe -9 soar_ros/Receiver
+    pkill -fe -9 soar_ros/Sender
     # echo "Waiting for 5 seconds before next run..." 
     sleep 5
   done
@@ -69,7 +73,7 @@ run_benchmark() {
 run_benchmark 0 0 "1000" "True" "False"
 
 # 2. SISO: Single-channel throughput sweep with auto-delete
-run_benchmark 1 4000 "2000,2500,3000" "True" "False"
+run_benchmark 1 4000 "2500,3000" "True" "False" 80
 
 # 3. Normal: Low-frequency, WME accumulation (no auto-delete)
 run_benchmark 1 8000 "200" "False" "False"
@@ -78,7 +82,7 @@ run_benchmark 1 8000 "200" "False" "False"
 run_benchmark 1 8000 "200" "True" "False"
 
 # 5. Preferences-Based Sort: Low-frequency with auto-delete and preferences-based sorting
-run_benchmark 1 200 "2000,2500" "True" "True" 30
+run_benchmark 1 100 "2500,3000" "True" "True" 12
 
 echo ""
 echo "All benchmarks complete. SESSION_ID: ${SESSION_ID}"
