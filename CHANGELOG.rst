@@ -2,6 +2,22 @@
 Changelog for package soar_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* feat: add benchmark test for performance evaluation
+* feat: add automatic input/output-link cleanup
+* fix: set continue_on_error flag for ROS distribution builds
+* revert: remove patch version from ros-tooling/setup-ros
+* ci: set fail-fast to false
+* fix: add missing SQLite3 dependency to ament_export_dependencies
+* ci: add lyrical and set rolling to ubuntu 26.04
+* feat: upgrade to Soar 9.6.5
+* build: add pre-commit to docker
+* feat: add default ROS message parsing and tests
+* docs: cleanup
+  Co-authored-by: Copilot <copilot@github.com>
+* Contributors: Moritz Schmidt
+
 0.1.0 (2026-04-26)
 ------------------
 * doc: add ci status badge
