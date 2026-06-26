@@ -2,8 +2,8 @@
 Changelog for package soar_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.0 (2026-06-26)
+------------------
 * fix: update uv lock file for reduced dependencies
 * docs: update changelog
 * feat: add benchmark test for performance evaluation
