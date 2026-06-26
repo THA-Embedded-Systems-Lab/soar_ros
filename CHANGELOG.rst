@@ -4,6 +4,29 @@ Changelog for package soar_ros
 
 Forthcoming
 -----------
+* fix: update uv lock file for reduced dependencies
+* docs: update changelog
+* feat: add benchmark test for performance evaluation
+* feat: add automatic input/output-link cleanup
+  Add an opt-in mechanism that removes completed input-link messages each
+  decision cycle. SoarAgent assigns a soar-input-removal-id to every
+  input-link element and loads input-output-deletion.soar; productions
+  copy the id to the output-link when processing is complete, and the
+  agent intercepts the removal command to destroy the corresponding WME.
+  Exposed through SoarRunner::addAgent's auto_delete_soar_io_on_complete
+  parameter (default on).
+* fix: set continue_on_error flag for ROS distribution builds
+* revert: remove patch version from ros-tooling/setup-ros
+* ci: set fail-fast to false
+* fix: add missing SQLite3 dependency to ament_export_dependencies
+* ci: add lyrical and set rolling to ubuntu 26.04
+* feat: upgrade to Soar 9.6.5
+* build: add pre-commit to docker
+* feat: add default ROS message parsing and tests
+* docs: cleanup
+  Co-authored-by: Copilot <copilot@github.com>
+* Contributors: Moritz Schmidt
+
 * feat: add benchmark test for performance evaluation
 * feat: add automatic input/output-link cleanup
 * fix: set continue_on_error flag for ROS distribution builds
