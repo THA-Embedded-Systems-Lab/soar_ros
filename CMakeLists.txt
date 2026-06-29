@@ -65,7 +65,9 @@ target_link_libraries(soar_ros
     ${THIS_PACKAGE_LINK_DEPENDS})
 set_target_properties(soar_ros
   PROPERTIES CMAKE_CXX_STANDARD 20)
-target_compile_definitions(soar_ros PUBLIC BUILD_BENCHMARK)
+if(BUILD_BENCHMARK)
+  target_compile_definitions(soar_ros PUBLIC BUILD_BENCHMARK)
+endif()
 if(BUILD_BENCHMARK)
   target_compile_options(soar_ros PRIVATE -g)
 endif()
