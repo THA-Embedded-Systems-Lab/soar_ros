@@ -48,6 +48,13 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(soar)
 
+# Soar 9.6.5 declares INSTALL_INTERFACE:include/soar on soar_lib, but its install
+# rules don't run under FetchContent. Fulfill the promise so re-exported targets work.
+get_target_property(SOAR_PUBLIC_HEADERS soar_lib PUBLIC_HEADER)
+install(FILES ${SOAR_PUBLIC_HEADERS}
+  DESTINATION include/soar
+)
+
 add_library(soar_ros src/soar_ros.cpp src/SoarRunner.cpp)
 target_include_directories(soar_ros
   PUBLIC
