@@ -1,0 +1,4 @@
+[submodule "Soar-kernel"]
+	path = Soar-kernel
+	url = git@github.com:moschmdt/Soar.git
+	branch = main

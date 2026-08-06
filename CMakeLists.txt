@@ -19,6 +19,8 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   std_srvs
   ament_index_cpp
   SQLite3
+  spdlog
+  nlohmann_json
 )
 
 find_package(rclcpp REQUIRED)
@@ -28,6 +30,8 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(ament_index_cpp REQUIRED)
 find_package(SQLite3 REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
 set(THIS_PACKAGE_LINK_DEPENDS
   rclcpp::rclcpp
@@ -40,10 +44,11 @@ set(THIS_PACKAGE_LINK_DEPENDS
 
 include(FetchContent)
 
+# Built from the local Soar-kernel/ submodule (moschmdt/Soar fork) instead of
+# fetching a pinned release, so kernel changes rebuild in place via colcon.
 FetchContent_Declare(
     soar
-    GIT_REPOSITORY https://github.com/SoarGroup/Soar.git
-    GIT_TAG releases/9.6.5
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Soar-kernel
 )
 
 FetchContent_MakeAvailable(soar)
