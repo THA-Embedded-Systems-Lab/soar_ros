@@ -29,6 +29,8 @@
 
   <!-- Required for Soar until available as rosdep key. Currently installed via fetchcontent-->
   <depend>libsqlite3-dev</depend>
+  <depend>libspdlog-dev</depend>
+  <depend>nlohmann-json3-dev</depend>
 
   <test_depend>launch_testing</test_depend>
   <test_depend>launch_ros</test_depend>

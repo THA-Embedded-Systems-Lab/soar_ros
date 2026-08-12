@@ -46,6 +46,12 @@ include(FetchContent)
 
 # Built from the local Soar-kernel/ submodule (moschmdt/Soar fork) instead of
 # fetching a pinned release, so kernel changes rebuild in place via colcon.
+# Force off regardless of any stale BUILD_TESTS cache entry: the kernel's
+# own test/benchmark subdirectories reference paths via CMAKE_SOURCE_DIR,
+# which resolves to soar_ros (the top-level project) rather than Soar-kernel
+# when pulled in as a SOURCE_DIR-based FetchContent, and fails to configure.
+set(BUILD_TESTS OFF CACHE BOOL "Build Soar kernel tests" FORCE)
+
 FetchContent_Declare(
     soar
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Soar-kernel

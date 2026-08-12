@@ -78,7 +78,11 @@ namespace soar_ros
 
         /// @brief Create a new Soar agent and return a handle for I/O wiring.
         /// @param agent_name  Name passed to sml::Kernel::CreateAgent().
-        /// @param source_file Path to the .soar file to load.  Empty = no load.
+        /// @param source_file Path to the .soar file to load, or to a VisualSoar
+        ///                    .vsa.json project file (recognized by the ".vsa.json"
+        ///                    suffix) whose main entry point is resolved and loaded
+        ///                    instead -- see datamap.entryFile, falling back to
+        ///                    '<projectDir>/<layout.folder>.soar'.  Empty = no load.
         /// @return            Per-agent handle; call add*() methods on it.
         std::shared_ptr<SoarAgent> addAgent(
             const std::string &agent_name,

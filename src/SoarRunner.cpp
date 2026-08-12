@@ -23,9 +23,48 @@
 #include <string>
 #include <thread>
 
+#include <filesystem>
+#include <fstream>
+
+#include <nlohmann/json.hpp>
 #include <rclcpp/rclcpp.hpp>
 #include <std_srvs/srv/trigger.hpp>
 #include "sml_Client.h"
+
+namespace soar_ros
+{
+
+/// @brief Resolve a VisualSoar .vsa.json project file to its main .soar
+///        entry point, mirroring soar-code-extension's
+///        ProjectLoader::resolveEntryFile(): prefer datamap.entryFile if
+///        set, otherwise fall back to '<projectDir>/<layout.folder>.soar'.
+static std::string resolveEntryFile(const std::string & project_file)
+{
+  std::ifstream in(project_file);
+  if (!in) {
+    throw std::runtime_error("Failed to open Soar project file: " + project_file);
+  }
+
+  nlohmann::json project;
+  in >> project;
+
+  const auto project_dir = std::filesystem::path(project_file).parent_path();
+
+  if (project.contains("datamap") && project["datamap"].contains("entryFile")) {
+    return (project_dir / project["datamap"]["entryFile"].get<std::string>()).string();
+  }
+
+  if (!project.contains("layout") || !project["layout"].contains("folder")) {
+    throw std::runtime_error(
+      "Cannot resolve entry file for '" + project_file +
+      "': layout root has no 'folder' and datamap.entryFile is not set");
+  }
+
+  const auto folder = project["layout"]["folder"].get<std::string>();
+  return (project_dir / (folder + ".soar")).string();
+}
+
+}  // namespace soar_ros
 
 namespace soar_ros
 {
@@ -162,7 +201,30 @@ std::shared_ptr<SoarAgent> SoarRunner::addAgent(
   }
 
   if (!source_file.empty()) {
-    raw_agent->LoadProductions(source_file.c_str());
+    const bool is_project_file = source_file.size() > 9 &&
+      source_file.compare(source_file.size() - 9, 9, ".vsa.json") == 0;
+    const std::string load_path = is_project_file ? resolveEntryFile(source_file) : source_file;
+    if (is_project_file) {
+      RCLCPP_INFO(
+        get_logger(), "Resolved project file '%s' to entry point '%s'",
+        source_file.c_str(), load_path.c_str());
+
+      // Hold the raw project JSON in the kernel itself (rather than just on
+      // disk) so a remote SML client -- e.g. the Soar Dev Tools MCP server --
+      // can retrieve the datamap/purpose via Agent::GetDatamap() even when it
+      // has no filesystem access to wherever this node is running.
+      std::ifstream project_in(source_file);
+      if (project_in) {
+        std::string json_contents(
+          (std::istreambuf_iterator<char>(project_in)), std::istreambuf_iterator<char>());
+        raw_agent->SetDatamap(json_contents.c_str());
+      } else {
+        RCLCPP_WARN(
+          get_logger(), "Could not re-read project file '%s' to cache datamap in kernel",
+          source_file.c_str());
+      }
+    }
+    raw_agent->LoadProductions(load_path.c_str());
     if (raw_agent->HadError()) {
       std::string err_msg = raw_agent->GetLastErrorDescription();
       RCLCPP_ERROR_STREAM(get_logger(), err_msg);
