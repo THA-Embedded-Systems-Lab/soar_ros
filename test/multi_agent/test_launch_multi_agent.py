@@ -33,7 +33,6 @@ def generate_test_description():
     soar_ros_node = launch_ros.actions.Node(
         package="soar_ros",
         executable="test_multi_agent",
-        shell=True,
         emulate_tty=True,
         output='screen'
     )
