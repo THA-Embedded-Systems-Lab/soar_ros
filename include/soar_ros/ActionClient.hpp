@@ -128,6 +128,16 @@ public:
     client_ptr_->async_send_goal(*soar_goal, options);
   }
 
+  /// @brief Request cancellation of the goal currently in flight (and drop any
+  ///        goals Soar has queued but this client has not sent yet).
+  ///
+  /// Thread-safe to call from anywhere: it only sets a flag; the actual
+  /// async_cancel_all_goals() call happens on this client's own executor
+  /// thread (run()), so it never races the send/response path. The cancelled
+  /// goal's result_callback still fires - with ResultCode::CANCELED - so the
+  /// subclass's parse(WrappedResult) sees a normal terminal result.
+  void requestCancel() {m_cancel_requested.store(true);}
+
   // Interface implementation
   std::string getTopic() override {return m_topic;}
   sml::Agent * getAgent() override {return m_pAgent;}
@@ -162,6 +172,7 @@ private:
   bool m_goal_in_flight{false};  // only ever touched from m_action_thread
   std::chrono::steady_clock::time_point m_goal_sent_at{};
   std::chrono::steady_clock::time_point m_last_goal_done{};
+  std::atomic<bool> m_cancel_requested{false};
 
   // Own thread: process this client's own responses, then send the next
   // queued goal. Everything action-client happens here, so async_send_goal()
@@ -173,10 +184,28 @@ private:
     while (isRunning.load()) {
       m_exec.spin_some(std::chrono::milliseconds(20));
       if (rclcpp::ok()) {
+        handleCancel();
         pollAndSend();
       }
       std::this_thread::sleep_for(
         m_goal_in_flight ? std::chrono::milliseconds(20) : std::chrono::milliseconds(100));
+    }
+  }
+
+  // requestCancel() sets m_cancel_requested from another thread; act on it
+  // here so the cancel call and the send/response path stay on one thread.
+  // Also empties the Soar output queue so a goal queued just before the stop
+  // doesn't get sent the moment the in-flight one is cancelled.
+  void handleCancel()
+  {
+    if (!m_cancel_requested.exchange(false)) {
+      return;
+    }
+    while (this->template Output<pGoalMsg>::m_s2rQueue.tryPop().has_value()) {}
+    if (m_goal_in_flight) {
+      RCLCPP_INFO(
+        m_node->get_logger(), "Action '%s': cancelling the in-flight goal.", m_topic.c_str());
+      client_ptr_->async_cancel_all_goals();
     }
   }
 
