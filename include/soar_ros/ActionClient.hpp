@@ -101,10 +101,16 @@ public:
     // Goal response callback
     options.goal_response_callback = [this](std::shared_ptr<GoalHandle> goal_handle) {
         if (!goal_handle) {
-          this->template Input<bool>::m_r2sQueue.push(false);
-          m_goal_in_flight = false;  // rejected -> free to send the next
+          // Rejected. A server that answers one goal at a time can reject the
+          // next one in the brief window before it has finished tearing down
+          // the previous goal, so retry it (pollAndSend) instead of leaving
+          // Soar's step wedged with no result. The "rejected" status is only
+          // pushed to Soar once the retries are exhausted.
+          m_goal_in_flight = false;
+          m_retry_goal = m_pending_goal;
         } else {
           this->template Input<bool>::m_r2sQueue.push(true);
+          m_pending_goal = nullptr;
         }
       };
 
@@ -123,6 +129,7 @@ public:
         m_last_goal_done = std::chrono::steady_clock::now();
       };
 
+    m_pending_goal = soar_goal;  // kept in case the server rejects it
     m_goal_in_flight = true;
     m_goal_sent_at = std::chrono::steady_clock::now();
     client_ptr_->async_send_goal(*soar_goal, options);
@@ -173,6 +180,9 @@ private:
   std::chrono::steady_clock::time_point m_goal_sent_at{};
   std::chrono::steady_clock::time_point m_last_goal_done{};
   std::atomic<bool> m_cancel_requested{false};
+  pGoalMsg m_pending_goal{nullptr};  // goal currently in flight, for a reject-retry
+  pGoalMsg m_retry_goal{nullptr};    // a rejected goal awaiting re-send
+  int m_retry_count{0};
 
   // Own thread: process this client's own responses, then send the next
   // queued goal. Everything action-client happens here, so async_send_goal()
@@ -202,6 +212,7 @@ private:
       return;
     }
     while (this->template Output<pGoalMsg>::m_s2rQueue.tryPop().has_value()) {}
+    m_retry_goal = nullptr;
     if (m_goal_in_flight) {
       RCLCPP_INFO(
         m_node->get_logger(), "Action '%s': cancelling the in-flight goal.", m_topic.c_str());
@@ -232,8 +243,36 @@ private:
     if (!client_ptr_->action_server_is_ready()) {
       return;
     }
+
+    // A goal the server rejected: give it a few tries (~0.4 s apart) before
+    // telling Soar the step was rejected - the server is usually just still
+    // finishing the previous goal.
+    if (m_retry_goal) {
+      if (std::chrono::steady_clock::now() - m_goal_sent_at < std::chrono::milliseconds(400)) {
+        return;
+      }
+      if (++m_retry_count > 25) {
+        RCLCPP_ERROR(
+          m_node->get_logger(), "Action '%s': goal rejected %d times, giving up.",
+          m_topic.c_str(), m_retry_count);
+        this->template Input<bool>::m_r2sQueue.push(false);
+        m_retry_goal = nullptr;
+        m_pending_goal = nullptr;
+        m_retry_count = 0;
+        return;
+      }
+      RCLCPP_WARN(
+        m_node->get_logger(), "Action '%s': goal rejected, retrying (%d).",
+        m_topic.c_str(), m_retry_count);
+      pGoalMsg g = m_retry_goal;
+      m_retry_goal = nullptr;
+      send_goal_from_soar(g);
+      return;
+    }
+
     auto goal = this->template Output<pGoalMsg>::m_s2rQueue.tryPop();
     if (goal.has_value()) {
+      m_retry_count = 0;
       send_goal_from_soar(goal.value());
     }
   }
