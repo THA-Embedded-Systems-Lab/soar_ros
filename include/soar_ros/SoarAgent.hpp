@@ -105,6 +105,19 @@ namespace soar_ros
       return true;
     }
 
+    /// @brief Register a bare input handler with no ROS subscription.
+    ///
+    /// For inputs fed from a non-ROS source (a raw socket, a timer, a library
+    /// callback): the handler fills its own Input<T>::m_r2sQueue from whatever
+    /// thread it likes, and process_r2s() drains it onto the input-link on the
+    /// Soar thread each decision cycle -- exactly like a Subscriber, minus the
+    /// rclcpp::Subscription.
+    bool addInput(std::shared_ptr<soar_ros::InputBase> input)
+    {
+      m_inputs.push_back(input);
+      return true;
+    }
+
     /// @brief Register a Service; service name is used as the Soar command name.
     template <typename T>
     bool addService(std::shared_ptr<Service<T>> service)
