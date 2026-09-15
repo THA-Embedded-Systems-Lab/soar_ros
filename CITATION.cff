@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "soar_ros"
+abstract: "A ROS 2 integration of the Soar cognitive architecture."
+version: 0.2.0
+url: "https://github.com/THA-Embedded-Systems-Lab/soar_ros"
+license: Apache-2.0
+authors:
+    - family-names: Schmidt
+      given-names: Moritz
+    - family-names: Teynor
+      given-names: Alexandra
+    - family-names: Meitinger
+      given-names: Claudia
+preferred-citation:
+    type: conference-paper
+    title: "soar ros: A ROS 2 Integration of the Soar Cognitive Architecture with Performance Evaluation and Design Guidelines"
+    authors:
+        - family-names: Schmidt
+          given-names: Moritz
+        - family-names: Teynor
+          given-names: Alexandra
+        - family-names: Meitinger
+          given-names: CLaudia
+    year: 2026
+    publisher:
+        name: Zenodo
+    conference:
+        name: "Service Oriented, Holonic and Multi-agent Manufacturing Systems for Industry of the Future (SOHOMA)"
+        city: Cambridge
+    doi: "10.5281/zenodo.22763140"
+    url: "https://doi.org/10.5281/zenodo.22763140"
