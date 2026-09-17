@@ -81,6 +81,7 @@ def main():
 
     message_results = []
     soar_decision_dfs = []
+    sender_publish_dfs = []
 
     for log_file in log_files:
         freq_match = re.search(r"f_(\d+\.?\d*)", log_file)
@@ -94,6 +95,16 @@ def main():
         if not soar_decision_df.empty:
             soar_decision_df["frequency"] = frequency
             soar_decision_dfs.append(soar_decision_df)
+
+        # Save every message actually published by the sender, regardless of
+        # whether it was ever received - this is the only frequency measure
+        # that isn't confounded by receiver-side backlog/dropout.
+        if sender_msgs:
+            sender_rows = [
+                {"counter": counter, "channel": channel, "sender_time": info["sender_time"], "frequency": frequency}
+                for (counter, channel), info in sender_msgs.items()
+            ]
+            sender_publish_dfs.append(pd.DataFrame(sender_rows))
 
         if receiver_msgs == []:
             print(f"No receiver messages found in log file {log_file}, skipping.")
@@ -125,6 +136,12 @@ def main():
         soar_decision_dfs = pd.concat(soar_decision_dfs)
         soar_decision_dfs.to_csv(
             os.path.join(data_dir, f"combined_soar_decision.csv"), index=False
+        )
+
+    if sender_publish_dfs:
+        sender_publish_dfs = pd.concat(sender_publish_dfs)
+        sender_publish_dfs.to_csv(
+            os.path.join(data_dir, f"combined_sender_publish.csv"), index=False
         )
 
     print(f"Parsing logs completed! Results saved to {data_dir}")

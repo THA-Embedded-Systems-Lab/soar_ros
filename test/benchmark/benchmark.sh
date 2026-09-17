@@ -67,6 +67,62 @@ run_benchmark() {
   echo "Results saved to: $LOG_DIR"
 }
 
+# run_staircase_benchmark <NUM_CHANNELS> <START_FREQ> <END_FREQ> <STEP_FREQ> <HOLD_S> <RECOVERY_S>
+#
+# Linearly ramps the sender frequency as a staircase (hold each step, brief
+# recovery pause, then step up) in a single continuous run. Always runs with
+# automatic IOL cleanup enabled.
+run_staircase_benchmark() {
+  local NUM_CHANNELS="$1"
+  local START_FREQ="$2"
+  local END_FREQ="$3"
+  local STEP_FREQ="$4"
+  local HOLD_S="$5"
+  local RECOVERY_S="$6"
+
+  local NUM_STEPS=$(( (END_FREQ - START_FREQ) / STEP_FREQ + 1 ))
+  local RUN_ID="${SESSION_ID}_ch${NUM_CHANNELS}_staircase_f${START_FREQ}-${END_FREQ}-step${STEP_FREQ}_delTrue"
+  local LOG_DIR="$SCRIPT_DIR/out/${RUN_ID}"
+
+  mkdir -p "$LOG_DIR/logs"
+  mkdir -p "$LOG_DIR/data"
+  mkdir -p "$LOG_DIR/evaluation"
+
+  # Staircase timing is deterministic (unlike the message-count-based runs above),
+  # so no SAFETY_FACTOR is needed: OFFSET_S covers startup before the first message,
+  # and the run is cut off exactly 2s after the last message is sent.
+  local TIMEOUT
+  TIMEOUT=$(awk "BEGIN { v = ${NUM_STEPS} * ${HOLD_S} + (${NUM_STEPS} - 1) * ${RECOVERY_S} + ${OFFSET_S} + 2; t = (v == int(v)) ? v : int(v)+1; print t }")
+
+  echo ""
+  echo "=== staircase: channels=${NUM_CHANNELS}, freq=${START_FREQ}-${END_FREQ} Hz (step ${STEP_FREQ}), hold=${HOLD_S}s, recovery=${RECOVERY_S}s, auto_delete=True, timeout=${TIMEOUT}s ==="
+  timeout "$TIMEOUT" ros2 launch soar_ros benchmark.launch.py \
+    num_inputs:="${NUM_CHANNELS}" \
+    num_outputs:="${NUM_CHANNELS}" \
+    auto_delete_soar_io_on_complete:="True" \
+    staircase_mode:="True" \
+    staircase_start_freq:="${START_FREQ}" \
+    staircase_end_freq:="${END_FREQ}" \
+    staircase_step_freq:="${STEP_FREQ}" \
+    staircase_hold_duration:="${HOLD_S}" \
+    staircase_recovery_duration:="${RECOVERY_S}" || true
+
+  # Reuse the "f_<freq>.log" naming (tagged with the start frequency) so the
+  # existing log parser picks up the file; the staircase plot does not split
+  # by this nominal frequency.
+  cp ~/.ros/log/latest/launch.log "$LOG_DIR/logs/benchmark_f_${START_FREQ}.log"
+
+  # Ensure all system nodes are down.
+  pkill -fe -9 soar_ros/System
+  pkill -fe -9 soar_ros/Receiver
+  pkill -fe -9 soar_ros/Sender
+  sleep 5
+
+  echo "Parsing logs..."
+  python3 "$SCRIPT_DIR/parse-logs.py" -d "$LOG_DIR"
+  echo "Results saved to: $LOG_DIR"
+}
+
 # --- Test Cases ---
 
 # 1. No Load: Soar kernel baseline with no I/O channels
@@ -83,6 +139,9 @@ run_benchmark 1 8000 "200" "True" "False"
 
 # 5. Preferences-Based Sort: Low-frequency with auto-delete and preferences-based sorting
 run_benchmark 1 100 "2500,3000" "True" "True" 12
+
+# 6. Staircase: linear frequency ramp (1000-3000 Hz, 200 Hz steps) with auto-delete enabled
+run_staircase_benchmark 1 1000 3000 200 4.0 1.0
 
 echo ""
 echo "All benchmarks complete. SESSION_ID: ${SESSION_ID}"

@@ -12,6 +12,7 @@ def build_paths(session_id: str) -> dict:
         "normal":               f"{session_id}_ch1_msg8000_f200_delFalse_sortFalse",
         "auto_delete_io":       f"{session_id}_ch1_msg8000_f200_delTrue_sortFalse",
         "benchmark_preferences": f"{session_id}_ch1_msg100_f2500-3000_delTrue_sortTrue",
+        "staircase": f"{session_id}_ch1_staircase_f1000-3000-step200_delTrue",
     }
 
 def save_latex_table(df, filepath, caption="", label=""):
@@ -138,6 +139,159 @@ def analyze_sender_frequency(df, show_plots=False, scenario=""):
         )
     return pd.DataFrame(rows) if rows else pd.DataFrame()
 
+def _plot_duration_and_frequency(df_test, df_soar, title, figsize=(6.8, 2), min_duration=None,
+                                  input_freq_subplot=False, df_sent=None):
+    """
+    Plot message delay and Soar kernel frequency on aligned dual y-axes for a
+    single (already filtered) slice of test/soar data.
+
+    Parameters:
+    -----------
+    df_test : pandas.DataFrame
+        Test results with 'channel', 'receive_time', 'sender_time', 'duration' columns
+    df_soar : pandas.DataFrame
+        Soar decision cycle data with 'timestamp' column
+    title : str
+        Full plot title, also used (with spaces replaced) as the image filename
+    figsize : tuple
+        Figure size (width, height)
+    min_duration : float or None
+        Minimum x-axis duration in seconds.
+    input_freq_subplot : bool
+        If True, draw the input (sender) frequency in its own subplot below the
+        main duration/kernel-frequency plot instead of overlaying it on the
+        kernel-frequency axis. Use this when the run may be cut off before all
+        sent messages are received (e.g. a staircase run) - in that case pass
+        df_sent so the input frequency reflects every message actually sent,
+        not just the ones that made it back before the cutoff.
+    df_sent : pandas.DataFrame or None
+        All messages the sender published, with 'channel' and 'sender_time'
+        columns, independent of whether they were ever received. Only used
+        when input_freq_subplot is True; falls back to df_test if omitted.
+
+    Returns:
+    --------
+    tuple[float, list[dict]]
+        The plotted duration (in seconds) and a list of per-channel stat rows
+        (without a "Configured Input Freq." column - callers add their own).
+    """
+    if input_freq_subplot:
+        fig, (ax1, ax3) = plt.subplots(2, 1, figsize=(figsize[0], figsize[1] * 2.4), sharex=True,
+                                        gridspec_kw={'height_ratios': [1, 1]})
+    else:
+        fig, ax1 = plt.subplots(figsize=figsize)
+
+    global_start = min(df_test["receive_time"].min(), df_soar["timestamp"].min())
+
+    rel_receive_time = df_test["receive_time"] - global_start
+    rel_timestamp = df_soar["timestamp"] - global_start
+    kernel_freqs = 1 / df_soar["timestamp"].diff().dropna()
+
+    min_time = min(rel_receive_time.min(), rel_timestamp.min())
+    max_time = max(rel_receive_time.max(), rel_timestamp.max())
+
+    if min_duration is not None:
+        max_time = max(max_time, min_time + min_duration)
+
+    # Left y-axis: Duration
+    if not input_freq_subplot:
+        ax1.set_xlabel("Test duration (s)")
+    ax1.set_ylabel("Message delay (s)")
+
+    channels = sorted(df_test["channel"].unique())
+    stat_rows = []
+
+    for channel in channels:
+        df_channel = df_test[df_test["channel"] == channel].sort_values("receive_time")
+        ax1.plot(rel_receive_time[df_channel.index], df_channel["duration"], marker='o', linestyle='', markersize=2, label=f"Duration Channel {channel}", zorder=2)
+        dur = df_channel["duration"]
+        recv_freq = (1 / df_channel["receive_time"].diff()).dropna()
+        recv_freq = recv_freq[np.isfinite(recv_freq)]
+        pub_freq = (1 / df_channel["sender_time"].diff()).dropna()
+        pub_freq = pub_freq[np.isfinite(pub_freq)]
+        stat_rows.append({
+            "Channel": int(channel),
+            "Mean Published Freq. (Hz)": round(pub_freq.mean(), 2) if len(pub_freq) else float("nan"),
+            "Std Dev Published Freq. (Hz)": round(pub_freq.std(), 2) if len(pub_freq) else float("nan"),
+            "Mean Received Freq. (Hz)": round(recv_freq.mean(), 2) if len(recv_freq) else float("nan"),
+            "Std Dev Received Freq. (Hz)": round(recv_freq.std(), 2) if len(recv_freq) else float("nan"),
+            "Mean Delay (s)": round(dur.mean(), 4),
+            "Std Dev Delay (s)": round(dur.std(), 4),
+            "Median Delay (s)": round(dur.median(), 4),
+            "Min Delay (s)": round(dur.min(), 4),
+            "Max Delay (s)": round(dur.max(), 4),
+            "P95 Delay (s)": round(dur.quantile(0.95), 4),
+            "Samples": len(dur),
+        })
+
+    ax1.tick_params(axis='y')
+    ax1.set_xlim(min_time, max_time)
+    ax1.set_zorder(2)
+    ax1.patch.set_visible(False)
+
+    ax2 = ax1.twinx()
+    ax2.set_zorder(1)
+    kernel_color = 'tab:green'
+    input_color = 'darkgreen'
+    ax2.set_yscale('log')
+    ax2.fill_between(rel_timestamp[1:], kernel_freqs, 0, color=kernel_color, alpha=0.2, zorder=0, linestyle="",
+                     label="Soar Kernel Frequency")
+    ax2.tick_params(axis='y')
+    ax2.grid(False)
+
+    input_source = df_sent if (df_sent is not None and not df_sent.empty) else df_test
+    input_channels = sorted(input_source["channel"].unique())
+
+    if input_freq_subplot:
+        # Kernel frequency keeps its own axis label/legend; input frequency
+        # moves to a dedicated subplot below so the two don't have to share a
+        # cramped log-scale legend, and so a truncated/backlogged receiver
+        # dataset can't be mistaken for the sender actually slowing down.
+        ax2.set_ylabel("$f_{Kernel}$ (Hz)", color=kernel_color)
+        # ax2.legend(loc='upper right')
+
+        for channel in input_channels:
+            df_channel = input_source[input_source["channel"] == channel].sort_values("sender_time")
+            rel_sender_time = df_channel["sender_time"] - global_start
+            input_freq = (1 / df_channel["sender_time"].diff()).dropna()
+            input_freq = input_freq[np.isfinite(input_freq)]
+            if len(input_freq) == 0:
+                continue
+            ax3.plot(rel_sender_time[input_freq.index], input_freq, ".", color=input_color, label=f"Channel {channel}", markersize=0.5)
+
+        ax3.set_xlabel("Test duration (s)")
+        ax3.set_ylabel("$f_{Input}$ (Hz)")
+        ax3.tick_params(axis='y')
+        # if len(input_channels) > 1:
+        #     ax3.legend(loc='upper left')
+    else:
+        ax2.set_ylabel("Frequency (Hz)")
+
+        for i, channel in enumerate(input_channels):
+            df_channel = input_source[input_source["channel"] == channel].sort_values("sender_time")
+            rel_sender_time = df_channel["sender_time"] - global_start
+            input_freq = (1 / df_channel["sender_time"].diff()).dropna()
+            input_freq = input_freq[np.isfinite(input_freq)]
+            if len(input_freq) == 0:
+                continue
+            ax2.plot(rel_sender_time[input_freq.index], input_freq, "o", color=input_color,
+                     zorder=1, label="Input Frequency" if i == 0 else None)
+
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax2.legend(lines2, labels2, loc='upper right')
+
+    fig.tight_layout()
+
+    if not os.path.exists("out/images"):
+        os.makedirs("out/images")
+    plt.savefig(f"out/images/{title.replace(' ', '_')}.png", dpi=300)
+
+    fig.suptitle(title)
+    # plt.show()
+
+    return max_time - min_time, stat_rows
+
+
 def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.8, 2), min_duration=None):
     """
     Plot test data duration and Soar kernel frequency on aligned dual y-axes.
@@ -171,88 +325,19 @@ def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.
     dur_rows = []
 
     for frequency in unique_frequencies:
-        fig, ax1 = plt.subplots(figsize=figsize)
-
-        # Data preparation
         df_test = test_data[test_data["frequency"] == frequency]
         df_soar = soar_data[soar_data["frequency"] == frequency]
 
         if df_test.empty or df_soar.empty:
             print(f"Skipping frequency {frequency} Hz - no data available")
-            plt.close(fig)
             continue
 
-        global_start = min(df_test["receive_time"].min(), df_soar["timestamp"].min())
-
-        rel_receive_time = df_test["receive_time"] - global_start
-        rel_timestamp = df_soar["timestamp"] - global_start
-        freqs = 1 / df_soar["timestamp"].diff().dropna()
-
-        min_time = min(rel_receive_time.min(), rel_timestamp.min())
-        max_time = max(rel_receive_time.max(), rel_timestamp.max())
-
-        if min_duration is not None:
-            max_time = max(max_time, min_time + min_duration)
-
-        max_duration = max(max_duration, max_time - min_time)
-
-        # Left y-axis: Duration
-        # color1 = 'tab:blue'
-        ax1.set_xlabel("Test duration (s)")
-        ax1.set_ylabel("Message delay (s)")
-
-        for channel in df_test["channel"].unique():
-            df_channel = df_test[df_test["channel"] == channel].sort_values("receive_time")
-            ax1.plot(rel_receive_time[df_channel.index], df_channel["duration"], marker='o', linestyle='', markersize=2, label=f"Duration Channel {channel}", zorder=2)
-            dur = df_channel["duration"]
-            recv_freq = (1 / df_channel["receive_time"].diff()).dropna()
-            recv_freq = recv_freq[np.isfinite(recv_freq)]
-            pub_freq = (1 / df_channel["sender_time"].diff()).dropna()
-            pub_freq = pub_freq[np.isfinite(pub_freq)]
-            dur_rows.append({
-                "Configured Input Freq. (Hz)": int(frequency),
-                "Channel": int(channel),
-                "Mean Published Freq. (Hz)": round(pub_freq.mean(), 2) if len(pub_freq) else float("nan"),
-                "Std Dev Published Freq. (Hz)": round(pub_freq.std(), 2) if len(pub_freq) else float("nan"),
-                "Mean Received Freq. (Hz)": round(recv_freq.mean(), 2) if len(recv_freq) else float("nan"),
-                "Std Dev Received Freq. (Hz)": round(recv_freq.std(), 2) if len(recv_freq) else float("nan"),
-                "Mean Delay (s)": round(dur.mean(), 4),
-                "Std Dev Delay (s)": round(dur.std(), 4),
-                "Median Delay (s)": round(dur.median(), 4),
-                "Min Delay (s)": round(dur.min(), 4),
-                "Max Delay (s)": round(dur.max(), 4),
-                "P95 Delay (s)": round(dur.quantile(0.95), 4),
-                "Samples": len(dur),
-            })
-
-        ax1.tick_params(axis='y')
-        ax1.set_xlim(min_time, max_time)
-        ax1.set_zorder(2)
-        ax1.patch.set_visible(False)
-
-        ax2 = ax1.twinx()
-        ax2.set_zorder(1)
-        color2 = 'tab:green'
-        ax2.set_ylabel("$f_{Kernel}$ (Hz)", color=color2)
-        ax2.set_yscale('log')
-        ax2.fill_between(rel_timestamp[1:], freqs, 0, color=color2, alpha=0.2, zorder=0, linestyle="")
-        ax2.tick_params(axis='y', labelcolor=color2)
-
-        lines1, labels1 = ax1.get_legend_handles_labels()
-        lines2, labels2 = ax2.get_legend_handles_labels()
-        # ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
-
         title = f"{title_prefix} {int(frequency)} Hz Duration and Soar Kernel Frequency vs Relative Time"
-        ax2.grid(False)
+        duration, stat_rows = _plot_duration_and_frequency(df_test, df_soar, title, figsize=figsize, min_duration=min_duration)
 
-        fig.tight_layout()
-
-        if not os.path.exists("out/images"):
-            os.makedirs("out/images")
-        plt.savefig(f"out/images/{title.replace(' ', '_')}.png", dpi=300)
-
-        fig.suptitle(title)
-        # plt.show()
+        max_duration = max(max_duration, duration)
+        for row in stat_rows:
+            dur_rows.append({"Configured Input Freq. (Hz)": int(frequency), **row})
 
     if dur_rows and title_prefix:
         tag = title_prefix.replace(" ", "_")
@@ -264,6 +349,45 @@ def plot_dual_axis_comparison(test_data, soar_data, title_prefix="", figsize=(6.
         )
 
     return max_duration
+
+
+def plot_staircase(test_data, soar_data, title_prefix, figsize=(6.8, 2), sent_data=None):
+    """
+    Plot message delay, Soar kernel frequency, and input frequency (in its own
+    subplot) for a staircase run as a single continuous plot, without
+    splitting by the nominal 'frequency' column.
+
+    Parameters:
+    -----------
+    test_data : pandas.DataFrame
+        Test results dataframe with 'receive_time', 'sender_time', 'channel', 'duration' columns
+    soar_data : pandas.DataFrame
+        Soar decision cycle dataframe with 'timestamp' column
+    title_prefix : str
+        Prefix for the plot title (e.g., "Staircase")
+    sent_data : pandas.DataFrame or None
+        Every message the sender published (regardless of whether it was ever
+        received), with 'channel' and 'sender_time' columns. A staircase run
+        may be cut off before the receiver catches up on a large backlog, so
+        this - rather than the receiver-derived test_data - is what the input
+        frequency subplot is drawn from; falls back to test_data if omitted.
+    """
+    if test_data.empty or soar_data.empty:
+        print(f"Skipping {title_prefix} - no data available")
+        return
+
+    title = f"{title_prefix} Duration and Soar Kernel Frequency vs Relative Time"
+    _, stat_rows = _plot_duration_and_frequency(test_data, soar_data, title, figsize=figsize,
+                                                 input_freq_subplot=True, df_sent=sent_data)
+
+    if stat_rows:
+        tag = title_prefix.replace(" ", "_")
+        save_latex_table(
+            pd.DataFrame(stat_rows),
+            f"out/images/duration_stats_{tag}.tex",
+            caption=f"Message delay statistics -- {title_prefix}",
+            label=f"tab:duration_{tag.lower()}"
+        )
 
 def trim_soar_timeseries(soar_df, duration_df, soar_time_col="timestamp", duration_time_col="receive_time", frequency_col="frequency", min_duration=0.0):
     trimmed_frames = []
@@ -334,6 +458,16 @@ def load_benchmark_data(dir_name_logs, min_duration=0.0) -> tuple[pd.DataFrame, 
         df_soar = trim_soar_timeseries(df_soar, df_test, min_duration=min_duration)
     return df_test, df_soar
 
+def load_sent_data(dir_name_logs: str) -> pd.DataFrame:
+    """
+    Load every message the sender published for a run, regardless of whether
+    it was ever received - see "combined_sender_publish.csv" in parse-logs.py.
+    """
+    path = os.path.join("out", dir_name_logs, "data", "combined_sender_publish.csv")
+    if os.path.exists(path):
+        return pd.read_csv(path)
+    return pd.DataFrame()
+
 def frequency_comparison_plot(df,title_prefix):
     plt.figure(figsize=(6.8, 2))
     plt.xlabel('Message Counter (1)')
@@ -388,35 +522,70 @@ def frequency_comparison_plot(df,title_prefix):
         )
 
 
-def main(paths: dict):
-    matplotlib.use("Agg")
+def _run_dir_exists(dir_name_logs: str) -> bool:
+    """Whether a benchmark.sh run directory has parsed data to evaluate."""
+    return os.path.isdir(os.path.join("out", dir_name_logs, "data"))
+
+
+def main(paths: dict, show: bool = False):
+    if not show:
+        matplotlib.use("Agg")
     plt.rcParams['axes.grid'] = True
 
-    df_messages_no_load, df_no_load = load_benchmark_data(paths["no_load"])
-    compare_soar_kernel_frequencies(df_no_load, "no_load", False)
+    if _run_dir_exists(paths["no_load"]):
+        df_messages_no_load, df_no_load = load_benchmark_data(paths["no_load"])
+        compare_soar_kernel_frequencies(df_no_load, "no_load", False)
+    else:
+        print(f"Skipping no_load - run directory not found: {paths['no_load']}")
 
-    df_siso, df_siso_soar_trimmed = load_benchmark_data(paths["siso"])
-    analyze_sender_frequency(df_siso, scenario="siso")
-    compare_soar_kernel_frequencies(df_siso_soar_trimmed, "siso")
-    frequency_comparison_plot(df_siso, "SISO")
-    plot_dual_axis_comparison(df_siso, df_siso_soar_trimmed, "SISO")
+    if _run_dir_exists(paths["siso"]):
+        df_siso, df_siso_soar_trimmed = load_benchmark_data(paths["siso"])
+        analyze_sender_frequency(df_siso, scenario="siso")
+        compare_soar_kernel_frequencies(df_siso_soar_trimmed, "siso")
+        frequency_comparison_plot(df_siso, "SISO")
+        plot_dual_axis_comparison(df_siso, df_siso_soar_trimmed, "SISO")
+    else:
+        print(f"Skipping siso - run directory not found: {paths['siso']}")
 
-    df_normal, df_normal_soar_trimmed = load_benchmark_data(paths["normal"])
-    normal_test_duration = df_normal["receive_time"].max() - df_normal["receive_time"].min()
-    df_auto_delete_io, df_auto_delete_io_soar_trimmed = load_benchmark_data(paths["auto_delete_io"], min_duration=normal_test_duration)
+    normal_duration = None
+    normal_test_duration = 0.0
+    if _run_dir_exists(paths["normal"]):
+        df_normal, df_normal_soar_trimmed = load_benchmark_data(paths["normal"])
+        normal_test_duration = df_normal["receive_time"].max() - df_normal["receive_time"].min()
+        analyze_sender_frequency(df_normal, scenario="no_autodelete")
+        normal_duration = plot_dual_axis_comparison(df_normal, df_normal_soar_trimmed, "no_autodelete")
+    else:
+        print(f"Skipping no_autodelete - run directory not found: {paths['normal']}")
 
-    analyze_sender_frequency(df_normal, scenario="no_autodelete")
-    normal_duration = plot_dual_axis_comparison(df_normal, df_normal_soar_trimmed, "no_autodelete")
-    analyze_sender_frequency(df_auto_delete_io, scenario="auto_delete")
-    plot_dual_axis_comparison(df_auto_delete_io, df_auto_delete_io_soar_trimmed, "auto_delete", min_duration=normal_duration)
+    if _run_dir_exists(paths["auto_delete_io"]):
+        df_auto_delete_io, df_auto_delete_io_soar_trimmed = load_benchmark_data(paths["auto_delete_io"], min_duration=normal_test_duration)
+        analyze_sender_frequency(df_auto_delete_io, scenario="auto_delete")
+        plot_dual_axis_comparison(df_auto_delete_io, df_auto_delete_io_soar_trimmed, "auto_delete", min_duration=normal_duration)
+    else:
+        print(f"Skipping auto_delete - run directory not found: {paths['auto_delete_io']}")
 
-    df_msg_preferences, df_soar_preferences = load_benchmark_data(paths["benchmark_preferences"])
-    analyze_sender_frequency(df_msg_preferences, scenario="preferences")
-    plot_dual_axis_comparison(df_msg_preferences, df_soar_preferences, "Preference including")
-    frequency_comparison_plot(df_msg_preferences, "preference_enabled")
+    if _run_dir_exists(paths["benchmark_preferences"]):
+        df_msg_preferences, df_soar_preferences = load_benchmark_data(paths["benchmark_preferences"])
+        analyze_sender_frequency(df_msg_preferences, scenario="preferences")
+        plot_dual_axis_comparison(df_msg_preferences, df_soar_preferences, "Preference including")
+        frequency_comparison_plot(df_msg_preferences, "preference_enabled")
+    else:
+        print(f"Skipping preferences - run directory not found: {paths['benchmark_preferences']}")
+
+    if _run_dir_exists(paths["staircase"]):
+        df_staircase, df_staircase_soar = load_benchmark_data(paths["staircase"])
+        df_staircase_sent = load_sent_data(paths["staircase"])
+        plot_staircase(df_staircase, df_staircase_soar, "Staircase", sent_data=df_staircase_sent)
+    else:
+        print(f"Skipping staircase - run directory not found: {paths['staircase']}")
+
+    if show:
+        plt.show()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate benchmark results for a given session.")
     parser.add_argument("session_id", help="SESSION_ID printed at the end of benchmark.sh (e.g. 2026-06-13T17:28:51)")
+    parser.add_argument("--show", action="store_true", default=False,
+                         help="Display the generated plots interactively for inspection instead of only saving them")
     args = parser.parse_args()
-    main(build_paths(args.session_id))
+    main(build_paths(args.session_id), show=args.show)
