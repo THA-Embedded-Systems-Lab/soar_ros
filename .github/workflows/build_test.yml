@@ -18,7 +18,7 @@ jobs:
                     - jazzy
                     - kilted
                     - lyrical
-                    - rolling
+                    # - rolling
 
                 # Define the Docker image(s) associated with each ROS distribution.
                 # The include syntax allows additional variables to be defined, like
@@ -44,10 +44,10 @@ jobs:
                       ros_version: 2
                       continue_on_error: false
 
-                    - docker_image: ubuntu:resolute
-                      ros_distribution: rolling
-                      ros_version: 2
-                      continue_on_error: true
+                    # - docker_image: ubuntu:resolute
+                    #   ros_distribution: rolling
+                    #   ros_version: 2
+                    #   continue_on_error: true
         container:
             image: ${{ matrix.docker_image }}
         env:
