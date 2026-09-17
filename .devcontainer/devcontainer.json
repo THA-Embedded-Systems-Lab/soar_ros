@@ -20,7 +20,7 @@
                 "ms-toolsai.jupyter",
                 "github.copilot-chat",
                 "zachflower.uncrustify",
-                "tha-embedded-systems-lab.soar-tool"
+                "tha-embedded-systems-lab.soar-dev-tools"
             ]
         }
     },
